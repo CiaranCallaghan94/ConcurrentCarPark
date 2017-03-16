@@ -24,6 +24,9 @@ public class Application {
     private static int arrive_rush_hour = timeToSeconds("09:00");
     private static int leave_rush_hour  = timeToSeconds("17:00");
 
+    // Standard distribution
+    private static int std_distribution = 10*60;
+
     // Average width of a car
     private static int avg_width = 180;
 
@@ -48,10 +51,20 @@ public class Application {
         return hours*60*60 + mins*60;
     }
 
+    public static String secondsToTime(int seconds) {
+
+        int hours = seconds / 3600;
+        int minutes = (seconds % 3600) / 60;
+        int secs = seconds % 60;
+
+        return String.format("%02d:%02d:%02d", hours, minutes, secs);
+    }
+
     public static void setupCars() {
 
-        NormalDistribution arrival_dist = new NormalDistribution(arrive_rush_hour, 1);
-        NormalDistribution leave_dist = new NormalDistribution(leave_rush_hour, 1);
+        // Normal distribution with std deviation of 3 minutes
+        NormalDistribution arrival_dist = new NormalDistribution(arrive_rush_hour, std_distribution);
+        NormalDistribution leave_dist = new NormalDistribution(leave_rush_hour, std_distribution);
 
         Car new_car;
         int arrive_time;
@@ -74,7 +87,6 @@ public class Application {
 
             cars.add(new_car);
         }
-
     }
 
     public static void main(String [] args) {
@@ -82,8 +94,9 @@ public class Application {
         setupCars();
 
         for(Car c: cars) {
-            LOGGER.info("Arrive time: " + c.getArriveTime());
-            LOGGER.info("Leave time: " + c.getLeaveTime() + "\n\n");
+            LOGGER.info("Arrive time: " + secondsToTime(c.getArriveTime()));
+            LOGGER.info("Leave time: " + secondsToTime(c.getLeaveTime()));
+            secondsToTime(c.getLeaveTime());
         }
     }
 }
