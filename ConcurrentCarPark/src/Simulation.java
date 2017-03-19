@@ -14,7 +14,6 @@ public class Simulation {
 
     // Simulation objects
     private Carpark carpark = new Carpark();
-    private Gateway gateway = new Gateway();
     private static List<Car> cars_by_arrival;
     private static List<Car> car_by_departure;
 
@@ -56,7 +55,7 @@ public class Simulation {
             Car car = cars_by_arrival.get(arrival_index);
             while(car.getArriveTime() == time) {
                 LOGGER.info("Car arrived, going to gateway: " + Application.secondsToTime(time));
-                gateway.manageArrival(car);
+                carpark.manageArrival(car);
                 arrival_index++;
 
                 if(arrival_index < cars_by_arrival.size())
@@ -75,9 +74,9 @@ public class Simulation {
             Car car = car_by_departure.get(departure_index);
             while(car.getLeaveTime() == time) {
                 LOGGER.info("Car departed: " + Application.secondsToTime(time));
-                gateway.manageDeparture(car);
-
+                carpark.manageDeparture(car);
                 departure_index++;
+                
                 if(departure_index < car_by_departure.size())
                     car = car_by_departure.get(departure_index);
                 else

@@ -12,13 +12,13 @@ public class Gateway {
     private static List<Lane> entrances   = new ArrayList<>(3);
     private static List<Lane> exits       = new ArrayList<>(3);
 
-    public static void manageArrival(Car c)  {
+    public void manageArrival(Car c)  {
 
         LOGGER.info("Managing car arrival...");
         placeInShortestQueue(c,entrances); 
     }
 
-	public static void manageDeparture(Car c) {
+	public void manageDeparture(Car c) {
 
         LOGGER.info("Managing car departure...");
         placeInShortestQueue(c,exits); 

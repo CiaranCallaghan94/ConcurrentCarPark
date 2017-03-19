@@ -1,5 +1,6 @@
 package Carpark;
 import Car.Car;
+import Gateway.Gateway;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.logging.Logger;
 public class Carpark {
 
     private static final Logger LOGGER = Logger.getLogger( "Carpark" );
-
+    private Gateway gateway = new Gateway();
     List<Space> spaces;
 
     public Carpark() {
@@ -37,6 +38,16 @@ public class Carpark {
         LOGGER.info("Car wasn't added to space");
         return false;
     }
+
+	public void manageArrival(Car car) {
+		// TODO Auto-generated method stub
+		gateway.manageArrival(car);
+	}
+
+	public void manageDeparture(Car car) {
+		// TODO Auto-generated method stub
+		gateway.manageDeparture(car);
+	}
 
 
 }
