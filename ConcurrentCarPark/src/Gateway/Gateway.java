@@ -44,4 +44,28 @@ public class Gateway {
 			 entrances.get(index_of_smallest_queue).addCar(c);
 		 }
 	}
+	 // Check the lanes and if a car can pass through a barrier place 
+	 // it into the List
+	public List<Car> checkEntrances() {
+		
+		List<Car> cars_to_return = new ArrayList<Car>();
+		
+		for (Lane entrance : entrances){
+			// TODO: Possible better implementation
+			Car car = null;
+			car = entrance.checkForCarLeavingLane() ;
+			
+			if(car != null){
+				
+				cars_to_return.add(car);
+			}
+		}
+		
+		return cars_to_return;
+	}
+
+	public void checkExits() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -10,20 +10,19 @@ public class Entrance implements Lane {
 
 	private static final Logger LOGGER = Logger.getLogger( "Entrance" );
 
+	Barrier barrier = new EntranceBarrier();
 	Queue<Car> queue = new LinkedList<Car>();
 
 	@Override
 	public void addCar(Car c) {
-		// TODO Auto-generated method stub
+		
 		queue.add(c);
 	}
 
-	@Override
-	public Car removerCar() {
-		// TODO Auto-generated method stub
+	// If the queue is not empty remove the car at the front of the queue
+	// else return null
+	public Car removerCar() {	
 		
-		//if the queue is not empty remove the car at the front of the queue
-		//else return null
 		if(!queue.isEmpty()){
 			
 			return queue.remove();
@@ -32,10 +31,23 @@ public class Entrance implements Lane {
 			return null;
 	}
 
-	@Override
 	public int numOfCarsInQueue() {
-		// TODO Auto-generated method stub
+
 		return queue.size();
+	}
+
+	// Returns the car at the front of the queue
+	// if the barrier is open
+	public Car checkForCarLeavingLane() {
+		
+		if(queue != null && !queue.isEmpty()){
+			
+			if(barrier.isBarrierOpen()){
+				
+				return queue.remove();
+			}
+		}
+		return null;
 	}
 
 }

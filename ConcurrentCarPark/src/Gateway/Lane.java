@@ -8,5 +8,7 @@ public interface Lane {
 	public Car removerCar();
 	
 	public int numOfCarsInQueue();
+
+	public Car checkForCarLeavingLane();
 	
 }

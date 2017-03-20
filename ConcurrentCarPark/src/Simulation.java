@@ -33,11 +33,21 @@ public class Simulation {
     public void runSimulation() {
 
         int time = open_time;
-
+        
+        // While loop from open_time to close_time
+        // Checks for cars arriving and departing the carpark
+        // Checks for cars entering or exiting the barriers
+        
         while( time < close_time) {
 
             manageArrivals(time);
             manageDepartures(time);
+            
+            // Checks the gateway for new cars 
+            carpark.checkGateway();
+            // Parks the cars looking for a spot
+            carpark.parkCars();
+            
             time++;
         }
 
