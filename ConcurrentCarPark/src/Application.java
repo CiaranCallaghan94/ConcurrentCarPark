@@ -1,5 +1,9 @@
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import Car.Car;
 import Car.StudentCar;
+import Car.LecturerCar;
 import config.JsonParser;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
@@ -8,14 +12,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Logger;
 
-/**
- * Created by Anglim on 16/03/2017.
- */
 public class Application {
 
-    private static final Logger LOGGER = Logger.getLogger( "Simulation" );
+    private static final Logger LOGGER = LogManager.getLogger( "Simulation" );
 
     private static int open_time;
     private static int close_time;
@@ -95,7 +95,7 @@ public class Application {
                 if(random_num <= 8)
                     new_car = new StudentCar(arrive_time, leave_time, avg_car_width, avg_student_dexterity);
                 else
-                    new_car = new Car.LecturerCar(arrive_time, leave_time, avg_car_width, avg_lecturer_dexterity);
+                    new_car = new LecturerCar(arrive_time, leave_time, avg_car_width, avg_lecturer_dexterity);
 
                 cars_by_arrival.add(new_car);
                 cars_by_departure.add(new_car);

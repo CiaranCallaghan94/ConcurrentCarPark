@@ -1,13 +1,15 @@
 package Gateway;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 import Car.*;
 
 public class Gateway {
 
-    private static final Logger LOGGER = Logger.getLogger( "Simulation" );
+    private static final Logger LOGGER = LogManager.getLogger( "Simulation" );
 
     private static List<Lane> entrances;
     private static List<Lane> exits;    
@@ -33,6 +35,8 @@ public class Gateway {
 	
 	//Scans through all the entrances and adds the car to the shortest queue
 	 private static void placeInShortestQueue(Car c, List<Lane> queues) {
+
+    	LOGGER.info("Placing in shortest queue...");
 			
 		 if(queues.size()>0){
 			 

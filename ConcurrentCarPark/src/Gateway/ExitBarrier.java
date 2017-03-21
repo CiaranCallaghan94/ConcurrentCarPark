@@ -1,10 +1,11 @@
 package Gateway;
 
-import java.util.logging.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 public class ExitBarrier implements Barrier {
 
-    private static final Logger LOGGER = Logger.getLogger( "ExitBarrier" );
+    private static final Logger LOGGER = LogManager.getLogger( "ExitBarrier" );
 
     private boolean is_open;
     

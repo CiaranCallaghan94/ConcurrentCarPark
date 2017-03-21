@@ -1,14 +1,16 @@
 package Gateway;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.logging.Logger;
 
 import Car.Car;
 
 public class Entrance implements Lane {
 
-	private static final Logger LOGGER = Logger.getLogger( "Entrance" );
+	private static final Logger LOGGER = LogManager.getLogger( "Entrance" );
 
 	Barrier barrier = new EntranceBarrier();
 	Queue<Car> queue = new LinkedList<Car>();

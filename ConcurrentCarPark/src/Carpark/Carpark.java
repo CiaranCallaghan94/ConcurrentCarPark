@@ -1,14 +1,16 @@
 package Carpark;
+
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import Car.Car;
 import Gateway.Gateway;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class Carpark {
 
-    private static final Logger LOGGER = Logger.getLogger( "Carpark" );
+    private static final Logger LOGGER = LogManager.getLogger( "Carpark" );
     private Gateway gateway;
     List<Space> spaces;
     List<Car> cars_searching_for_space;

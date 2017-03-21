@@ -1,12 +1,13 @@
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import Carpark.Carpark;
-import Gateway.Gateway;
 import Car.Car;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class Simulation {
 
-    private static final Logger LOGGER = Logger.getLogger( "Simulation" );
+    private static final Logger LOGGER = LogManager.getLogger( "Simulation" );
 
     // Variables
     private int open_time;
@@ -62,11 +63,9 @@ public class Simulation {
 
         if(arrival_index < cars_by_arrival.size()) {
 
-            LOGGER.info("arr_index: " + arrival_index + ". Size: " + cars_by_arrival.size());
-
             Car car = cars_by_arrival.get(arrival_index);
             while(car.getArriveTime() == time) {
-                LOGGER.info("Car arrived, going to gateway: " + Application.secondsToTime(time));
+                LOGGER.info("Car arrived, sending to gateway: " + Application.secondsToTime(time));
                 carpark.manageArrival(car);
                 arrival_index++;
 

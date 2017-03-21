@@ -1,11 +1,13 @@
 package Carpark;
-import Car.Car;
 
-import java.util.logging.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
+import Car.Car;
 
 public class Space {
 
-    private static final Logger LOGGER = Logger.getLogger( "Space" );
+    private static final Logger LOGGER = LogManager.getLogger( "Space" );
 
     private Car car = null;
     private boolean is_free = true;

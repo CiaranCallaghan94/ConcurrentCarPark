@@ -1,14 +1,16 @@
 package config;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.logging.Logger;
 import javax.json.*;
 
 public class JsonParser {
 
-    private static final Logger LOGGER = Logger.getLogger( "JsonParser" );
+    private static final Logger LOGGER = LogManager.getLogger( "JsonParser" );
 
     public static String file_path   = "./ConcurrentCarPark/src/config/input.json";
     public static String file_path_2 = "src/config/input.json";
