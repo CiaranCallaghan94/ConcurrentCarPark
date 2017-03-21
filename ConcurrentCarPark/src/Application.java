@@ -1,9 +1,5 @@
 import Car.Car;
 import Car.StudentCar;
-import Car.LectureCar;
-import Carpark.Carpark;
-import Gateway.Entrance;
-import Gateway.Exit;
 import config.JsonParser;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
@@ -99,7 +95,7 @@ public class Application {
                 if(random_num <= 8)
                     new_car = new StudentCar(arrive_time, leave_time, avg_car_width, avg_student_dexterity);
                 else
-                    new_car = new LectureCar(arrive_time, leave_time, avg_car_width, avg_lecturer_dexterity);
+                    new_car = new Car.LecturerCar(arrive_time, leave_time, avg_car_width, avg_lecturer_dexterity);
 
                 cars_by_arrival.add(new_car);
                 cars_by_departure.add(new_car);
