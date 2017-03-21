@@ -21,7 +21,7 @@ public class Application {
 
     private static final Logger LOGGER = Logger.getLogger( "Simulation" );
     private static final JsonParser jsonParser = new JsonParser();
-    
+
     // Variables
     private static int open_time        = timeToSeconds("08:00");
     private static int close_time       = timeToSeconds("19:00");
@@ -38,15 +38,15 @@ public class Application {
     private static int avg_student_dexterity = 40;
     private static int avg_lecture_dexterity = 60;
 
-    private static int total_cars = 2500;
+    private static int total_cars = 1;
 
     // Separate lists for arrival and departure so that we can sort on
     // arrival / departure times and massively speed up simulation
     // as do not have to search through the list, can just keep indexes
     // of latest cars in the two lists to arrive/depart.
     // Every time car arrive/departs, increment index. (See Simulation).
-    private static List<Car> cars_by_arrival    = new ArrayList<>(2500);
-    private static List<Car> cars_by_departure  = new ArrayList<>(2500);
+    private static List<Car> cars_by_arrival    = new ArrayList<>(1);
+    private static List<Car> cars_by_departure  = new ArrayList<>(1);
 
     public static int timeToSeconds(String time) {
 
@@ -121,7 +121,7 @@ public class Application {
     }
 
     public static void main(String [] args) {
-    	jsonParser.readInput("/Users/ciarancallaghan/ConcurrentCarPark/ConcurrentCarPark/src/config/input.json");
+    	jsonParser.readInput();
         setupCars();
 
         for(Car c: cars_by_arrival) {

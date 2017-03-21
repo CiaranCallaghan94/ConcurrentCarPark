@@ -1,23 +1,29 @@
 package config;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import jdk.nashorn.internal.parser.JSONParser;
+import javax.json.*;
 
 public class JsonParser {
+
+	public static final String file_path = "./ConcurrentCarPark/src/config/input.json";
 	
-	public void readInput(String s){
+	public void readInput(){
 		try {
-			FileReader reader = new FileReader(s);
+
+			File config_file = new File(file_path);
+
+			FileReader reader = new FileReader(config_file);
 			System.out.println(reader.toString());
 			JSONObject jsonObject = new JSONObject(reader);
 			
 			System.out.println(jsonObject.length());
 			jsonObject.get("num_cars");
+			System.out.println("TESTING");
+			System.out.println(jsonObject.get("num_cars"));
+
 		} catch (FileNotFoundException | JSONException e) {
 			e.printStackTrace();
 		}
