@@ -20,32 +20,19 @@ import java.util.logging.Logger;
 public class Application {
 
     private static final Logger LOGGER = Logger.getLogger( "Simulation" );
-    private static final JsonParser jsonParser = new JsonParser();
-    private static final String file_path = "./src/config/input.json";
 
-    // Parameters for Simulation (given DEFAULT values in case input is null)
-    private static int open_time        = timeToSeconds("08:00");
-    private static int close_time       = timeToSeconds("19:00");
-    private static int arrive_rush_hour = timeToSeconds("09:00");
-    private static int departure_rush_hour  = timeToSeconds("17:00");
-    
-    private static int carpark_capacity = 1000;
-    private static int num_entrances = 3;
-    private static int num_exits = 3;
-
-    // Variable for setUpCars()
-    private static int num_cars = 1;
-    
-    // Standard distribution
-    private static int std_distribution = 10*60;
-
-    // Average width of a car
-    private static int avg_width = 180;
-
-    // Dexterity ranges from 1-100
-    private static int avg_student_dexterity = 40;
-    private static int avg_lecture_dexterity = 60;
-
+    private static int open_time;
+    private static int close_time;
+    private static int arrive_rush_hour;
+    private static int departure_rush_hour;
+    private static int carpark_capacity;
+    private static int num_entrances;
+    private static int num_exits;
+    private static int num_cars;
+    private static int std_distribution;
+    private static int avg_car_width;
+    private static int avg_student_dexterity;
+    private static int avg_lecturer_dexterity;
 
     // Separate lists for arrival and departure so that we can sort on
     // arrival / departure times and massively speed up simulation
@@ -110,9 +97,9 @@ public class Application {
                 LOGGER.info("Random num: " + random_num);
 
                 if(random_num <= 8)
-                    new_car = new StudentCar(arrive_time, leave_time, avg_width, avg_student_dexterity);
+                    new_car = new StudentCar(arrive_time, leave_time, avg_car_width, avg_student_dexterity);
                 else
-                    new_car = new LectureCar(arrive_time, leave_time, avg_width, avg_lecture_dexterity);
+                    new_car = new LectureCar(arrive_time, leave_time, avg_car_width, avg_lecturer_dexterity);
 
                 cars_by_arrival.add(new_car);
                 cars_by_departure.add(new_car);
@@ -130,46 +117,27 @@ public class Application {
     // TODO: Choose a suitable name for this method
     // Reads in the input file and its values
     public static void readInputFromJSONFile(){
-    	
-    	jsonParser.readInput(file_path);
-    	
+
+        JsonParser.readInput();
+
     	// Parameters for Simulation
-    	// TODO: null checking should be completed in the parser not here FIX:
-    	if(jsonParser.OPEN_TIME != null){
-    		open_time = timeToSeconds(jsonParser.OPEN_TIME);
-    	}
-    	if(jsonParser.CLOSE_TIME != null){
-    		close_time = timeToSeconds(jsonParser.CLOSE_TIME);
-    	}
-    	if(jsonParser.ARRIVAL_RUSH_HOUR != null){
-    		arrive_rush_hour = timeToSeconds(jsonParser.ARRIVAL_RUSH_HOUR);
-    	}
-    	if(jsonParser.DEPARTURE_RUSH_HOUR != null){
-    		departure_rush_hour = timeToSeconds(jsonParser.DEPARTURE_RUSH_HOUR);
-    	}
-    	if(jsonParser.CARPARK_CAPACITY != null){
-    		carpark_capacity = Integer.parseInt(jsonParser.CARPARK_CAPACITY);
-    	}
-    	if(jsonParser.NUM_ENTRANCES != null){
-    		num_entrances = Integer.parseInt(jsonParser.NUM_ENTRANCES);
-    	}
-    	if(jsonParser.NUM_EXITS != null){
-    		num_exits = Integer.parseInt(jsonParser.NUM_EXITS);
-    	}
-    	// Variable used before simulation in setUpCars()
-    	if(jsonParser.NUM_CARS != null){
-    		num_cars = Integer.parseInt(jsonParser.NUM_CARS);
-    	}
-    	
-    	
-    	
-    	
+        open_time               = timeToSeconds(JsonParser.OPEN_TIME);
+        close_time              = timeToSeconds(JsonParser.CLOSE_TIME);
+        arrive_rush_hour        = timeToSeconds(JsonParser.ARRIVAL_RUSH_HOUR);
+        departure_rush_hour     = timeToSeconds(JsonParser.DEPARTURE_RUSH_HOUR);
+        carpark_capacity        = JsonParser.CARPARK_CAPACITY;
+        num_cars                = JsonParser.NUM_CARS;
+        num_entrances           = JsonParser.NUM_ENTRANCES;
+        num_exits               = JsonParser.NUM_EXITS;
+        std_distribution        = JsonParser.STD_DISTRIBUTION;
+        avg_car_width           = JsonParser.AVG_CAR_WIDTH;
+        avg_student_dexterity   = JsonParser.AVG_STUDENT_DEXTERITY;
+        avg_lecturer_dexterity  = JsonParser.AVG_LECTURER_DEXTERITY;
     }
     
     public static void main(String [] args) {
     	
     	readInputFromJSONFile();
-    	
         setupCars();
 
         for(Car c: cars_by_arrival) {

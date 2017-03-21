@@ -3,17 +3,35 @@ package config;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-
+import java.util.logging.Logger;
 import javax.json.*;
 
 public class JsonParser {
-	
-	public static String OPEN_TIME, CLOSE_TIME, ARRIVAL_RUSH_HOUR, DEPARTURE_RUSH_HOUR,
-							CARPARK_CAPACITY, NUM_CARS, NUM_ENTRANCES, NUM_EXITS;
-	public void readInput(String file_path){
+
+    private static final Logger LOGGER = Logger.getLogger( "JsonParser" );
+
+    public static String file_path   = "./ConcurrentCarPark/src/config/input.json";
+    public static String file_path_2 = "src/config/input.json";
+
+    // DEFAULTS
+	public static String OPEN_TIME              = "08:00";
+    public static String CLOSE_TIME             = "19:00";
+    public static String ARRIVAL_RUSH_HOUR      = "09:00";
+    public static String DEPARTURE_RUSH_HOUR    = "17:00";
+    public static int    CARPARK_CAPACITY       = 1000;
+    public static int    NUM_CARS               = 2500;
+    public static int    NUM_ENTRANCES          = 3;
+    public static int    NUM_EXITS              = 3;
+
+    // NON-USER INPUTS
+    public static final int STD_DISTRIBUTION       = 10*60;
+    public static final int AVG_CAR_WIDTH          = 180;
+    public static final int AVG_STUDENT_DEXTERITY  = 40;
+    public static final int AVG_LECTURER_DEXTERITY = 60;
+
+	public static void readInput(){
 		
 		File config_file = new File(file_path);
-		
 		JsonReader jsonReader;
 		
 		try {
@@ -35,18 +53,17 @@ public class JsonParser {
 				DEPARTURE_RUSH_HOUR = object.get("departure_rush_hour").toString().replaceAll("^\"|\"$", "");
 			}
 			if(object.containsKey("num_cars")){
-				NUM_CARS = object.get("num_cars").toString().replaceAll("^\"|\"$", "");
+				NUM_CARS = Integer.parseInt(object.get("num_cars").toString());
 			}
 			if(object.containsKey("carpark_capacity")){
-				CARPARK_CAPACITY = object.get("carpark_capacity").toString().replaceAll("^\"|\"$", "");
+				CARPARK_CAPACITY = Integer.parseInt(object.get("carpark_capacity").toString());
 			}
 			if(object.containsKey("num_entrances")){
-				NUM_ENTRANCES = object.get("num_entrances").toString().replaceAll("^\"|\"$", "");
+				NUM_ENTRANCES = Integer.parseInt(object.get("num_entrances").toString());
 			}
 			if(object.containsKey("num_exits")){
-				NUM_EXITS = object.get("num_exits").toString().replaceAll("^\"|\"$", "");
+				NUM_EXITS = Integer.parseInt(object.get("num_exits").toString());
 			}
-			
 			
 		} catch (FileNotFoundException e) {
 			
