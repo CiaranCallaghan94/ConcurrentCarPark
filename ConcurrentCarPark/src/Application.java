@@ -21,13 +21,21 @@ public class Application {
 
     private static final Logger LOGGER = Logger.getLogger( "Simulation" );
     private static final JsonParser jsonParser = new JsonParser();
+    private static final String file_path = "./src/config/input.json";
 
-    // Variables
+    // Parameters for Simulation (given DEFAULT values in case input is null)
     private static int open_time        = timeToSeconds("08:00");
     private static int close_time       = timeToSeconds("19:00");
     private static int arrive_rush_hour = timeToSeconds("09:00");
-    private static int leave_rush_hour  = timeToSeconds("17:00");
+    private static int departure_rush_hour  = timeToSeconds("17:00");
+    
+    private static int carpark_capacity = 1000;
+    private static int num_entrances = 3;
+    private static int num_exits = 3;
 
+    // Variable for setUpCars()
+    private static int num_cars = 1;
+    
     // Standard distribution
     private static int std_distribution = 10*60;
 
@@ -38,7 +46,6 @@ public class Application {
     private static int avg_student_dexterity = 40;
     private static int avg_lecture_dexterity = 60;
 
-    private static int total_cars = 1;
 
     // Separate lists for arrival and departure so that we can sort on
     // arrival / departure times and massively speed up simulation
@@ -81,7 +88,7 @@ public class Application {
 
         // Normal distribution with std deviation of 3 minutes
         NormalDistribution arrival_dist = new NormalDistribution(arrive_rush_hour, std_distribution);
-        NormalDistribution leave_dist = new NormalDistribution(leave_rush_hour, std_distribution);
+        NormalDistribution leave_dist = new NormalDistribution(departure_rush_hour, std_distribution);
 
         Car new_car;
         int arrive_time;
@@ -91,7 +98,7 @@ public class Application {
 
         // Create the cars
         int i=0;
-        while(i < total_cars) {
+        while(i < num_cars) {
 
             arrive_time = (int)Math.round(arrival_dist.sample());
             leave_time = (int)Math.round(leave_dist.sample());
@@ -119,16 +126,57 @@ public class Application {
         cars_by_arrival = sortCarsByArrival(cars_by_arrival);
         cars_by_departure = sortCarsByDeparture(cars_by_departure);
     }
-
+    
+    // TODO: Choose a suitable name for this method
+    // Reads in the input file and its values
+    public static void readInputFromJSONFile(){
+    	
+    	jsonParser.readInput(file_path);
+    	
+    	// Parameters for Simulation
+    	// TODO: null checking should be completed in the parser not here FIX:
+    	if(jsonParser.OPEN_TIME != null){
+    		open_time = timeToSeconds(jsonParser.OPEN_TIME);
+    	}
+    	if(jsonParser.CLOSE_TIME != null){
+    		close_time = timeToSeconds(jsonParser.CLOSE_TIME);
+    	}
+    	if(jsonParser.ARRIVAL_RUSH_HOUR != null){
+    		arrive_rush_hour = timeToSeconds(jsonParser.ARRIVAL_RUSH_HOUR);
+    	}
+    	if(jsonParser.DEPARTURE_RUSH_HOUR != null){
+    		departure_rush_hour = timeToSeconds(jsonParser.DEPARTURE_RUSH_HOUR);
+    	}
+    	if(jsonParser.CARPARK_CAPACITY != null){
+    		carpark_capacity = Integer.parseInt(jsonParser.CARPARK_CAPACITY);
+    	}
+    	if(jsonParser.NUM_ENTRANCES != null){
+    		num_entrances = Integer.parseInt(jsonParser.NUM_ENTRANCES);
+    	}
+    	if(jsonParser.NUM_EXITS != null){
+    		num_exits = Integer.parseInt(jsonParser.NUM_EXITS);
+    	}
+    	// Variable used before simulation in setUpCars()
+    	if(jsonParser.NUM_CARS != null){
+    		num_cars = Integer.parseInt(jsonParser.NUM_CARS);
+    	}
+    	
+    	
+    	
+    	
+    }
+    
     public static void main(String [] args) {
-    	jsonParser.readInput();
+    	
+    	readInputFromJSONFile();
+    	
         setupCars();
 
         for(Car c: cars_by_arrival) {
             LOGGER.info("Arrive time: " + secondsToTime(c.getArriveTime()));
         }
 
-        Simulation sim = new Simulation(cars_by_arrival, cars_by_departure, open_time, close_time);
+        Simulation sim = new Simulation(cars_by_arrival, cars_by_departure, open_time, close_time, carpark_capacity, num_entrances, num_exits);
         sim.runSimulation();
     }
 }

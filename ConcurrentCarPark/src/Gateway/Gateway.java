@@ -9,10 +9,17 @@ public class Gateway {
 
     private static final Logger LOGGER = Logger.getLogger( "Simulation" );
 
-    private static List<Lane> entrances   = new ArrayList<>(3);
-    private static List<Lane> exits       = new ArrayList<>(3);
+    private static List<Lane> entrances;
+    private static List<Lane> exits;    
 
-    public void manageArrival(Car c)  {
+    public Gateway(int num_entrances, int num_exits) {
+		
+    	entrances = new ArrayList<>(num_entrances);
+    	exits = new ArrayList<>(num_exits);
+    	
+	}
+
+	public void manageArrival(Car c)  {
 
         LOGGER.info("Managing car arrival...");
         placeInShortestQueue(c,entrances); 

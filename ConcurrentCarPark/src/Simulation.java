@@ -13,20 +13,22 @@ public class Simulation {
     private int close_time;
 
     // Simulation objects
-    private Carpark carpark = new Carpark();
+    private Carpark carpark;
     private static List<Car> cars_by_arrival;
     private static List<Car> car_by_departure;
 
     private int arrival_index = 0;
     private int departure_index = 0;
 
-    public Simulation(List<Car> cars_by_arrival0, List<Car> car_by_departure0, int open_time0, int close_time0) {
+    public Simulation(List<Car> cars_by_arrival0, List<Car> car_by_departure0, int open_time0, int close_time0, int carpark_capacity, int num_entrances, int num_exits) {
 
         cars_by_arrival = cars_by_arrival0;
         car_by_departure = car_by_departure0;
 
         open_time = open_time0;
         close_time = close_time0;
+        
+        carpark = new Carpark(carpark_capacity, num_entrances, num_exits);
     }
 
     // Simulate every second from the carpark opening until it closes. Each second, check and manage events.

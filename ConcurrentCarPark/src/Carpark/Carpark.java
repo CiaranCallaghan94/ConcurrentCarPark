@@ -9,12 +9,14 @@ import java.util.logging.Logger;
 public class Carpark {
 
     private static final Logger LOGGER = Logger.getLogger( "Carpark" );
-    private Gateway gateway = new Gateway();
+    private Gateway gateway;
     List<Space> spaces;
     List<Car> cars_searching_for_space;
     
-    public Carpark() {
-        spaces = new ArrayList<>(1000);
+    public Carpark(int carpark_capacity, int num_entrances, int num_exits) {
+    	
+        spaces = new ArrayList<>(carpark_capacity);
+        gateway = new Gateway(num_entrances, num_exits);
     }
 
     // parks all the cars searching for spaces
