@@ -4,6 +4,8 @@ import Car.LectureCar;
 import Carpark.Carpark;
 import Gateway.Entrance;
 import Gateway.Exit;
+import config.JsonParser;
+
 import org.apache.commons.math3.distribution.NormalDistribution;
 
 import java.util.ArrayList;
@@ -18,7 +20,8 @@ import java.util.logging.Logger;
 public class Application {
 
     private static final Logger LOGGER = Logger.getLogger( "Simulation" );
-
+    private static final JsonParser jsonParser = new JsonParser();
+    
     // Variables
     private static int open_time        = timeToSeconds("08:00");
     private static int close_time       = timeToSeconds("19:00");
@@ -118,7 +121,7 @@ public class Application {
     }
 
     public static void main(String [] args) {
-
+    	jsonParser.readInput("/Users/ciarancallaghan/ConcurrentCarPark/ConcurrentCarPark/src/config/input.json");
         setupCars();
 
         for(Car c: cars_by_arrival) {
