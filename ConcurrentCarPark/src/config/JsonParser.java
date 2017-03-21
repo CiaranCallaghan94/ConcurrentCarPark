@@ -22,14 +22,30 @@ public class JsonParser {
 			JsonObject object = jsonReader.readObject();
 			jsonReader.close();
 			
-			OPEN_TIME = object.get("open_time").toString().replaceAll("^\"|\"$", "");
-			CLOSE_TIME = object.get("close_time").toString().replaceAll("^\"|\"$", "");
-			ARRIVAL_RUSH_HOUR = object.get("arrival_rush_hour").toString().replaceAll("^\"|\"$", "");
-			DEPARTURE_RUSH_HOUR = object.get("departure_rush_hour").toString().replaceAll("^\"|\"$", "");
-			NUM_CARS = object.get("num_cars").toString().replaceAll("^\"|\"$", "");
-			CARPARK_CAPACITY = object.get("carpark_capacity").toString().replaceAll("^\"|\"$", "");
-			NUM_ENTRANCES = object.get("num_entrances").toString().replaceAll("^\"|\"$", "");
-			NUM_EXITS = object.get("num_exits").toString().replaceAll("^\"|\"$", "");
+			if(object.containsKey("open_time")){
+				OPEN_TIME = object.get("open_time").toString().replaceAll("^\"|\"$", "");
+			}
+			if(object.containsKey("close_time")){
+				CLOSE_TIME = object.get("close_time").toString().replaceAll("^\"|\"$", "");
+			}
+			if(object.containsKey("arrival_rush_hour")){
+				ARRIVAL_RUSH_HOUR = object.get("arrival_rush_hour").toString().replaceAll("^\"|\"$", "");
+			}
+			if(object.containsKey("departure_rush_hour")){
+				DEPARTURE_RUSH_HOUR = object.get("departure_rush_hour").toString().replaceAll("^\"|\"$", "");
+			}
+			if(object.containsKey("num_cars")){
+				NUM_CARS = object.get("num_cars").toString().replaceAll("^\"|\"$", "");
+			}
+			if(object.containsKey("carpark_capacity")){
+				CARPARK_CAPACITY = object.get("carpark_capacity").toString().replaceAll("^\"|\"$", "");
+			}
+			if(object.containsKey("num_entrances")){
+				NUM_ENTRANCES = object.get("num_entrances").toString().replaceAll("^\"|\"$", "");
+			}
+			if(object.containsKey("num_exits")){
+				NUM_EXITS = object.get("num_exits").toString().replaceAll("^\"|\"$", "");
+			}
 			
 			
 		} catch (FileNotFoundException e) {
