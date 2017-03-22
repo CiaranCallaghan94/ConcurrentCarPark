@@ -43,13 +43,13 @@ public class Simulation {
         
         while( time < close_time) {
 
+            LOGGER.info("Current time: " + time);
+
             manageArrivals(time);
             manageDepartures(time);
             
             // Checks the gateway for new cars 
-            carpark.checkGateway();
-            // Parks the cars looking for a spot
-            carpark.parkCars();
+            carpark.advanceSimulation();
             
             time++;
         }

@@ -3,15 +3,13 @@ package Gateway;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
-public class ExitBarrier implements Barrier {
+public class ExitBarrier extends Barrier {
 
     private static final Logger LOGGER = LogManager.getLogger( "ExitBarrier" );
 
-    private boolean is_open;
-    
-	public boolean isBarrierOpen() {
+	public ExitBarrier() {
 
-		return is_open;
+		super();
 	}
 
 }

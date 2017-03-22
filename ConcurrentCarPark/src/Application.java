@@ -90,7 +90,6 @@ public class Application {
             if(arrive_time < leave_time) {
 
                 random_num = rand.nextInt((10 - 1) + 1) + 1;
-                LOGGER.info("Random num: " + random_num);
 
                 if(random_num <= 8)
                     new_car = new StudentCar(arrive_time, leave_time, avg_car_width, avg_student_dexterity);

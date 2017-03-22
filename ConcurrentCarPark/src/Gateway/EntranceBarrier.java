@@ -1,16 +1,19 @@
 package Gateway;
 
+import Car.Car;
+
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
-public class EntranceBarrier implements Barrier {
+import java.util.Random;
+
+public class EntranceBarrier extends Barrier {
 
     private static final Logger LOGGER = LogManager.getLogger( "EntranceBarrier" );
-    
-    private boolean is_open;
-    
-    public boolean isBarrierOpen(){
-    	
-    	return is_open;
+
+
+    public EntranceBarrier() {
+
+        super();
     }
 }

@@ -19,7 +19,15 @@ public class Carpark {
     	
         spaces = new ArrayList<>(carpark_capacity);
         gateway = new Gateway(num_entrances, num_exits);
+
+        cars_searching_for_space = new ArrayList<>();
     }
+
+    public void addCarsSearchingForSpace(List<Car> cars) {
+
+    	LOGGER.info("Adding to cars to search for space");
+    	cars_searching_for_space.addAll(cars);
+	}
 
     // parks all the cars searching for spaces
     public void parkCars() {
@@ -39,15 +47,23 @@ public class Carpark {
 		        for(Space space: spaces) {
 		
 		            if(space.isFree()) {
+
+		            	LOGGER.info("found free space!");
 		
 		                space.addCar(car);
 		                cars_searching_for_space.remove(car);
 		                LOGGER.info("Added car to space and removed from cars searching for space");
 		                break;
-		            }
+		            } else {
+		            	LOGGER.info("Space not free");
+					}
 		        }
 	    	}
     	}
+
+    	if(!cars_searching_for_space.isEmpty()) {
+    		LOGGER.info("Num cars that did not park: " + cars_searching_for_space.size());
+		}
     	//else {LOGGER.info("No cars need to be parked");}
     	
     	// TODO: Consider dealing with a scenario where a car can not find a space.
@@ -57,24 +73,31 @@ public class Carpark {
     }
 
 	public void manageArrival(Car car) {
-		
-		gateway.manageArrival(car);
+
+		gateway.addArrivalsToEntrance(car);
 	}
 
 	public void manageDeparture(Car car) {
-
-		gateway.manageDeparture(car);
+		gateway.addDeparturesToExit(car);
 	}
 
-	// Checks the Gateway lanes to see if the barrier's are open 
-	// and the queue is not empty
-	// adds the cars to a list of cars looking for a space
-	public void checkGateway() {
-	
-		cars_searching_for_space = gateway.checkEntrances();
-		// TODO: Decide whether storing the leaving cars is necessary
-		gateway.checkExits();
+	public void advanceSimulation() {
+
+    	// Check if cars are done with entrance barrier
+    	List<Car> cars_to_enter = gateway.advanceEntranceBarriers();
+
+    	// if there are any, let them search for a space
+		if(cars_to_enter.size() > 0) {
+			addCarsSearchingForSpace(cars_to_enter);
+		}
+
+    	// Park the cars that are searching for a space
+    	parkCars();
+
+    	// Checks if cars are done with exit barrier - if so they leave system
+    	gateway.advanceExitBarriers();
+
+    	// Move the lanes along - add next cars to barriers
+    	gateway.advanceLanes();
 	}
-
-
 }
