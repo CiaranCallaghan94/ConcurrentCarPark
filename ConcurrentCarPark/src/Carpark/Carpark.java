@@ -16,8 +16,13 @@ public class Carpark {
     List<Car> cars_searching_for_space;
     
     public Carpark(int carpark_capacity, int num_entrances, int num_exits) {
-    	
-        spaces = new ArrayList<>(carpark_capacity);
+
+		spaces = new ArrayList<>(carpark_capacity);
+		for(int i=0; i < spaces.size(); i++) {
+			Space space = new Space();
+			spaces.add(space);
+		}
+
         gateway = new Gateway(num_entrances, num_exits);
 
         cars_searching_for_space = new ArrayList<>();
@@ -31,6 +36,8 @@ public class Carpark {
 
     // parks all the cars searching for spaces
     public void parkCars() {
+
+    	LOGGER.info("parking cars");
     	
     	// Iterate through all the cars looking for a space
         // Iterate through the Spaces in the Carpark
@@ -41,10 +48,16 @@ public class Carpark {
 
     	//TODO: Test that this code works correctly
     	if(!cars_searching_for_space.isEmpty() && cars_searching_for_space != null){
+
+    		LOGGER.info("Cars speaking for space is NOT EMPTY && NOT NULL");
     		
 	    	for(Car car: cars_searching_for_space){
+
+	    		LOGGER.info("Iterating through cars searching for spaces...");
 	    	
 		        for(Space space: spaces) {
+
+		        	LOGGER.info("Iterating through each space...");
 		
 		            if(space.isFree()) {
 
@@ -92,7 +105,8 @@ public class Carpark {
 		}
 
     	// Park the cars that are searching for a space
-    	parkCars();
+		if(cars_searching_for_space.size() > 0)
+    		parkCars();
 
     	// Checks if cars are done with exit barrier - if so they leave system
     	gateway.advanceExitBarriers();
