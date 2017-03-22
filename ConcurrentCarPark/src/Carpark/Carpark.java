@@ -18,7 +18,7 @@ public class Carpark {
     public Carpark(int carpark_capacity, int num_entrances, int num_exits) {
 
 		spaces = new ArrayList<>(carpark_capacity);
-		for(int i=0; i < spaces.size(); i++) {
+		for(int i=0; i < carpark_capacity; i++) {
 			Space space = new Space();
 			spaces.add(space);
 		}
@@ -46,7 +46,11 @@ public class Carpark {
         //          is dependant on car_width, width of neighbour cars,
         //          dexterity, & probability
 
-    	//TODO: Test that this code works correctly
+		// So that objects are not removed from the list whilst still iterating
+		// through said list, add them to this list and remove them all at end
+		List<Car> cars_to_be_removed = new ArrayList<>();
+
+    	//TODO: FIX concurrent modification exception
     	if(!cars_searching_for_space.isEmpty() && cars_searching_for_space != null){
 
     		LOGGER.info("Cars speaking for space is NOT EMPTY && NOT NULL");
@@ -64,7 +68,7 @@ public class Carpark {
 		            	LOGGER.info("found free space!");
 		
 		                space.addCar(car);
-		                cars_searching_for_space.remove(car);
+						cars_to_be_removed.add(car);
 		                LOGGER.info("Added car to space and removed from cars searching for space");
 		                break;
 		            } else {
@@ -73,6 +77,8 @@ public class Carpark {
 		        }
 	    	}
     	}
+
+    	cars_searching_for_space.removeAll(cars_to_be_removed);
 
     	if(!cars_searching_for_space.isEmpty()) {
     		LOGGER.info("Num cars that did not park: " + cars_searching_for_space.size());
