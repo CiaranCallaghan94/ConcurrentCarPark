@@ -10,6 +10,10 @@ public abstract class Barrier {
 
 	private static final Logger LOGGER = LogManager.getLogger( "Barrier" );
 
+	private int std_barrier_time;
+	private int std_problem_time;
+	private double probability_of_problem;
+
 	private boolean is_open;
 	private boolean is_free;
 
@@ -18,6 +22,10 @@ public abstract class Barrier {
 	private int progress_through_service;
 
 	public Barrier() {
+
+		std_barrier_time = 5;
+		std_problem_time = 60;
+		probability_of_problem = 0.01;
 
 		is_free = true;
 		service_time = 0;
@@ -30,11 +38,36 @@ public abstract class Barrier {
 
 		double service_time_dbl = -1;
 		while(service_time_dbl <= 0)
-			service_time_dbl = (rand.nextGaussian() + 1);
+			service_time_dbl = (rand.nextGaussian() * 1 + std_barrier_time);
 
 		service_time = (int)Math.round(service_time_dbl);
 
+		service_time += emulateProblem();
+
 		LOGGER.info("Service time set as: " + service_time);
+	}
+
+	// Emulate problem with payment / faulty barrier
+	public int emulateProblem() {
+
+		int additional_time = 0;
+
+		Random rand = new Random();
+
+		int random = rand.nextInt();
+		if(random <= probability_of_problem) {
+
+			double problem_time_dbl = -1;
+			while(problem_time_dbl <= 0) {
+				problem_time_dbl = rand.nextGaussian() * 1 + std_problem_time;
+			}
+
+			additional_time = (int)Math.round(problem_time_dbl);
+
+			LOGGER.info("Barrier has problem. Additional time: " + additional_time);
+		}
+
+		return additional_time;
 	}
 
 	private void clearTheBarrier() {
