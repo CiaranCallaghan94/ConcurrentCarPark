@@ -87,7 +87,7 @@ public class Simulation {
                 LOGGER.info("Car heading to exit: " + Application.secondsToTime(time));
                 carpark.manageDeparture(car);
                 departure_index++;
-                
+
                 if(departure_index < car_by_departure.size())
                     car = car_by_departure.get(departure_index);
                 else

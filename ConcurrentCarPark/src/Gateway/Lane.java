@@ -10,7 +10,7 @@ public abstract class Lane {
 
 	private static final Logger LOGGER = LogManager.getLogger( "Lane" );
 
-	Barrier barrier = new EntranceBarrier();
+	Gateway.BarrierSection barrierSection = new Gateway.EntranceBarrierSection();
 	Queue<Car> queue = new LinkedList<Car>();
 
 	public void addCar(Car c) {
@@ -41,29 +41,29 @@ public abstract class Lane {
 
 	public void moveCarToBarrier() {
 
-		if(barrier.isFree()) {
+		if(barrierSection.isFree()) {
 
 			Car first_in_queue = removerCar();
 
 			if(first_in_queue != null) {
-				barrier.addCar(first_in_queue);
+				barrierSection.addCar(first_in_queue);
 			}
 		}
 	}
 
 	public Car advanceBarrier() {
 
-		return barrier.advanceBarrierService();
+		return barrierSection.advanceBarrierService();
 	}
 
 	/*
 	// Returns the car at the front of the queue
-	// if the barrier is open
+	// if the barrierSection is open
 	public Car checkForCarLeavingLane() {
 
 		if(queue != null && !queue.isEmpty()){
 
-			if(barrier.isBarrierOpen()){
+			if(barrierSection.isBarrierOpen()){
 
 				return queue.remove();
 			}

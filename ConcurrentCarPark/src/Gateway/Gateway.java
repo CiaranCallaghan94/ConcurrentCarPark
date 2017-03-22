@@ -64,7 +64,7 @@ public class Gateway {
 		 shortest_lane.addCar(c);
 	}
 
-	 // Check if car is done with barrier
+	 // Check if car is done with barrierSection
 	public List<Car> advanceEntranceBarriers() {
 		
 		List<Car> cars_to_return = new ArrayList<Car>();
@@ -83,7 +83,7 @@ public class Gateway {
 		return cars_to_return;
 	}
 
-	// Check if car is done with barrier
+	// Check if car is done with barrierSection
 	public void advanceExitBarriers() {
 
 		List<Car> cars_to_exit = new ArrayList<Car>();
