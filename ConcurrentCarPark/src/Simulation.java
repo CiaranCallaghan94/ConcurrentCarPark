@@ -84,7 +84,7 @@ public class Simulation {
 
             Car car = car_by_departure.get(departure_index);
             while(car.getLeaveTime() == time) {
-                LOGGER.info("Car departed: " + Application.secondsToTime(time));
+                LOGGER.info("Car heading to exit: " + Application.secondsToTime(time));
                 carpark.manageDeparture(car);
                 departure_index++;
                 

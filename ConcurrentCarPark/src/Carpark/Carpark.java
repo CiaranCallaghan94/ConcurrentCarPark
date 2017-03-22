@@ -83,7 +83,6 @@ public class Carpark {
     	if(!cars_searching_for_space.isEmpty()) {
     		LOGGER.info("Num cars that did not park: " + cars_searching_for_space.size());
 		}
-    	//else {LOGGER.info("No cars need to be parked");}
     	
     	// TODO: Consider dealing with a scenario where a car can not find a space.
     	//		- Should it wait x amount of time then leave if still no spaces.
