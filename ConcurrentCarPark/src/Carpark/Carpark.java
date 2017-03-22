@@ -52,28 +52,18 @@ public class Carpark {
 
     	//TODO: FIX concurrent modification exception
     	if(!cars_searching_for_space.isEmpty() && cars_searching_for_space != null){
-
-    		LOGGER.info("Cars speaking for space is NOT EMPTY && NOT NULL");
     		
 	    	for(Car car: cars_searching_for_space){
-
-	    		LOGGER.info("Iterating through cars searching for spaces...");
 	    	
 		        for(Space space: spaces) {
-
-		        	LOGGER.info("Iterating through each space...");
 		
 		            if(space.isFree()) {
-
-		            	LOGGER.info("found free space!");
 		
 		                space.addCar(car);
 						cars_to_be_removed.add(car);
 		                LOGGER.info("Added car to space and removed from cars searching for space");
 		                break;
-		            } else {
-		            	LOGGER.info("Space not free");
-					}
+		            }
 		        }
 	    	}
     	}

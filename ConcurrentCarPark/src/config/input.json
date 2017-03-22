@@ -3,7 +3,7 @@
   "close_time": "19:00",
   "arrival_rush_hour": "09:00",
   "departure_rush_hour": "17:00",
-  "num_cars": 1,
+  "num_cars": 1000,
   "carpark_capacity": 1000,
   "num_entrances": 3,
   "num_exits": 3
