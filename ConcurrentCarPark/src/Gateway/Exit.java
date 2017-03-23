@@ -7,4 +7,7 @@ public class Exit extends Lane {
 
     private static final Logger LOGGER = LogManager.getLogger( "Exit" );
 
+    public Exit(Integer num_cars) {
+        super(num_cars);
+    }
 }

@@ -17,11 +17,12 @@ public abstract class BarrierSection {
 	private boolean is_open;
 	private boolean is_free;
 
-	private Car car;
+	protected Car car;
+
 	private int service_time;
 	private int progress_through_service;
 
-	public BarrierSection() {
+	public BarrierSection(Integer num_cars) {
 
 		std_barrier_time = 5;
 		std_problem_time = 60;
@@ -77,21 +78,24 @@ public abstract class BarrierSection {
 		progress_through_service = 0;
 	}
 
+	public abstract void sendCarThroughBarrier();
+
 	public void addCar(Car c) {
 
 		is_free = false;
 		car = c;
 		setServiceTime();
+		sendCarThroughBarrier();
 	}
+
 
 	public Car advanceBarrierService() {
 
 		if(!isFree()) {
 
 			if(progress_through_service == service_time) {
-				LOGGER.info("Barrier opening...!");
-
-
+				car.setReadyToPark();
+				LOGGER.info("Car ready...!");
 				return removeCar();
 			}
 			else {

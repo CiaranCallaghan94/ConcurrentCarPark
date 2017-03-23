@@ -10,8 +10,13 @@ public abstract class Lane {
 
 	private static final Logger LOGGER = LogManager.getLogger( "Lane" );
 
-	Gateway.BarrierSection barrierSection = new Gateway.EntranceBarrierSection();
+	EntranceBarrierSection barrierSection;
 	Queue<Car> queue = new LinkedList<Car>();
+
+	Lane(Integer num_cars) {
+
+		barrierSection = new EntranceBarrierSection(num_cars);
+	}
 
 	public void addCar(Car c) {
 
