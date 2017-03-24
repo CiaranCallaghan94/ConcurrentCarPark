@@ -9,9 +9,9 @@ public interface Lane {
 
 	int numOfCarsInQueue();
 
-	void advanceLane();
+	void advanceLane(Car car) throws InterruptedException;
 
-	void moveCarToBarrier();
+	void moveCarToBarrier(Car car) throws InterruptedException;
 
 	Car advanceBarrier();
 	

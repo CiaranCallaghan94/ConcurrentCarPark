@@ -1,7 +1,9 @@
 package Car;
 
-import Gateway.Gateway;
 import Carpark.Carpark;
+import Gateway.Gateway;
+import Gateway.Entrance;
+import Gateway.BarrierSection;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,6 +20,8 @@ public abstract class Car implements Runnable {
 
     Gateway gateway;
     Carpark carpark;
+    Entrance entrance;
+    BarrierSection barrierSection;
 
     Car(Gateway gateway, Carpark carpark) {
 
@@ -40,8 +44,13 @@ public abstract class Car implements Runnable {
             Thread.sleep(arrive_time);
 
             LOGGER.info("Car has now arrived, going to gateway");
-            gateway.addCarToEntrance(this);
+            entrance = gateway.addCarToEntrance(this);
             LOGGER.info("Car is in the queue");
+            entrance.advanceLane(this);
+            LOGGER.info("Car is at the barrier");
+
+
+
             // TODO: Wait until car is at top of queue. Something then notifies it... somehow...
 
         } catch(InterruptedException ex) {

@@ -12,7 +12,7 @@ public class Gateway {
     private static final Logger LOGGER = LogManager.getLogger( "Simulation" );
 
     private static List<Lane> entrances;
-    private static List<Lane> exits;    
+    private static List<Lane> exits;
 
     public Gateway(int num_entrances, int num_exits) {
 
@@ -34,12 +34,13 @@ public class Gateway {
 		}
 	}
 
-	public void addCarToEntrance(Car c)  {
+	public Entrance addCarToEntrance(Car c)  {
 
         LOGGER.info("Managing car arrival...");
         LOGGER.info("Entrances size: " + entrances.size());
-		placeInShortestLane(c, entrances);
-    }
+
+		return (Entrance)placeInShortestLane(c, entrances);
+	}
 
 	public void addCarToExit(Car c) {
 
@@ -48,7 +49,7 @@ public class Gateway {
     }
 	
 	//Scans through all the entrances and adds the car to the shortest queue
-	 private synchronized void placeInShortestLane(Car c, List<Lane> lanes) {
+	 private synchronized Lane placeInShortestLane(Car c, List<Lane> lanes) {
 
     	LOGGER.info("Placing in shortest lane...");
 
@@ -62,10 +63,10 @@ public class Gateway {
 				 shortest_lane = test_shortest;
 			 }
 		}
-
 		 shortest_lane.addCar(c);
-
 		 LOGGER.info("Car placed in shortest lane...");
+
+		 return shortest_lane;
 	}
 
 	 // Check if car is done with barrierSection
@@ -108,15 +109,15 @@ public class Gateway {
 
 	}
 
-	public void advanceLanes() {
-
-		for(Lane entrance: entrances) {
-			entrance.moveCarToBarrier();
-		}
-
-		for(Lane exit: exits) {
-			exit.moveCarToBarrier();
-		}
-	}
+//	public void advanceLanes() {
+//
+//		for(Lane entrance: entrances) {
+//			entrance.moveCarToBarrier();
+//		}
+//
+//		for(Lane exit: exits) {
+//			exit.moveCarToBarrier();
+//		}
+//	}
 
 }

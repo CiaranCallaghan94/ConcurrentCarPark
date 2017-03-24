@@ -41,19 +41,33 @@ public class Entrance implements Lane {
 		return queue.size();
 	}
 
-	public void advanceLane() {
+	public void advanceLane(Car car) throws InterruptedException {
 
-		moveCarToBarrier();
+		while(!Thread.currentThread().isInterrupted()) {
+
+			if (car == queue.peek()) {
+
+				LOGGER.info("Car is at the top of the queue");
+				moveCarToBarrier(car);
+				break;
+
+			} else {
+				LOGGER.info("Car is waiting its turn in the queue");
+				wait();
+			}
+		}
 	}
 
-	public void moveCarToBarrier() {
+	public void moveCarToBarrier(Car car) throws InterruptedException {
 
-		if(barrierSection.isFree()) {
+		while(!Thread.currentThread().isInterrupted()) {
 
-			Car first_in_queue = removerCar();
+			if (barrierSection.isFree()) {
 
-			if(first_in_queue != null) {
-				barrierSection.addCar(first_in_queue);
+				removerCar();
+				barrierSection.addCar(car);
+			} else {
+				wait();
 			}
 		}
 	}
