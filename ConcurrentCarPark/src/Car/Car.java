@@ -1,31 +1,52 @@
 package Car;
 
-public abstract class Car {
+import Gateway.Gateway;
+import Carpark.Carpark;
 
-    protected int arrive_time_secs;
-    protected int leave_time_secs;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+public abstract class Car implements Runnable {
+
+    private static final Logger LOGGER = LogManager.getLogger( "Car" );
+
+    protected int arrive_time;
+    protected int leave_time;
 
     protected int width;
     protected int dexterity;
 
-    protected boolean is_ready_to_park;
+    Gateway gateway;
+    Carpark carpark;
 
-    Car(int arrive_time_secs0, int leave_time_secs0, int width0, int dexterity0) {
+    Car(Gateway gateway, Carpark carpark) {
 
-        arrive_time_secs    = arrive_time_secs0;
-        leave_time_secs     = leave_time_secs0;
-        width               = width0;
-        dexterity           = dexterity0;
-
-        is_ready_to_park = false;
+        this.gateway = gateway;
+        this.carpark = carpark;
     }
 
-    public int getArriveTime() {
-        return arrive_time_secs;
+    public void setVariables(int arrive_time, int leave_time, int width, int dexterity) {
+
+        this.arrive_time = arrive_time;
+        this.leave_time = leave_time;
     }
 
-    public int getLeaveTime() {
-        return leave_time_secs;
+    public void run() {
+
+        LOGGER.info("Running car thread");
+        try {
+
+            LOGGER.info("Sleeping until arrive time (milliseconds): " + arrive_time);
+            Thread.sleep(arrive_time);
+
+            LOGGER.info("Car has now arrived, going to gateway");
+            gateway.addCarToEntrance(this);
+            LOGGER.info("Car is in the queue");
+            // TODO: Wait until car is at top of queue. Something then notifies it... somehow...
+
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     public int getWidth() {

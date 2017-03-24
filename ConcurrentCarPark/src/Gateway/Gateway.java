@@ -1,11 +1,11 @@
 package Gateway;
 
-import org.apache.logging.log4j.Logger;
+import Car.Car;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
-import Car.*;
 
 public class Gateway {
 
@@ -34,21 +34,21 @@ public class Gateway {
 		}
 	}
 
-	public void addArrivalsToEntrance(Car c)  {
+	public void addCarToEntrance(Car c)  {
 
         LOGGER.info("Managing car arrival...");
         LOGGER.info("Entrances size: " + entrances.size());
 		placeInShortestLane(c, entrances);
     }
 
-	public void addDeparturesToExit(Car c) {
+	public void addCarToExit(Car c) {
 
         LOGGER.info("Managing car departure...");
 		placeInShortestLane(c, exits);
     }
 	
 	//Scans through all the entrances and adds the car to the shortest queue
-	 private void placeInShortestLane(Car c, List<Lane> lanes) {
+	 private synchronized void placeInShortestLane(Car c, List<Lane> lanes) {
 
     	LOGGER.info("Placing in shortest lane...");
 
@@ -64,6 +64,8 @@ public class Gateway {
 		}
 
 		 shortest_lane.addCar(c);
+
+		 LOGGER.info("Car placed in shortest lane...");
 	}
 
 	 // Check if car is done with barrierSection

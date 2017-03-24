@@ -1,19 +1,19 @@
 package config;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import javax.json.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import javax.json.*;
 
 public class JsonParser {
 
     private static final Logger LOGGER = LogManager.getLogger( "JsonParser" );
 
     public static String file_path   = "./ConcurrentCarPark/src/config/input.json";
-    public static String file_path_2 = "src/config/input.json";
+    public static String file_path_2   = "src/config/input.json";
 
     // DEFAULTS
 	public static String OPEN_TIME              = "08:00";

@@ -1,17 +1,17 @@
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
-
 import Car.Car;
-import Car.StudentCar;
 import Car.LecturerCar;
+import Car.StudentCar;
+import Gateway.Gateway;
+import Carpark.Carpark;
 import config.JsonParser;
-
 import org.apache.commons.math3.distribution.NormalDistribution;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
 
 public class Application {
 
@@ -30,13 +30,7 @@ public class Application {
     private static int avg_student_dexterity;
     private static int avg_lecturer_dexterity;
 
-    // Separate lists for arrival and departure so that we can sort on
-    // arrival / departure times and massively speed up simulation
-    // as do not have to search through the list, can just keep indexes
-    // of latest cars in the two lists to arrive/depart.
-    // Every time car arrive/departs, increment index. (See Simulation).
-    private static List<Car> cars_by_arrival    = new ArrayList<>(1);
-    private static List<Car> cars_by_departure  = new ArrayList<>(1);
+    private static List<Car> cars;
 
     public static int timeToSeconds(String time) {
 
@@ -57,23 +51,12 @@ public class Application {
         return String.format("%02d:%02d:%02d", hours, minutes, secs);
     }
 
-    private static List<Car> sortCarsByArrival(List<Car> cars) {
-        Collections.sort(cars, (c1, c2) -> Integer.compare(c1.getArriveTime(), c2.getArriveTime()));
-        return cars;
-    }
-
-    private static List<Car>  sortCarsByDeparture(List<Car> cars) {
-        Collections.sort(cars, (c1, c2) -> Integer.compare(c1.getLeaveTime(), c2.getLeaveTime()));
-        return cars;
-    }
-
     public static void setupCars() {
 
         // Normal distribution with std deviation of 3 minutes
         NormalDistribution arrival_dist = new NormalDistribution(arrive_rush_hour, std_distribution);
         NormalDistribution leave_dist = new NormalDistribution(departure_rush_hour, std_distribution);
 
-        Car new_car;
         int arrive_time;
         int leave_time;
         int random_num;
@@ -81,7 +64,7 @@ public class Application {
 
         // Create the cars
         int i=0;
-        while(i < num_cars) {
+        for(Car car: cars) {
 
             arrive_time = (int)Math.round(arrival_dist.sample());
             leave_time = (int)Math.round(leave_dist.sample());
@@ -92,21 +75,15 @@ public class Application {
                 random_num = rand.nextInt((10 - 1) + 1) + 1;
 
                 if(random_num <= 8)
-                    new_car = new StudentCar(arrive_time, leave_time, avg_car_width, avg_student_dexterity);
+                    car.setVariables(arrive_time, leave_time, avg_car_width, avg_student_dexterity);//
                 else
-                    new_car = new LecturerCar(arrive_time, leave_time, avg_car_width, avg_lecturer_dexterity);
+                    car.setVariables(arrive_time, leave_time, avg_car_width, avg_lecturer_dexterity);//
 
-                cars_by_arrival.add(new_car);
-                cars_by_departure.add(new_car);
-
-                i++;
             } else {
                 LOGGER.info("Arrive time after departure time. Arrive: " + arrive_time  + ". Leave: " + leave_time);
             }
         }
 
-        cars_by_arrival = sortCarsByArrival(cars_by_arrival);
-        cars_by_departure = sortCarsByDeparture(cars_by_departure);
     }
     
     // TODO: Choose a suitable name for this method
@@ -131,15 +108,24 @@ public class Application {
     }
     
     public static void main(String [] args) {
-    	
-    	readInputFromJSONFile();
-        setupCars();
 
-        for(Car c: cars_by_arrival) {
-            LOGGER.info("Arrive time: " + secondsToTime(c.getArriveTime()));
+        readInputFromJSONFile();
+
+        cars = new ArrayList<>(num_cars);
+
+        Gateway gateway = new Gateway(num_entrances, num_exits);
+        Carpark carpark = new Carpark(carpark_capacity);
+
+        Car car;
+        for(int i=0; i<num_cars; i++) {
+            car = new StudentCar(gateway, carpark);
+            cars.add(car);
         }
 
-        Simulation sim = new Simulation(cars_by_arrival, cars_by_departure, open_time, close_time, carpark_capacity, num_entrances, num_exits);
-        sim.runSimulation();
+        setupCars();
+
+        for(Car c: cars) {
+            new Thread(c).start();
+        }
     }
 }

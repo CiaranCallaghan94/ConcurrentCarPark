@@ -1,12 +1,12 @@
 package Gateway;
 
-		import org.apache.logging.log4j.Logger;
-		import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-		import java.util.concurrent.ExecutionException;
-		import java.util.concurrent.ExecutorService;
-		import java.util.concurrent.Executors;
-		import java.util.concurrent.Future;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class ExitBarrierSection extends BarrierSection {
 

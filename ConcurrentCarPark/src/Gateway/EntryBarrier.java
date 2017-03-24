@@ -1,10 +1,8 @@
 package Gateway;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import config.JsonParser;
-import Car.Car;
 import java.util.concurrent.Callable;
 
 public class EntryBarrier implements Callable<Boolean> {
