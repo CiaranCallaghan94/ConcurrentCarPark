@@ -20,16 +20,18 @@ public class JsonParser {
     public static String CLOSE_TIME             = "19:00";
     public static String ARRIVAL_RUSH_HOUR      = "09:00";
     public static String DEPARTURE_RUSH_HOUR    = "17:00";
+    public static int    SIMULATION_SPEED       = 1000;
+	public static String STD_DEVIATION          = "00:30";
+
     public static int    CARPARK_CAPACITY       = 1000;
     public static int    NUM_CARS               = 2500;
     public static int    NUM_ENTRANCES          = 3;
     public static int    NUM_EXITS              = 3;
 
     // NON-USER INPUTS
-    public static final int STD_DISTRIBUTION       = 10*60;
-    public static final int AVG_CAR_WIDTH          = 180;
-    public static final int AVG_STUDENT_DEXTERITY  = 40;
-    public static final int AVG_LECTURER_DEXTERITY = 60;
+    public static final int 	AVG_CAR_WIDTH          = 180;
+    public static final int 	AVG_STUDENT_DEXTERITY  = 40;
+    public static final int 	AVG_LECTURER_DEXTERITY = 60;
 
 	public static void readInput(){
 		
@@ -53,6 +55,9 @@ public class JsonParser {
 			}
 			if(object.containsKey("departure_rush_hour")){
 				DEPARTURE_RUSH_HOUR = object.get("departure_rush_hour").toString().replaceAll("^\"|\"$", "");
+			}
+			if(object.containsKey("simulation_speed")){
+				SIMULATION_SPEED = Integer.parseInt(object.get("simulation_speed").toString());
 			}
 			if(object.containsKey("num_cars")){
 				NUM_CARS = Integer.parseInt(object.get("num_cars").toString());
