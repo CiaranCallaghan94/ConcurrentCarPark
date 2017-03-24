@@ -21,41 +21,36 @@ public class Application {
     private static int close_time;
     private static int arrive_rush_hour;
     private static int departure_rush_hour;
+    private static int simulation_speed;
+
     private static int carpark_capacity;
     private static int num_entrances;
     private static int num_exits;
     private static int num_cars;
-    private static int std_distribution;
+    private static int std_deviation;
     private static int avg_car_width;
     private static int avg_student_dexterity;
     private static int avg_lecturer_dexterity;
 
     private static List<Car> cars;
 
-    public static int timeToSeconds(String time) {
+    public static int timeToSimulationTime(String time) {
 
         String [] time_arr = time.split(":");
 
         int hours = Integer.parseInt(time_arr[0]);
         int mins = Integer.parseInt(time_arr[1]);
 
-        return hours*60*60 + mins*60;
-    }
+        int time_in_seconds = hours*60*60 + mins*60;
+        int time_in_milliseconds = time_in_seconds * 1000;
 
-    public static String secondsToTime(int seconds) {
+        LOGGER.info("Time in millis: " + time_in_milliseconds);
+        LOGGER.info("Time divided by speed: " + time_in_milliseconds / simulation_speed);
 
-        int hours = seconds / 3600;
-        int minutes = (seconds % 3600) / 60;
-        int secs = seconds % 60;
-
-        return String.format("%02d:%02d:%02d", hours, minutes, secs);
+        return time_in_milliseconds / simulation_speed;
     }
 
     public static void setupCars() {
-
-        // Normal distribution with std deviation of 3 minutes
-        NormalDistribution arrival_dist = new NormalDistribution(arrive_rush_hour, std_distribution);
-        NormalDistribution leave_dist = new NormalDistribution(departure_rush_hour, std_distribution);
 
         int arrive_time;
         int leave_time;
@@ -63,11 +58,10 @@ public class Application {
         Random rand = new Random();
 
         // Create the cars
-        int i=0;
         for(Car car: cars) {
 
-            arrive_time = (int)Math.round(arrival_dist.sample());
-            leave_time = (int)Math.round(leave_dist.sample());
+            arrive_time = (int)Math.round(rand.nextGaussian() * std_deviation + arrive_rush_hour);
+            leave_time = (int)Math.round(rand.nextGaussian() * std_deviation + departure_rush_hour);
 
             // Only add car if arrive time is less than leave time, otherwise get a new sample
             if(arrive_time < leave_time) {
@@ -85,23 +79,25 @@ public class Application {
         }
 
     }
-    
-    // TODO: Choose a suitable name for this method
+
     // Reads in the input file and its values
     public static void readInputFromJSONFile(){
 
         JsonParser.readInput();
 
     	// Parameters for Simulation
-        open_time               = timeToSeconds(JsonParser.OPEN_TIME);
-        close_time              = timeToSeconds(JsonParser.CLOSE_TIME);
-        arrive_rush_hour        = timeToSeconds(JsonParser.ARRIVAL_RUSH_HOUR);
-        departure_rush_hour     = timeToSeconds(JsonParser.DEPARTURE_RUSH_HOUR);
+        simulation_speed        = JsonParser.SIMULATION_SPEED;
+        open_time               = timeToSimulationTime(JsonParser.OPEN_TIME);
+        close_time              = timeToSimulationTime(JsonParser.CLOSE_TIME);
+        arrive_rush_hour        = timeToSimulationTime(JsonParser.ARRIVAL_RUSH_HOUR);
+        departure_rush_hour     = timeToSimulationTime(JsonParser.DEPARTURE_RUSH_HOUR);
+        std_deviation           = timeToSimulationTime(JsonParser.STD_DEVIATION);
+
         carpark_capacity        = JsonParser.CARPARK_CAPACITY;
         num_cars                = JsonParser.NUM_CARS;
         num_entrances           = JsonParser.NUM_ENTRANCES;
         num_exits               = JsonParser.NUM_EXITS;
-        std_distribution        = JsonParser.STD_DISTRIBUTION;
+
         avg_car_width           = JsonParser.AVG_CAR_WIDTH;
         avg_student_dexterity   = JsonParser.AVG_STUDENT_DEXTERITY;
         avg_lecturer_dexterity  = JsonParser.AVG_LECTURER_DEXTERITY;
