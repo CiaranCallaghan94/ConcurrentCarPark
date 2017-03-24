@@ -4,57 +4,43 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 import config.JsonParser;
-
 import Car.Car;
+import java.util.concurrent.Callable;
 
-public class EntryBarrier extends Thread {
+public class EntryBarrier implements Callable<Boolean> {
 
     private static final Logger LOGGER = LogManager.getLogger( "EntryBarrier" );
 
-    int num_cars_in_carpark = 0;
-    final int carpark_capacity = JsonParser.CARPARK_CAPACITY;
+    Data data;
 
-    Car car;
+    public EntryBarrier(Data data) {
 
-    public EntryBarrier(Car car, int num_cars_in_carpark) {
-
-        this.car = car;
-        this.num_cars_in_carpark = num_cars_in_carpark;
-
-        LOGGER.info("Car arg in ENTRYbarrier: " + car);
-        LOGGER.info("Car read in ENTRYbarrier: " + this.car);
+        LOGGER.info("num cars EntryBarrier: " + data);
+        this.data = data;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
-        LOGGER.info("Car received: " + car.isReadyToPark());
+    public Boolean call() throws Exception {
+        return letCarEnterCarpark();
     }
 
-    public void run() {
-        LOGGER.info("running entry barrier thread...");
-        letCarEnterCarpark();
-    }
-
-    public synchronized void letCarEnterCarpark() {
-
-        LOGGER.info("In letcarentercarpark");
+    public synchronized Boolean letCarEnterCarpark() {
 
         while (!Thread.currentThread().isInterrupted()) {
 
-            if (num_cars_in_carpark >= carpark_capacity) {
+            if (data.getNumCars() >= data.getCarparkCapacity()) {
                 try {
                     LOGGER.info("Carpark full, waiting...");
                     wait();
                 } catch (InterruptedException e) {
                     LOGGER.info("Interrupt");
-                    return;
+                    return false;
                 }
             }
 
-            if(car.isReadyToPark()) {
-                LOGGER.info("Car passing through ENTRY barrier!");
-                num_cars_in_carpark++;
-            }
+            data.incrementNumCars();
+            LOGGER.info("Barrier opened! num_cars incremented: " + data.getNumCars());
+            return true;
         }
+        return false;
     }
 }

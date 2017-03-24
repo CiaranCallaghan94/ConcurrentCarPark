@@ -36,15 +36,6 @@ public abstract class Car {
         return dexterity;
     }
 
-    public void setReadyToPark() {
-        is_ready_to_park = true;
-    }
-
-    public boolean isReadyToPark() {
-
-        return is_ready_to_park;
-    }
-
     public void park() {
 
         // Iterate through the Spaces in the Carpark

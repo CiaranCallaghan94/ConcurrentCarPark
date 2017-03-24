@@ -21,15 +21,15 @@ public class Gateway {
 		entrances = new ArrayList<>(num_entrances);
 		exits = new ArrayList<>(num_exits);
 
-		Integer num_cars = new Integer(0);
+		Data data = new Data();
 
     	for(int i=0; i< num_entrances; i++) {
-    		Lane entrance = new Entrance(num_cars);
+    		Lane entrance = new Entrance(data);
     		entrances.add(entrance);
 		}
 
 		for(int i=0; i<num_exits; i++) {
-    		Lane exit = new Exit(num_cars);
+    		Lane exit = new Exit(data);
     		exits.add(exit);
 		}
 	}

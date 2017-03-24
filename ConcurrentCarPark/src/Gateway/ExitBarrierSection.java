@@ -3,22 +3,34 @@ package Gateway;
 		import org.apache.logging.log4j.Logger;
 		import org.apache.logging.log4j.LogManager;
 
+		import java.util.concurrent.ExecutionException;
+		import java.util.concurrent.ExecutorService;
+		import java.util.concurrent.Executors;
+		import java.util.concurrent.Future;
+
 public class ExitBarrierSection extends BarrierSection {
 
 	private static final Logger LOGGER = LogManager.getLogger( "ExitBarrierSection" );
 
 	ExitBarrier exit_barrier;
 
-	public ExitBarrierSection(Integer num_cars) {
+	public ExitBarrierSection(Data data) {
 
-		super(num_cars);
-
-		exit_barrier = new ExitBarrier(car, num_cars);
-		exit_barrier.start();
+		exit_barrier = new ExitBarrier(data);
 	}
 
-	public void sendCarThroughBarrier() {
-		exit_barrier.setCar(car);
-	}
+	public void openBarrier() {
 
+		ExecutorService executorService = Executors.newFixedThreadPool(1);
+		Future future = executorService.submit(exit_barrier);
+
+		try {
+			LOGGER.info("Calling EXIT future.get");
+			future.get();
+			LOGGER.info("Get EXIT complete");
+		}
+		catch(InterruptedException e) {}
+		catch(ExecutionException e) {}
+
+	}
 }
