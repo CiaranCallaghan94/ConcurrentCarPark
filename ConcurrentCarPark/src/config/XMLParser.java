@@ -20,30 +20,46 @@ public class XMLParser {
     public static String input_path	 = "./ConcurrentCarPark/src/config/input.xml";
 
     // TIMES
-	public static String OPEN_TIME              = "08:00";
-    public static String CLOSE_TIME             = "19:00";
-    public static String ARRIVAL_RUSH_HOUR      = "09:00";
-	public static String STD_DEVIATION          = "00:30";
-	public static int    SIMULATION_SPEED       = 10000;
+	public static int OPEN_TIME;
+    public static int CLOSE_TIME;
+    public static int ARRIVAL_RUSH_HOUR;
+	public static int STD_DEVIATION;
+	public static int SIMULATION_SPEED;
 
 	// CARPARK
-    public static int    CARPARK_CAPACITY       = 1000;
-    public static int    NUM_ENTRANCES          = 3;
-    public static int    NUM_EXITS              = 3;
+    public static int CARPARK_CAPACITY;
+    public static int NUM_ENTRANCES;
+    public static int NUM_EXITS;
 
     // CARS
-	public static int	 NUM_CARS              	= 2500;
-	public static float  PROPORTION_STUDENTS	= 0.9f;
+	public static int	NUM_CARS;
+	public static float PROPORTION_STUDENTS;
 
 	// LECTURER CARS
-    public static int 	 AVG_LECTURER_CAR_WIDTH  = 200;
-    public static int 	 AVG_LECTURER_DEXTERITY  = 60;
-	public static String AVG_LECTURER_STAY_TIME	 = "07:00";
+    public static int AVG_LECTURER_CAR_WIDTH;
+    public static int AVG_LECTURER_DEXTERITY;
+	public static int AVG_LECTURER_STAY_TIME;
 
     // STUDENT CARS
-	public static int 	 AVG_STUDENT_CAR_WIDTH   = 170;
-	public static int 	 AVG_STUDENT_DEXTERITY   = 40;
-	public static String AVG_STUDENT_STAY_TIME	 = "03:00";
+	public static int AVG_STUDENT_CAR_WIDTH;
+	public static int AVG_STUDENT_DEXTERITY;
+	public static int AVG_STUDENT_STAY_TIME;
+
+    public static int timeToSimulationTime(String time) {
+
+        String [] time_arr = time.split(":");
+
+        int hours = Integer.parseInt(time_arr[0]);
+        int mins = Integer.parseInt(time_arr[1]);
+
+        int time_in_seconds = hours*60*60 + mins*60;
+        int time_in_milliseconds = time_in_seconds * 1000;
+
+        LOGGER.info("Time in millis: " + time_in_milliseconds);
+        LOGGER.info("Time divided by speed: " + time_in_milliseconds / SIMULATION_SPEED);
+
+        return time_in_milliseconds / SIMULATION_SPEED;
+    }
 
 	public static void readInput() {
 
@@ -63,11 +79,11 @@ public class XMLParser {
 			Element student_cars 	= (Element) document.getElementsByTagName("student_cars").item(0);
 
 			// TIMES
-			OPEN_TIME 			= times.getElementsByTagName("open_time").item(0).getTextContent();
-			CLOSE_TIME 			= times.getElementsByTagName("close_time").item(0).getTextContent();
-			ARRIVAL_RUSH_HOUR 	= times.getElementsByTagName("arrival_rush_hour").item(0).getTextContent();
-			STD_DEVIATION 		= times.getElementsByTagName("std_deviation").item(0).getTextContent();
-			SIMULATION_SPEED 	= Integer.parseInt(times.getElementsByTagName("simulation_speed").item(0).getTextContent());
+            SIMULATION_SPEED 	= Integer.parseInt(times.getElementsByTagName("simulation_speed").item(0).getTextContent());
+			OPEN_TIME 			= timeToSimulationTime( times.getElementsByTagName("open_time").item(0).getTextContent() );
+			CLOSE_TIME 			= timeToSimulationTime( times.getElementsByTagName("close_time").item(0).getTextContent() );
+			ARRIVAL_RUSH_HOUR 	= timeToSimulationTime( times.getElementsByTagName("arrival_rush_hour").item(0).getTextContent() );;
+			STD_DEVIATION 		= timeToSimulationTime( times.getElementsByTagName("std_deviation").item(0).getTextContent() );
 
 			// CARPARK
 			CARPARK_CAPACITY 	= Integer.parseInt(carpark.getElementsByTagName("carpark_capacity").item(0).getTextContent());
@@ -81,12 +97,12 @@ public class XMLParser {
 			// LECTURER CARS
 			AVG_LECTURER_CAR_WIDTH 	= Integer.parseInt(lecturer_cars.getElementsByTagName("avg_lecturer_car_width").item(0).getTextContent());
 			AVG_LECTURER_DEXTERITY 	= Integer.parseInt(lecturer_cars.getElementsByTagName("avg_lecturer_dexterity").item(0).getTextContent());
-			AVG_LECTURER_STAY_TIME 	= lecturer_cars.getElementsByTagName("avg_lecturer_stay_time").item(0).getTextContent();
+			AVG_LECTURER_STAY_TIME 	= timeToSimulationTime( lecturer_cars.getElementsByTagName("avg_lecturer_stay_time").item(0).getTextContent());
 
 			// STUDENT CARS
 			AVG_STUDENT_CAR_WIDTH 	= Integer.parseInt(student_cars.getElementsByTagName("avg_student_car_width").item(0).getTextContent());
 			AVG_STUDENT_DEXTERITY 	= Integer.parseInt(student_cars.getElementsByTagName("avg_student_dexterity").item(0).getTextContent());
-			AVG_STUDENT_STAY_TIME 	= student_cars.getElementsByTagName("avg_student_stay_time").item(0).getTextContent();
+			AVG_STUDENT_STAY_TIME 	= timeToSimulationTime( student_cars.getElementsByTagName("avg_student_stay_time").item(0).getTextContent() );
 
 		}
 		catch(ParserConfigurationException e) {}
