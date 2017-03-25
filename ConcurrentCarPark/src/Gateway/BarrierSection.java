@@ -14,13 +14,11 @@ public abstract class BarrierSection {
 	private int std_problem_time;
 	private double probability_of_problem;
 
-	private boolean is_open;
 	private boolean is_free;
 
 	protected Car car;
 
 	private int service_time;
-	private int progress_through_service;
 
 	public BarrierSection() {
 
@@ -30,10 +28,9 @@ public abstract class BarrierSection {
 
 		is_free = true;
 		service_time = 0;
-		progress_through_service = 0;
 	}
 
-	private void setServiceTime() {
+	private int setServiceTime() {
 
 		Random rand = new Random();
 
@@ -46,6 +43,8 @@ public abstract class BarrierSection {
 		service_time += emulateProblem();
 
 		LOGGER.info("Service time set as: " + service_time);
+
+		return service_time;
 	}
 
 	// Emulate problem with payment / faulty barrierSection
@@ -65,7 +64,7 @@ public abstract class BarrierSection {
 
 			additional_time = (int)Math.round(problem_time_dbl);
 
-			LOGGER.info("BarrierSection has problem. Additional time: " + additional_time);
+			LOGGER.info("BarrierSection has problem. Additional time: " + additional_time + " -" + Thread.currentThread().getId());
 		}
 
 		return additional_time;
@@ -75,36 +74,28 @@ public abstract class BarrierSection {
 
 		is_free = true;
 		service_time = 0;
-		progress_through_service = 0;
 	}
 
 	public void addCar(Car c) {
 
 		is_free = false;
 		car = c;
-		setServiceTime();
+		int service_time = setServiceTime();
+
+		try {
+			LOGGER.info("Car at barrier, putting ticket in... -" + Thread.currentThread().getId());
+			Thread.sleep(service_time * 1000);
+		}
+		catch(InterruptedException ex) {
+			Thread.currentThread().interrupt();
+		}
+
+		LOGGER.info("Car has put ticket in. Barrier should now open.. -" + Thread.currentThread().getId());
+		openBarrier();
+		removeCar();
 	}
 
 	public abstract void openBarrier();
-
-	public Car advanceBarrierService() {
-
-		if(!isFree()) {
-
-			if(progress_through_service == service_time) {
-				LOGGER.info("Car ready...!");
-				openBarrier();
-
-				LOGGER.info("Car passed through barrier!");
-				return removeCar();
-			}
-			else {
-				LOGGER.info("Car still in service");
-				progress_through_service++;
-			}
-		}
-		return null;
-	}
 
 	public Car removeCar() {
 

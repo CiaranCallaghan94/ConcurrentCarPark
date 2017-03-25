@@ -36,22 +36,21 @@ public class Gateway {
 
 	public Entrance addCarToEntrance(Car c)  {
 
-        LOGGER.info("Managing car arrival...");
-        LOGGER.info("Entrances size: " + entrances.size());
+        LOGGER.info("Managing car arrival...  -" + Thread.currentThread().getId());
 
 		return (Entrance)placeInShortestLane(c, entrances);
 	}
 
 	public void addCarToExit(Car c) {
 
-        LOGGER.info("Managing car departure...");
+        LOGGER.info("Managing car departure...  -" + Thread.currentThread().getId());
 		placeInShortestLane(c, exits);
     }
 	
 	//Scans through all the entrances and adds the car to the shortest queue
 	 private synchronized Lane placeInShortestLane(Car c, List<Lane> lanes) {
 
-    	LOGGER.info("Placing in shortest lane...");
+    	LOGGER.info("Placing in shortest lane... -" + Thread.currentThread().getId());
 
 		 Lane shortest_lane = lanes.get(0);
 
@@ -64,60 +63,9 @@ public class Gateway {
 			 }
 		}
 		 shortest_lane.addCar(c);
-		 LOGGER.info("Car placed in shortest lane...");
+		 LOGGER.info("Car placed in shortest lane...  -" + Thread.currentThread().getId());
 
 		 return shortest_lane;
 	}
-
-	 // Check if car is done with barrierSection
-	public List<Car> advanceEntranceBarriers() {
-		
-		List<Car> cars_to_return = new ArrayList<Car>();
-
-		Car car = null;
-		for (Lane entrance : entrances){
-
-			// TODO: Possible better implementation
-			car = entrance.advanceBarrier();
-			
-			if(car != null){
-				cars_to_return.add(car);
-			}
-		}
-		
-		return cars_to_return;
-	}
-
-	// Check if car is done with barrierSection
-	public void advanceExitBarriers() {
-
-		List<Car> cars_to_exit = new ArrayList<Car>();
-
-		Car car = null;
-		for (Lane exit : exits){
-
-			// TODO: Possible better implementation
-			car = exit.advanceBarrier();
-
-			if(car != null){
-				cars_to_exit.add(car);
-				LOGGER.info("Car exited carpark");
-			}
-		}
-
-		// TODO: Maybe want to do something with exiting cars
-
-	}
-
-//	public void advanceLanes() {
-//
-//		for(Lane entrance: entrances) {
-//			entrance.moveCarToBarrier();
-//		}
-//
-//		for(Lane exit: exits) {
-//			exit.moveCarToBarrier();
-//		}
-//	}
 
 }

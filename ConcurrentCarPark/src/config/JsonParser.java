@@ -35,7 +35,7 @@ public class JsonParser {
 
 	public static void readInput(){
 		
-		File config_file = new File(file_path_2);
+		File config_file = new File(file_path);
 		JsonReader jsonReader;
 		
 		try {

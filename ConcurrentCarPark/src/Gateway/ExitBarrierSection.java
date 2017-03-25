@@ -31,6 +31,5 @@ public class ExitBarrierSection extends BarrierSection {
 		}
 		catch(InterruptedException e) {}
 		catch(ExecutionException e) {}
-
 	}
 }

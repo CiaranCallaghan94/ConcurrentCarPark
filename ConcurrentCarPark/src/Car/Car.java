@@ -40,18 +40,14 @@ public abstract class Car implements Runnable {
         LOGGER.info("Running car thread");
         try {
 
-            LOGGER.info("Sleeping until arrive time (milliseconds): " + arrive_time);
+            LOGGER.info("Sleeping until arrive time (milliseconds): " + arrive_time + " -" + Thread.currentThread().getId());
             Thread.sleep(arrive_time);
 
-            LOGGER.info("Car has now arrived, going to gateway");
+            LOGGER.info("Car has now arrived, going to gateway -" + Thread.currentThread().getId());
             entrance = gateway.addCarToEntrance(this);
-            LOGGER.info("Car is in the queue");
+            LOGGER.info("Car is in the queue - " + Thread.currentThread().getId());
             entrance.advanceLane(this);
-            LOGGER.info("Car is at the barrier");
-
-
-
-            // TODO: Wait until car is at top of queue. Something then notifies it... somehow...
+            LOGGER.info("Car has passed that toxic barrier  -" + Thread.currentThread().getId());
 
         } catch(InterruptedException ex) {
             Thread.currentThread().interrupt();

@@ -46,12 +46,12 @@ public class Exit implements Lane {
 
             if (car == queue.peek()) {
 
-                LOGGER.info("Car is at the top of the queue");
+                LOGGER.info("Car is at the top of the EXIT queue  -" + Thread.currentThread().getId());
                 moveCarToBarrier(car);
                 break;
 
             } else {
-                LOGGER.info("Car is waiting its turn in the queue");
+                LOGGER.info("Car is waiting its turn in the EXIT queue  -" + Thread.currentThread().getId());
                 wait();
             }
         }
@@ -63,20 +63,16 @@ public class Exit implements Lane {
 
             if (barrierSection.isFree()) {
 
-                LOGGER.info("Car is moving out of the queue and up to the barrier");
+                LOGGER.info("Car is moving out of the queue and up to the barrier  -" + Thread.currentThread().getId());
                 removerCar();
                 barrierSection.addCar(car);
                 notifyAll();
+                break;
             } else {
 
-                LOGGER.info("Car is waiting for the barrier section to become free");
+                LOGGER.info("Car is waiting for the barrier section to become free  -" + Thread.currentThread().getId());
                 wait();
             }
         }
-    }
-
-    public Car advanceBarrier() {
-
-        return barrierSection.advanceBarrierService();
     }
 }

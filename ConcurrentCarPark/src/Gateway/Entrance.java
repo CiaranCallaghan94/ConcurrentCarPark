@@ -41,24 +41,28 @@ public class Entrance implements Lane {
 		return queue.size();
 	}
 
-	public void advanceLane(Car car) throws InterruptedException {
+	public synchronized void advanceLane(Car car) throws InterruptedException {
+
+		LOGGER.info("Car checking queue -" + Thread.currentThread().getId());
 
 		while(!Thread.currentThread().isInterrupted()) {
 
 			if (car == queue.peek()) {
 
-				LOGGER.info("Car is at the top of the queue");
+				LOGGER.info("Car is at the top of the queue -" + Thread.currentThread().getId());
 				moveCarToBarrier(car);
+				notify();
 				break;
 
 			} else {
-				LOGGER.info("Car is waiting its turn in the queue");
+				LOGGER.info("Car is waiting its turn in the queue -" + Thread.currentThread().getId());
 				wait();
+				LOGGER.info("Car has awoken -" + Thread.currentThread().getId());
 			}
 		}
 	}
 
-	public void moveCarToBarrier(Car car) throws InterruptedException {
+	public synchronized void moveCarToBarrier(Car car) throws InterruptedException {
 
 		while(!Thread.currentThread().isInterrupted()) {
 
@@ -66,14 +70,13 @@ public class Entrance implements Lane {
 
 				removerCar();
 				barrierSection.addCar(car);
+				notifyAll();
+				break;
 			} else {
+				LOGGER.info("Car not free -" + Thread.currentThread().getId());
 				wait();
+				LOGGER.info("Car has awoken to check if barrier free -" + Thread.currentThread().getId());
 			}
 		}
-	}
-
-	public Car advanceBarrier() {
-
-		return barrierSection.advanceBarrierService();
 	}
 }

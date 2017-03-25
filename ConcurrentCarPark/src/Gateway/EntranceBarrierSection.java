@@ -27,12 +27,11 @@ public class EntranceBarrierSection extends BarrierSection {
         Future future = executorService.submit(entry_barrier);
 
         try {
-            LOGGER.info("**********Calling future.get and waiting for barrier to open...**********");
+            LOGGER.info("Requesting barrier to open...");
             future.get();
-            LOGGER.info("**********Get complete. Barrier is open.**********");
+            LOGGER.info("Barrier has open and car may pass through!");
         }
         catch(InterruptedException e) {}
         catch(ExecutionException e) {}
-
     }
 }

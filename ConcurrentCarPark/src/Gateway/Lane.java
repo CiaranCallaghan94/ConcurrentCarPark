@@ -12,7 +12,5 @@ public interface Lane {
 	void advanceLane(Car car) throws InterruptedException;
 
 	void moveCarToBarrier(Car car) throws InterruptedException;
-
-	Car advanceBarrier();
 	
 }
