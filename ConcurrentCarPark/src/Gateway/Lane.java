@@ -6,5 +6,6 @@ public interface Lane {
 	void moveToBarrier(Car car) throws InterruptedException;
 
 	int checkLenghtOfQueue();
-	
+
+	void addToQueue();
 }

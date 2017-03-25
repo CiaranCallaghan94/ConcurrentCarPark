@@ -14,6 +14,8 @@ public class Entrance implements Lane {
 
 	EntranceBarrierSection barrierSection;
 
+	int amountInQueue = 0;
+
 	Entrance(Data data) {
 
 		LOGGER.info("num cars Entrance: " + data);
@@ -22,6 +24,7 @@ public class Entrance implements Lane {
 
 	public void moveToBarrier(Car car) throws InterruptedException {
 
+		addToQueue();
 		barrierArea.lock();
 
 		try {
@@ -31,16 +34,27 @@ public class Entrance implements Lane {
 		finally {
 
 			barrierArea.unlock();
+			removeFromQueue();
 		}
 	}
 
 	public int checkLenghtOfQueue(){
 
-		return barrierArea.getQueueLength();
+		return amountInQueue;
 	}
 
 	public void engageWithBarrier(Car car){
 
 		barrierSection.addCar(car);
+	}
+
+	public void addToQueue(){
+
+		amountInQueue++;
+	}
+
+	public void removeFromQueue(){
+
+		amountInQueue--;
 	}
 }
