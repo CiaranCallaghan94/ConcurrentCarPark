@@ -1,5 +1,9 @@
 package config;
 
+/**
+ * ArrivalRushHour is simply responsible for holding
+ * the information for a particular rush hour
+ */
 
 public class ArrivalRushHour {
 

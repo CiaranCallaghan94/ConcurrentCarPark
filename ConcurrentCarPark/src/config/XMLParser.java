@@ -16,6 +16,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * XMLParser is responsible for reading in the various user inputs
+ * from the XML input file. It also converts inputs into a
+ * usable format (e.g. hh:mm:ss string -> milliseconds).
+ */
+
 public class XMLParser {
 
     private static final Logger LOGGER = LogManager.getLogger("XMLParser");
@@ -113,6 +119,7 @@ public class XMLParser {
         }
     }
 
+    // Loop through and parse all the arrival rush hour nodes
     public static void parseArrivalRushHours(NodeList rush_hours) {
 
         ArrivalRushHour arrivalRushHour;
@@ -133,18 +140,21 @@ public class XMLParser {
         }
     }
 
+    // Parse String time (hh:mm:ss) XML attribute and convert to milliseconds
     public static int parseTimeAttribute(Element node, String attrib_name) {
 
         String value = node.getElementsByTagName(attrib_name).item(0).getTextContent();
         return timeToSimulationTime(value);
     }
 
+    // Parse integer XML attribute and convert from String to Integer
     public static int parseIntegerAttribute(Element node, String attrib_name) {
 
         String value = node.getElementsByTagName(attrib_name).item(0).getTextContent();
         return Integer.parseInt(value);
     }
 
+    //Convert String formatted time (hh:mm:ss) into milliseconds
     public static int timeToSimulationTime(String time) {
 
         String[] time_arr = time.split(":");
