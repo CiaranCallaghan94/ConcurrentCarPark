@@ -40,7 +40,7 @@ public class XMLParser {
     public static int PROPORTION_BARRIER_PROBLEM;
 
     // CARS
-    public static int   NUM_CARS;
+    public static int NUM_CARS;
     public static float PROPORTION_STUDENTS;
 
     // LECTURER CARS
@@ -78,7 +78,7 @@ public class XMLParser {
             Element student_cars = (Element) document.getElementsByTagName("student_cars").item(0);
 
             // SPEED
-            SIMULATION_SPEED = Integer.parseInt( sim_speed.getTextContent());
+            SIMULATION_SPEED = Integer.parseInt(sim_speed.getTextContent());
 
             // ARRIVAL RUSH HOURS
             parseArrivalRushHours(arrival_rush_hours);
@@ -107,25 +107,25 @@ public class XMLParser {
             AVG_STUDENT_DEXTERITY = parseIntegerAttribute(student_cars, "avg_student_dexterity");
             AVG_STUDENT_STAY_TIME = parseTimeAttribute(student_cars, "avg_student_stay_time");
 
+        } catch (ParserConfigurationException e) {
+        } catch (SAXException e) {
+        } catch (IOException e) {
         }
-        catch (ParserConfigurationException e) {}
-        catch (SAXException e) {}
-        catch (IOException e) {}
     }
 
     public static void parseArrivalRushHours(NodeList rush_hours) {
 
         ArrivalRushHour arrivalRushHour;
-        for(int i=0; i< rush_hours.getLength(); i++) {
+        for (int i = 0; i < rush_hours.getLength(); i++) {
 
             Node node = rush_hours.item(i);
 
-            if(node.getNodeType() == Node.ELEMENT_NODE) {
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
 
                 Element arrival_rush_hour = (Element) rush_hours.item(i);
-                int time = parseTimeAttribute( arrival_rush_hour, "time");
-                int proportion = parseIntegerAttribute( arrival_rush_hour, "proportion");
-                int std_deviation = parseTimeAttribute( arrival_rush_hour, "std_deviation");
+                int time = parseTimeAttribute(arrival_rush_hour, "time");
+                int proportion = parseIntegerAttribute(arrival_rush_hour, "proportion");
+                int std_deviation = parseTimeAttribute(arrival_rush_hour, "std_deviation");
 
                 arrivalRushHour = new ArrivalRushHour(time, proportion, std_deviation);
                 ARRIVAL_RUSH_HOURS.add(arrivalRushHour);
@@ -155,9 +155,6 @@ public class XMLParser {
 
         int time_in_seconds = hours * 60 * 60 + mins * 60 + secs;
         int time_in_milliseconds = time_in_seconds * 1000;
-
-        LOGGER.info("Time in millis: " + time_in_milliseconds);
-        LOGGER.info("Time divided by speed: " + time_in_milliseconds / SIMULATION_SPEED);
 
         return time_in_milliseconds / SIMULATION_SPEED;
     }
