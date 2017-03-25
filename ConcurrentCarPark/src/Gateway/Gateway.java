@@ -54,15 +54,14 @@ public class Gateway {
 
 		 Lane shortest_lane = lanes.get(0);
 
-		 for(int i = 1; i < lanes.size(); i++){
+		 for(int i = 1; i < lanes.size(); i++) {
 
-		 	Lane test_shortest = lanes.get(i);
-			 if(test_shortest.numOfCarsInQueue() < shortest_lane.numOfCarsInQueue()){
+			 Lane test_shortest = lanes.get(i);
+			 if (test_shortest.checkLenghtOfQueue() < shortest_lane.checkLenghtOfQueue ()){
 
 				 shortest_lane = test_shortest;
 			 }
-		}
-		 shortest_lane.addToQueue(c);
+		 }
 		 LOGGER.info("Car placed in shortest lane...  -" + Thread.currentThread().getId());
 
 		 return shortest_lane;
