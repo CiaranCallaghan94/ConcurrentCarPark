@@ -55,7 +55,13 @@ public abstract class Car implements Runnable {
             LOGGER.info("Car is entering the carpark -" + Thread.currentThread().getId());
             //carpark.enterCarpark();
 
+
+            // PARKED
+            // TODO: Stay here for duration of 'stay_time'
+
+
             // LEAVING
+            // TODO: Leave the carpark
 
 
         } catch(InterruptedException ex) {
