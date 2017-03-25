@@ -71,10 +71,21 @@ public class Carpark {
 				}
 			}
 
-			// TODO: Manage case where car does not park here.
+			// TODO: Consider dealing with a scenario where a car can not find a space.
+			//		- Should it wait x amount of time then leave if still no spaces.
+			//		- Should it leave?
 		}
 		finally {
 			space_lock.unlock();
+		}
+	}
+
+	public void leaveTheCarpark(List<Integer> occupied_spaces) {
+
+		space_lock.lock();
+
+		for(int space_id: occupied_spaces) {
+			spaces.get(space_id).removeCar();
 		}
 	}
 
@@ -117,51 +128,4 @@ public class Carpark {
 			spaces.get(space_id-1).addCar(car);
 		}
 	}
-
-	/*
-	// parks all the cars searching for spaces
-	public void parkCars() {
-
-		LOGGER.info("parking cars");
-
-		// Iterate through all the cars looking for a space
-		// Iterate through the Spaces in the Carpark
-		// When a free space is found, the car won't necessarily park there:
-		//      -   The chances of parking in a particular empty space
-		//          is dependant on car_width, width of neighbour cars,
-		//          dexterity, & probability
-
-		// So that objects are not removed from the list whilst still iterating
-		// through said list, add them to this list and remove them all at end
-		List<Car> cars_to_be_removed = new ArrayList<>();
-
-		//TODO: FIX concurrent modification exception
-		if(!cars_searching_for_space.isEmpty() && cars_searching_for_space != null){
-
-			for(Car car: cars_searching_for_space){
-
-				for(Space space: spaces) {
-
-					if(space.isFree()) {
-
-						space.addCar(car);
-						cars_to_be_removed.add(car);
-						LOGGER.info("Added car to space and removed from cars searching for space");
-						break;
-					}
-				}
-			}
-		}
-
-		cars_searching_for_space.removeAll(cars_to_be_removed);
-
-		if(!cars_searching_for_space.isEmpty()) {
-			LOGGER.info("Num cars that did not park: " + cars_searching_for_space.size());
-		}
-
-		// TODO: Consider dealing with a scenario where a car can not find a space.
-		//		- Should it wait x amount of time then leave if still no spaces.
-		//		- Should it leave on that turn, etc.
-
-	}*/
 }

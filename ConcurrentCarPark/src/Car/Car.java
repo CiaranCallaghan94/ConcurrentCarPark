@@ -7,6 +7,9 @@ import Gateway.Gateway;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Car implements Runnable {
 
     private static final Logger LOGGER = LogManager.getLogger( "Car" );
@@ -21,6 +24,8 @@ public abstract class Car implements Runnable {
     Carpark carpark;
     Entrance entrance;
     Exit exit;
+
+    List<Integer> occupied_spaces = new ArrayList<>(2);
 
     Car(Gateway gateway, Carpark carpark) {
 
@@ -60,8 +65,8 @@ public abstract class Car implements Runnable {
 
             // LEAVING
             LOGGER.info("Finished college. Going home..");
+            carpark.leaveTheCarpark(getSpaces());
 
-            // TODO: Leave the carpark
             exit = gateway.addCarToExit(this);
             LOGGER.info("Car is in the queue "+ (entrance.checkLenghtOfQueue()) +" cars back -" + Thread.currentThread().getId());
             exit.moveToBarrier(this);
@@ -75,27 +80,19 @@ public abstract class Car implements Runnable {
 
     public abstract boolean isStudent();
 
+    public void setSpace(List<Integer> occupied_spaces) {
+        this.occupied_spaces = occupied_spaces;
+    }
+
+    public List<Integer> getSpaces() {
+        return this.occupied_spaces;
+    }
+
     public int getWidth() {
         return width;
     }
 
     public int getDexterity() {
         return dexterity;
-    }
-
-    public void park() {
-
-        // Iterate through the Spaces in the Carpark
-        // When a free space is found, the car won't necessarily park there:
-        //      -   The chances of parking in a particular empty space
-        //          is dependant on car_width, width of neighbour cars,
-        //          dexterity, & probability
-
-        // This method should prob be in Carpark class.
-    }
-
-    public void leaveCarpark() {
-
-        // Go straight to exit queue
     }
 }
