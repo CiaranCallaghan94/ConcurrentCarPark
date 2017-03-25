@@ -85,7 +85,7 @@ public abstract class BarrierSection {
 
 		try {
 			LOGGER.info("Car at barrier, putting ticket in... -" + Thread.currentThread().getId());
-			Thread.sleep(service_time * 1000);
+			Thread.sleep(service_time);
 		}
 		catch(InterruptedException ex) {
 			Thread.currentThread().interrupt();
