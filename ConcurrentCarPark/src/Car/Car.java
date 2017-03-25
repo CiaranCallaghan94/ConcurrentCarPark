@@ -13,7 +13,7 @@ public abstract class Car implements Runnable {
     private static final Logger LOGGER = LogManager.getLogger( "Car" );
 
     protected int arrive_time;
-    protected int leave_time;
+    protected int stay_time;
 
     protected int width;
     protected int dexterity;
@@ -29,10 +29,10 @@ public abstract class Car implements Runnable {
         this.carpark = carpark;
     }
 
-    public void setVariables(int arrive_time, int leave_time, int width, int dexterity) {
+    public void setVariables(int arrive_time, int stay_time, int width, int dexterity) {
 
         this.arrive_time = arrive_time;
-        this.leave_time = leave_time;
+        this.stay_time = stay_time;
     }
 
     public void run() {
