@@ -15,9 +15,15 @@
         <num_exits>3</num_exits>
     </carpark>
 
+    <barrier>
+        <avg_time comment="hh:mm">00:01</avg_time>
+        <avg_problem_time comment="hh:mm">00:01</avg_problem_time>
+        <proportion_problem comment="% from 1-100">1</proportion_problem>
+    </barrier>
+
     <cars>
         <num_cars>2500</num_cars>
-        <proportion_student>2500</proportion_student>
+        <proportion_student comment="% from 1-100">90</proportion_student>
     </cars>
 
     <lecturer_cars>
@@ -31,4 +37,5 @@
         <avg_student_dexterity>50</avg_student_dexterity>
         <avg_student_stay_time comment="hh:mm">03:00</avg_student_stay_time>
     </student_cars>
+
 </Input>

@@ -1,6 +1,7 @@
 package Gateway;
 
 import Car.Car;
+import config.XMLParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,9 +23,9 @@ public abstract class BarrierSection {
 
 	public BarrierSection() {
 
-		std_barrier_time = 5;
-		std_problem_time = 60;
-		probability_of_problem = 0.01;
+		std_barrier_time = XMLParser.AVG_BARRIER_TIME;
+		std_problem_time = XMLParser.AVG_BARRIER_PROBLEM_TIME;
+		probability_of_problem = XMLParser.PROPORTION_BARRIER_PROBLEM;
 
 		is_free = true;
 		service_time = 0;
