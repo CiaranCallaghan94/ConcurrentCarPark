@@ -92,6 +92,5 @@ public class XMLParser {
 		catch(ParserConfigurationException e) {}
 		catch(SAXException e) {}
 		catch(IOException e) {}
-
 	}
 }

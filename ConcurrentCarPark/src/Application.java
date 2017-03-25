@@ -114,7 +114,7 @@ public class Application {
     }
 
     // Reads in the input file and its values
-    public static void readInputFromJSONFile(){
+    public static void parseXMLFile(){
 
         XMLParser.readInput();
 
@@ -148,7 +148,7 @@ public class Application {
     
     public static void main(String [] args) {
 
-        readInputFromJSONFile();
+        parseXMLFile();
 
         createCars();
         setCarVariables();
