@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Input>
 
-    <times>
-        <open_time comment="hh:mm:ss">07:00:00</open_time>
-        <close_time comment="hh:mm:ss">19:00:00</close_time>
-        <arrival_rush_hour comment="hh:mm:ss">09:00:00</arrival_rush_hour>
+    <simulation_speed>10000</simulation_speed>
+
+    <arrival_rush_hour id="1">
+        <time comment="hh:mm:ss">08:00:00</time>
+        <proportion comment="%">20</proportion>
         <std_deviation comment="hh:mm:ss">00:30:00</std_deviation>
-        <simulation_speed>10000</simulation_speed>
-    </times>
+    </arrival_rush_hour>
+
+    <arrival_rush_hour id="2">
+        <time comment="hh:mm:ss">09:00:00</time>
+        <proportion comment="%">50</proportion>
+        <std_deviation comment="hh:mm:ss">00:30:00</std_deviation>
+    </arrival_rush_hour>
+
+    <arrival_rush_hour id="3">
+        <time comment="hh:mm:ss">12:00:00</time>
+        <proportion comment="%">30</proportion>
+        <std_deviation comment="hh:mm:ss">01:00:00</std_deviation>
+    </arrival_rush_hour>
 
     <carpark>
         <carpark_capacity>10000</carpark_capacity>
