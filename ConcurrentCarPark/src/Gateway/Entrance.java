@@ -51,7 +51,6 @@ public class Entrance implements Lane {
 
 				LOGGER.info("Car is at the top of the queue -" + Thread.currentThread().getId());
 				moveCarToBarrier(car);
-				notify();
 				break;
 
 			} else {
@@ -67,10 +66,7 @@ public class Entrance implements Lane {
 		while(!Thread.currentThread().isInterrupted()) {
 
 			if (barrierSection.isFree()) {
-
 				removerCar();
-				barrierSection.addCar(car);
-				notifyAll();
 				break;
 			} else {
 				LOGGER.info("Car not free -" + Thread.currentThread().getId());
@@ -78,5 +74,14 @@ public class Entrance implements Lane {
 				LOGGER.info("Car has awoken to check if barrier free -" + Thread.currentThread().getId());
 			}
 		}
+	}
+
+	public void engageWithBarrier(Car car){
+
+		barrierSection.addCar(car);
+	}
+
+	public synchronized void leaveEntrance(){
+		notifyAll();
 	}
 }
