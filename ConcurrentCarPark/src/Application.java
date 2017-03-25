@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class Application {
 
-    private static final Logger LOGGER = LogManager.getLogger( "Simulation" );
+    private static final Logger LOGGER = LogManager.getLogger("Simulation");
 
     private static List<Car> cars;
 
@@ -29,11 +29,11 @@ public class Application {
         Random rand = new Random();
 
         Car car;
-        for(int i=0; i<XMLParser.NUM_CARS; i++) {
+        for (int i = 0; i < XMLParser.NUM_CARS; i++) {
 
             random_num = rand.nextFloat();
 
-            if(random_num <= XMLParser.PROPORTION_STUDENTS)
+            if (random_num <= XMLParser.PROPORTION_STUDENTS)
                 car = new StudentCar(gateway, carpark);
             else
                 car = new LecturerCar(gateway, carpark);
@@ -51,17 +51,17 @@ public class Application {
         int total_cars_after_this_rush_hour;
 
         int cars_processed = 0;
-        for(ArrivalRushHour rush_hour: arrival_rush_hours) {
+        for (ArrivalRushHour rush_hour : arrival_rush_hours) {
 
             percent_cars_this_rush_hour = rush_hour.PROPORTION / 100.0;
 
-            num_cars_this_rush_hour = (int) Math.round( cars.size() * percent_cars_this_rush_hour );
+            num_cars_this_rush_hour = (int) Math.round(cars.size() * percent_cars_this_rush_hour);
 
             total_cars_after_this_rush_hour = cars_processed + num_cars_this_rush_hour;
 
             LOGGER.info("Proportion cars this rush hour: " + num_cars_this_rush_hour);
 
-            while(cars_processed < total_cars_after_this_rush_hour ) {
+            while (cars_processed < total_cars_after_this_rush_hour) {
                 setSingleCarVars(cars_processed, rush_hour.TIME, rush_hour.STD_DEVIATION);
                 cars_processed++;
             }
@@ -78,30 +78,29 @@ public class Application {
         Car car = cars.get(car_id);
 
         Random rand = new Random();
-        arrive_time = (int)Math.round(rand.nextGaussian() * std_deviation + rush_hour);
+        arrive_time = (int) Math.round(rand.nextGaussian() * std_deviation + rush_hour);
 
-        if(car.isStudent()) {
-            stay_time = arrive_time + (int)Math.round(rand.nextGaussian() + XMLParser.AVG_STUDENT_STAY_TIME);
-            dexterity = (int)Math.round(rand.nextGaussian() + XMLParser.AVG_STUDENT_DEXTERITY);
-            car_width = (int)Math.round(rand.nextGaussian() + XMLParser.AVG_STUDENT_DEXTERITY);
-        }
-        else {
-            stay_time = arrive_time + (int)Math.round(rand.nextGaussian() + XMLParser.AVG_LECTURER_STAY_TIME);
-            dexterity = (int)Math.round(rand.nextGaussian() + XMLParser.AVG_LECTURER_DEXTERITY);
-            car_width = (int)Math.round(rand.nextGaussian() + XMLParser.AVG_LECTURER_CAR_WIDTH);
+        if (car.isStudent()) {
+            stay_time = arrive_time + (int) Math.round(rand.nextGaussian() + XMLParser.AVG_STUDENT_STAY_TIME);
+            dexterity = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_STUDENT_DEXTERITY);
+            car_width = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_STUDENT_DEXTERITY);
+        } else {
+            stay_time = arrive_time + (int) Math.round(rand.nextGaussian() + XMLParser.AVG_LECTURER_STAY_TIME);
+            dexterity = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_LECTURER_DEXTERITY);
+            car_width = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_LECTURER_CAR_WIDTH);
         }
 
         car.setVariables(arrive_time, stay_time, car_width, dexterity);
     }
-    
-    public static void main(String [] args) {
+
+    public static void main(String[] args) {
 
         XMLParser.readInput();
 
         createCars();
         setAllCarVariables();
 
-        for(Car c: cars) {
+        for (Car c : cars) {
             new Thread(c).start();
         }
     }

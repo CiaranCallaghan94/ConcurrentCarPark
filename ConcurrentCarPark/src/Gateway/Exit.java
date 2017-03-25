@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Exit implements Lane {
 
-    private static final Logger LOGGER = LogManager.getLogger( "Exit" );
+    private static final Logger LOGGER = LogManager.getLogger("Exit");
 
     ReentrantLock barrierArea = new ReentrantLock(true);
 
@@ -17,8 +17,6 @@ public class Exit implements Lane {
     int amountInQueue = 0;
 
     Exit(Data data) {
-
-        LOGGER.info("num cars Exit: " + data);
         barrierSection = new ExitBarrierSection(data);
     }
 
@@ -29,30 +27,29 @@ public class Exit implements Lane {
         try {
 
             engageWithBarrier(car);
-        }
-        finally {
+        } finally {
 
             barrierArea.unlock();
             removeFromQueue();
         }
     }
 
-    public int checkLenghtOfQueue(){
+    public int checkLenghtOfQueue() {
 
         return amountInQueue;
     }
 
-    public void engageWithBarrier(Car car){
+    public void engageWithBarrier(Car car) {
 
         barrierSection.addCar(car);
     }
 
-    public void addToQueue(){
+    public void addToQueue() {
 
         amountInQueue++;
     }
 
-    public void removeFromQueue(){
+    public void removeFromQueue() {
 
         amountInQueue--;
     }

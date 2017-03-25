@@ -7,7 +7,7 @@ import java.util.concurrent.Callable;
 
 public class ExitBarrier implements Callable<Boolean> {
 
-    private static final Logger LOGGER = LogManager.getLogger( "EntryBarrier" );
+    private static final Logger LOGGER = LogManager.getLogger("EntryBarrier");
 
     Data data;
 

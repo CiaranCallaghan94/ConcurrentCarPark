@@ -7,13 +7,11 @@ import java.util.concurrent.Callable;
 
 public class EntryBarrier implements Callable<Boolean> {
 
-    private static final Logger LOGGER = LogManager.getLogger( "EntryBarrier" );
+    private static final Logger LOGGER = LogManager.getLogger("EntryBarrier");
 
     Data data;
 
     public EntryBarrier(Data data) {
-
-        LOGGER.info("num cars EntryBarrier: " + data);
         this.data = data;
     }
 

@@ -8,53 +8,51 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Entrance implements Lane {
 
-	private static final Logger LOGGER = LogManager.getLogger( "Entrance" );
+    private static final Logger LOGGER = LogManager.getLogger("Entrance");
 
-	ReentrantLock barrierArea = new ReentrantLock(true);
+    ReentrantLock barrierArea = new ReentrantLock(true);
 
-	EntranceBarrierSection barrierSection;
+    EntranceBarrierSection barrierSection;
 
-	int amountInQueue = 0;
+    int amountInQueue = 0;
 
-	Entrance(Data data) {
+    Entrance(Data data) {
 
-		LOGGER.info("num cars Entrance: " + data);
-		barrierSection = new EntranceBarrierSection(data);
-	}
+        barrierSection = new EntranceBarrierSection(data);
+    }
 
-	public void moveToBarrier(Car car) throws InterruptedException {
+    public void moveToBarrier(Car car) throws InterruptedException {
 
-		addToQueue();
-		barrierArea.lock();
+        addToQueue();
+        barrierArea.lock();
 
-		try {
+        try {
 
-			engageWithBarrier(car);
-		}
-		finally {
+            engageWithBarrier(car);
+        } finally {
 
-			barrierArea.unlock();
-			removeFromQueue();
-		}
-	}
+            barrierArea.unlock();
+            removeFromQueue();
+        }
+    }
 
-	public int checkLenghtOfQueue(){
+    public int checkLenghtOfQueue() {
 
-		return amountInQueue;
-	}
+        return amountInQueue;
+    }
 
-	public void engageWithBarrier(Car car){
+    public void engageWithBarrier(Car car) {
 
-		barrierSection.addCar(car);
-	}
+        barrierSection.addCar(car);
+    }
 
-	public void addToQueue(){
+    public void addToQueue() {
 
-		amountInQueue++;
-	}
+        amountInQueue++;
+    }
 
-	public void removeFromQueue(){
+    public void removeFromQueue() {
 
-		amountInQueue--;
-	}
+        amountInQueue--;
+    }
 }

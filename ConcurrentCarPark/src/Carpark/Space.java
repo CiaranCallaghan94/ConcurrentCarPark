@@ -6,14 +6,14 @@ import org.apache.logging.log4j.Logger;
 
 public class Space {
 
-    private static final Logger LOGGER = LogManager.getLogger( "Space" );
+    private static final Logger LOGGER = LogManager.getLogger("Space");
 
     private Car car = null;
     private boolean is_free = true;
 
     public Car getCar() {
         LOGGER.info("Getting Car");
-        if(!isFree())
+        if (!isFree())
             return car;
         else {
             LOGGER.info("Space is empty");

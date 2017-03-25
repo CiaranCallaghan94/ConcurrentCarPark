@@ -1,11 +1,12 @@
 package Gateway;
+
 import Car.Car;
 
 public interface Lane {
 
-	void moveToBarrier(Car car) throws InterruptedException;
+    void moveToBarrier(Car car) throws InterruptedException;
 
-	int checkLenghtOfQueue();
+    int checkLenghtOfQueue();
 
-	void addToQueue();
+    void addToQueue();
 }

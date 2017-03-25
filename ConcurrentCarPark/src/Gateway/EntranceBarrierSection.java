@@ -10,14 +10,13 @@ import java.util.concurrent.Future;
 
 public class EntranceBarrierSection extends BarrierSection {
 
-    private static final Logger LOGGER = LogManager.getLogger( "EntranceBarrierSection" );
+    private static final Logger LOGGER = LogManager.getLogger("EntranceBarrierSection");
 
     private EntryBarrier entry_barrier;
 
     public EntranceBarrierSection(Data data) {
 
         super();
-        LOGGER.info("num cars EntranceBarrierSection: " + data);
         entry_barrier = new EntryBarrier(data);
     }
 
@@ -30,8 +29,8 @@ public class EntranceBarrierSection extends BarrierSection {
             LOGGER.info("Requesting barrier to open...");
             future.get();
             LOGGER.info("Barrier has open and car may pass through!");
+        } catch (InterruptedException e) {
+        } catch (ExecutionException e) {
         }
-        catch(InterruptedException e) {}
-        catch(ExecutionException e) {}
     }
 }
