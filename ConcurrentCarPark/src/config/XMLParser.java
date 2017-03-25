@@ -58,8 +58,9 @@ public class XMLParser {
 
         int hours = Integer.parseInt(time_arr[0]);
         int mins = Integer.parseInt(time_arr[1]);
+        int secs = Integer.parseInt(time_arr[2]);
 
-        int time_in_seconds = hours*60*60 + mins*60;
+        int time_in_seconds = hours*60*60 + mins*60 + secs;
         int time_in_milliseconds = time_in_seconds * 1000;
 
         LOGGER.info("Time in millis: " + time_in_milliseconds);

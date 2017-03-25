@@ -53,6 +53,7 @@ public abstract class Car implements Runnable {
             // CARPARK
             LOGGER.info("Car is entering the carpark -" + Thread.currentThread().getId());
             //carpark.enterCarpark();
+            // TODO: Park the car
 
 
             // PARKED
