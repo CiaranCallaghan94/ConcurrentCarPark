@@ -12,18 +12,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * This Application runs a multithreaded simulation of a university car park
+ */
+
 public class Application {
 
     private static final Logger LOGGER = LogManager.getLogger("Simulation");
 
     private static List<Car> cars;
 
-    public static void createCars() {
+    // Create the student and lecturer cars based on the inputted 'proportion students'
+    public static void createCars(Gateway gateway, Carpark carpark) {
 
         cars = new ArrayList<>(XMLParser.NUM_CARS);
-
-        Gateway gateway = new Gateway(XMLParser.NUM_ENTRANCES, XMLParser.NUM_EXITS);
-        Carpark carpark = new Carpark(XMLParser.CARPARK_CAPACITY);
 
         float random_num;
         Random rand = new Random();
@@ -31,8 +33,10 @@ public class Application {
         Car car;
         for (int i = 0; i < XMLParser.NUM_CARS; i++) {
 
+            // Here, student or lecturer car is created depending on a "100-sided dice roll".
+            // If the dice lands within the inputted proportion of students,
+            // a student car is created, else a lecturer is created.
             random_num = rand.nextFloat();
-
             if (random_num <= XMLParser.PROPORTION_STUDENTS)
                 car = new StudentCar(gateway, carpark);
             else
@@ -42,6 +46,7 @@ public class Application {
         }
     }
 
+    // Setup all the variables for each car
     public static void setAllCarVariables() {
 
         List<ArrivalRushHour> arrival_rush_hours = XMLParser.ARRIVAL_RUSH_HOURS;
@@ -49,14 +54,15 @@ public class Application {
         double percent_cars_this_rush_hour;
         int num_cars_this_rush_hour;
         int total_cars_after_this_rush_hour;
-
         int cars_processed = 0;
+
+        // Each rush hour has a % of cars based on the 'proportion' parameter.
+        // For all the cars in a particular rush hour, they are set a
+        // normally distributed arrival time around that rush hour time.
         for (ArrivalRushHour rush_hour : arrival_rush_hours) {
 
             percent_cars_this_rush_hour = rush_hour.PROPORTION / 100.0;
-
             num_cars_this_rush_hour = (int) Math.round(cars.size() * percent_cars_this_rush_hour);
-
             total_cars_after_this_rush_hour = cars_processed + num_cars_this_rush_hour;
 
             LOGGER.info("Proportion cars this rush hour: " + num_cars_this_rush_hour);
@@ -68,6 +74,7 @@ public class Application {
         }
     }
 
+    // Setup the variables for a single car - dexterity, arrival time, stay time, etc...
     public static void setSingleCarVars(int car_id, int rush_hour, int std_deviation) {
 
         int arrive_time;
@@ -80,10 +87,12 @@ public class Application {
         Random rand = new Random();
         arrive_time = (int) Math.round(rand.nextGaussian() * std_deviation + rush_hour);
 
+        // Normally distribute time, depening on whether car is student or lecturer
         if (car.isStudent()) {
             stay_time = arrive_time + (int) Math.round(rand.nextGaussian() + XMLParser.AVG_STUDENT_STAY_TIME);
             dexterity = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_STUDENT_DEXTERITY);
             car_width = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_STUDENT_DEXTERITY);
+
         } else {
             stay_time = arrive_time + (int) Math.round(rand.nextGaussian() + XMLParser.AVG_LECTURER_STAY_TIME);
             dexterity = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_LECTURER_DEXTERITY);
@@ -97,9 +106,13 @@ public class Application {
 
         XMLParser.readInput();
 
-        createCars();
+        Gateway gateway = new Gateway(XMLParser.NUM_ENTRANCES, XMLParser.NUM_EXITS);
+        Carpark carpark = new Carpark(XMLParser.CARPARK_CAPACITY);
+
+        createCars(gateway, carpark);
         setAllCarVariables();
 
+        // Start the car threads
         for (Car c : cars) {
             new Thread(c).start();
         }
