@@ -1,11 +1,11 @@
 package Gateway;
 
-import config.JsonParser;
+import config.XMLParser;
 
 public class Data {
 
     Integer num_cars_in_carpark;
-    final int carpark_capacity = JsonParser.CARPARK_CAPACITY;
+    final int carpark_capacity = XMLParser.CARPARK_CAPACITY;
 
     public Data() {
         num_cars_in_carpark = 0;

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Input>
+
+    <times>
+        <open_time comment="hh:mm">07:00</open_time>
+        <close_time comment="hh:mm">19:00</close_time>
+        <arrival_rush_hour comment="hh:mm">09:00</arrival_rush_hour>
+        <std_deviation comment="hh:mm">00:30</std_deviation>
+        <simulation_speed>10000</simulation_speed>
+    </times>
+
+    <carpark>
+        <carpark_capacity>10000</carpark_capacity>
+        <num_entrances>3</num_entrances>
+        <num_exits>3</num_exits>
+    </carpark>
+
+    <cars>
+        <num_cars>2500</num_cars>
+        <proportion_student>2500</proportion_student>
+    </cars>
+
+    <lecturer_cars>
+        <avg_lecturer_car_width>200</avg_lecturer_car_width>
+        <avg_lecturer_dexterity>80</avg_lecturer_dexterity>
+        <avg_lecturer_stay_time comment="hh:mm">07:00</avg_lecturer_stay_time>
+    </lecturer_cars>
+
+    <student_cars>
+        <avg_student_car_width>170</avg_student_car_width>
+        <avg_student_dexterity>50</avg_student_dexterity>
+        <avg_student_stay_time comment="hh:mm">03:00</avg_student_stay_time>
+    </student_cars>
+</Input>

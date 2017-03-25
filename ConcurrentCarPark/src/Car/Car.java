@@ -65,6 +65,8 @@ public abstract class Car implements Runnable {
         }
     }
 
+    public abstract boolean isStudent();
+
     public int getWidth() {
         return width;
     }

@@ -9,4 +9,8 @@ public class LecturerCar extends Car {
 
         super(gateway, carpark);
     }
+
+    public boolean isStudent() {
+        return false;
+    }
 }

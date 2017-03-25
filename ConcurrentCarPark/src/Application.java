@@ -3,7 +3,7 @@ import Car.LecturerCar;
 import Car.StudentCar;
 import Gateway.Gateway;
 import Carpark.Carpark;
-import config.JsonParser;
+import config.XMLParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -116,33 +116,33 @@ public class Application {
     // Reads in the input file and its values
     public static void readInputFromJSONFile(){
 
-        JsonParser.readInput();
+        XMLParser.readInput();
 
     	// TIMES
-        open_time               = timeToSimulationTime(JsonParser.OPEN_TIME);
-        close_time              = timeToSimulationTime(JsonParser.CLOSE_TIME);
-        arrive_rush_hour        = timeToSimulationTime(JsonParser.ARRIVAL_RUSH_HOUR);
-        std_deviation           = timeToSimulationTime(JsonParser.STD_DEVIATION);
-        simulation_speed        = JsonParser.SIMULATION_SPEED;
+        simulation_speed        = XMLParser.SIMULATION_SPEED;
+        open_time               = timeToSimulationTime(XMLParser.OPEN_TIME);
+        close_time              = timeToSimulationTime(XMLParser.CLOSE_TIME);
+        arrive_rush_hour        = timeToSimulationTime(XMLParser.ARRIVAL_RUSH_HOUR);
+        std_deviation           = timeToSimulationTime(XMLParser.STD_DEVIATION);
 
         // CARPARK
-        carpark_capacity        = JsonParser.CARPARK_CAPACITY;
-        num_entrances           = JsonParser.NUM_ENTRANCES;
-        num_exits               = JsonParser.NUM_EXITS;
+        carpark_capacity        = XMLParser.CARPARK_CAPACITY;
+        num_entrances           = XMLParser.NUM_ENTRANCES;
+        num_exits               = XMLParser.NUM_EXITS;
 
         // CARS
-        num_cars                = JsonParser.NUM_CARS;
-        proportion_students     = JsonParser.PROPORTION_STUDENTS;
+        num_cars                = XMLParser.NUM_CARS;
+        proportion_students     = XMLParser.PROPORTION_STUDENTS;
 
         // LECTURER CARS
-        avg_lecturer_car_width  = JsonParser.AVG_LECTURER_CAR_WIDTH;
-        avg_lecturer_dexterity  = JsonParser.AVG_LECTURER_DEXTERITY;
-        avg_lecturer_stay_time  = timeToSimulationTime(JsonParser.AVG_LECTURER_STAY_TIME);
+        avg_lecturer_car_width  = XMLParser.AVG_LECTURER_CAR_WIDTH;
+        avg_lecturer_dexterity  = XMLParser.AVG_LECTURER_DEXTERITY;
+        avg_lecturer_stay_time  = timeToSimulationTime(XMLParser.AVG_LECTURER_STAY_TIME);
 
         // STUDENT CARS
-        avg_student_car_width   = JsonParser.AVG_STUDENT_CAR_WIDTH;
-        avg_student_dexterity   = JsonParser.AVG_STUDENT_DEXTERITY;
-        avg_student_stay_time   = timeToSimulationTime(JsonParser.AVG_STUDENT_STAY_TIME);
+        avg_student_car_width   = XMLParser.AVG_STUDENT_CAR_WIDTH;
+        avg_student_dexterity   = XMLParser.AVG_STUDENT_DEXTERITY;
+        avg_student_stay_time   = timeToSimulationTime(XMLParser.AVG_STUDENT_STAY_TIME);
 
     }
     
