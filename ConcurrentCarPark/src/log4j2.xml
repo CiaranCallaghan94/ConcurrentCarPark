@@ -2,10 +2,10 @@
 <Configuration status="INFO">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss} %-5level %18C - %msg%n"/>
+            <PatternLayout pattern="%d{HH:mm:ss} %-5level %30C - %msg%n"/>
         </Console>
         <File name="MyFile" fileName="simulation.log" immediateFlush="false" append="false">
-            <PatternLayout pattern="%d{HH:mm:ss} %-5level %18C - %msg%n"/>
+            <PatternLayout pattern="%d{HH:mm:ss} %-5level %30C - %msg%n"/>
         </File>
     </Appenders>
     <Loggers>

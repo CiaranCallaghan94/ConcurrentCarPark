@@ -41,7 +41,6 @@ public abstract class Car implements Runnable {
 
     public void run() {
 
-        LOGGER.info("Running car thread");
         try {
 
             LOGGER.info("Sleeping until arrive time (milliseconds): " + arrive_time + " -" + Thread.currentThread().getId());
