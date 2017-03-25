@@ -63,7 +63,6 @@ public class Gateway {
 			 }
 		 }
 		 LOGGER.info("Car placed in shortest lane...  -" + Thread.currentThread().getId());
-
 		 return shortest_lane;
 	}
 

@@ -74,7 +74,7 @@ public class XMLParser {
 
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document document = builder.parse(new File(input_path));
+			Document document = builder.parse(new File(input_path_2));
 
 			// normalize text representation
 			document.getDocumentElement().normalize ();
@@ -90,17 +90,17 @@ public class XMLParser {
             SIMULATION_SPEED 	= Integer.parseInt( times.getElementsByTagName("simulation_speed").item(0).getTextContent() );
 			OPEN_TIME 			= timeToSimulationTime( times.getElementsByTagName("open_time").item(0).getTextContent() );
 			CLOSE_TIME 			= timeToSimulationTime( times.getElementsByTagName("close_time").item(0).getTextContent() );
-			ARRIVAL_RUSH_HOUR 	= timeToSimulationTime( times.getElementsByTagName("arrival_rush_hour").item(0).getTextContent() );;
+			ARRIVAL_RUSH_HOUR 	= timeToSimulationTime(times.getElementsByTagName("arrival_rush_hour").item(0).getTextContent() );;
 			STD_DEVIATION 		= timeToSimulationTime( times.getElementsByTagName("std_deviation").item(0).getTextContent() );
 
 			// CARPARK
-			CARPARK_CAPACITY 	= Integer.parseInt( carpark.getElementsByTagName("carpark_capacity").item(0).getTextContent() );
-			NUM_ENTRANCES 		= Integer.parseInt( carpark.getElementsByTagName("num_entrances").item(0).getTextContent() );
-			NUM_EXITS 			= Integer.parseInt( carpark.getElementsByTagName("num_exits").item(0).getTextContent() );
+			CARPARK_CAPACITY 	= Integer.parseInt(carpark.getElementsByTagName("carpark_capacity").item(0).getTextContent() );
+			NUM_ENTRANCES 		= Integer.parseInt(carpark.getElementsByTagName("num_entrances").item(0).getTextContent() );
+			NUM_EXITS 			= Integer.parseInt(carpark.getElementsByTagName("num_exits").item(0).getTextContent() );
 
             // BARRIER
-            AVG_BARRIER_TIME 	        = timeToSimulationTime( barrier.getElementsByTagName("avg_time").item(0).getTextContent() );
-            AVG_BARRIER_PROBLEM_TIME    = timeToSimulationTime( barrier.getElementsByTagName("avg_problem_time").item(0).getTextContent() );
+            AVG_BARRIER_TIME 	        = timeToSimulationTime(barrier.getElementsByTagName("avg_time").item(0).getTextContent() );
+            AVG_BARRIER_PROBLEM_TIME    = timeToSimulationTime(barrier.getElementsByTagName("avg_problem_time").item(0).getTextContent() );
             PROPORTION_BARRIER_PROBLEM  = Integer.parseInt( barrier.getElementsByTagName("proportion_problem").item(0).getTextContent() );
 
             // CARS
