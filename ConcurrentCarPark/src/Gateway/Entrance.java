@@ -6,10 +6,13 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Entrance implements Lane {
 
 	private static final Logger LOGGER = LogManager.getLogger( "Entrance" );
+
+	ReentrantLock barrierArea = new ReentrantLock(true);
 
 	EntranceBarrierSection barrierSection;
 	Queue<Car> queue = new LinkedList<Car>();
@@ -20,68 +23,42 @@ public class Entrance implements Lane {
 		barrierSection = new EntranceBarrierSection(data);
 	}
 
-	public void addCar(Car c) {
+	public void addToQueue(Car c) {
 
 		queue.add(c);
 	}
 
 	// If the queue is not empty remove the car at the front of the queue
 	// else return null
-	public Car removerCar() {
+	public void removeFromQueue() {
 
-		if(!queue.isEmpty()){
-
-			return queue.remove();
-		} else
-			return null;
-	}
+		queue.remove();
+}
 
 	public int numOfCarsInQueue() {
 
 		return queue.size();
 	}
 
-	public synchronized void advanceLane(Car car) throws InterruptedException {
 
-		LOGGER.info("Car checking queue -" + Thread.currentThread().getId());
 
-		while(!Thread.currentThread().isInterrupted()) {
+	public void moveToBarrier(Car car) throws InterruptedException {
 
-			if (car == queue.peek()) {
+		barrierArea.lock();
 
-				LOGGER.info("Car is at the top of the queue -" + Thread.currentThread().getId());
-				moveCarToBarrier(car);
-				break;
+		try {
 
-			} else {
-				LOGGER.info("Car is waiting its turn in the queue -" + Thread.currentThread().getId());
-				wait();
-				LOGGER.info("Car has awoken -" + Thread.currentThread().getId());
-			}
+			engageWithBarrier(car);
 		}
-	}
+		finally {
 
-	public synchronized void moveCarToBarrier(Car car) throws InterruptedException {
-
-		while(!Thread.currentThread().isInterrupted()) {
-
-			if (barrierSection.isFree()) {
-				removerCar();
-				break;
-			} else {
-				LOGGER.info("Car not free -" + Thread.currentThread().getId());
-				wait();
-				LOGGER.info("Car has awoken to check if barrier free -" + Thread.currentThread().getId());
-			}
+			removeFromQueue();
+			barrierArea.unlock();
 		}
 	}
 
 	public void engageWithBarrier(Car car){
 
 		barrierSection.addCar(car);
-	}
-
-	public synchronized void leaveEntrance(){
-		notifyAll();
 	}
 }

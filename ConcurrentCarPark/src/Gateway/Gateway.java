@@ -62,7 +62,7 @@ public class Gateway {
 				 shortest_lane = test_shortest;
 			 }
 		}
-		 shortest_lane.addCar(c);
+		 shortest_lane.addToQueue(c);
 		 LOGGER.info("Car placed in shortest lane...  -" + Thread.currentThread().getId());
 
 		 return shortest_lane;
