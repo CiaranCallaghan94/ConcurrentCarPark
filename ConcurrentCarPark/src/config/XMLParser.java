@@ -80,6 +80,7 @@ public class XMLParser {
 			// normalize text representation
 			document.getDocumentElement().normalize ();
 
+			// NODES
 			Element times 			= (Element) document.getElementsByTagName("times").item(0);
 			Element carpark 		= (Element) document.getElementsByTagName("carpark").item(0);
 			Element barrier 		= (Element) document.getElementsByTagName("barrier").item(0);
@@ -88,39 +89,53 @@ public class XMLParser {
 			Element student_cars 	= (Element) document.getElementsByTagName("student_cars").item(0);
 
 			// TIMES
-            SIMULATION_SPEED 	= Integer.parseInt( times.getElementsByTagName("simulation_speed").item(0).getTextContent() );
-			OPEN_TIME 			= timeToSimulationTime( times.getElementsByTagName("open_time").item(0).getTextContent() );
-			CLOSE_TIME 			= timeToSimulationTime( times.getElementsByTagName("close_time").item(0).getTextContent() );
-			ARRIVAL_RUSH_HOUR 	= timeToSimulationTime( times.getElementsByTagName("arrival_rush_hour").item(0).getTextContent() );;
-			STD_DEVIATION 		= timeToSimulationTime( times.getElementsByTagName("std_deviation").item(0).getTextContent() );
+            SIMULATION_SPEED 			= parseIntegerAttribute(times, "simulation_speed");
+			OPEN_TIME 					= parseTimeAttribute(times, "open_time");
+			CLOSE_TIME 					= parseTimeAttribute(times, "close_time");
+			ARRIVAL_RUSH_HOUR 			= parseTimeAttribute(times, "arrival_rush_hour");
+			STD_DEVIATION 				= parseTimeAttribute(times, "std_deviation");
 
 			// CARPARK
-			CARPARK_CAPACITY 	= Integer.parseInt( carpark.getElementsByTagName("carpark_capacity").item(0).getTextContent() );
-			NUM_ENTRANCES 		= Integer.parseInt( carpark.getElementsByTagName("num_entrances").item(0).getTextContent() );
-			NUM_EXITS 			= Integer.parseInt( carpark.getElementsByTagName("num_exits").item(0).getTextContent() );
+			CARPARK_CAPACITY 			= parseIntegerAttribute(carpark, "carpark_capacity");
+			NUM_ENTRANCES 				= parseIntegerAttribute(carpark, "num_entrances");
+			NUM_EXITS 					= parseIntegerAttribute(carpark, "num_exits");
 
             // BARRIER
-            AVG_BARRIER_TIME 	        = timeToSimulationTime( barrier.getElementsByTagName("avg_time").item(0).getTextContent() );
-            AVG_BARRIER_PROBLEM_TIME    = timeToSimulationTime( barrier.getElementsByTagName("avg_problem_time").item(0).getTextContent() );
-            PROPORTION_BARRIER_PROBLEM  = Integer.parseInt( barrier.getElementsByTagName("proportion_problem").item(0).getTextContent() );
+            AVG_BARRIER_TIME 	        = parseTimeAttribute(barrier, "avg_time");
+            AVG_BARRIER_PROBLEM_TIME    = parseTimeAttribute(barrier, "avg_problem_time");
+            PROPORTION_BARRIER_PROBLEM  = parseIntegerAttribute(barrier, "proportion_problem");
 
             // CARS
-			NUM_CARS 			= Integer.parseInt( cars.getElementsByTagName("num_cars").item(0).getTextContent() );
-			PROPORTION_STUDENTS = Integer.parseInt( cars.getElementsByTagName("proportion_student").item(0).getTextContent() );
+			NUM_CARS 					= parseIntegerAttribute(cars, "num_cars");
+			PROPORTION_STUDENTS 		= parseIntegerAttribute(cars, "proportion_student");
 
 			// LECTURER CARS
-			AVG_LECTURER_CAR_WIDTH 	= Integer.parseInt( lecturer_cars.getElementsByTagName("avg_lecturer_car_width").item(0).getTextContent() );
-			AVG_LECTURER_DEXTERITY 	= Integer.parseInt( lecturer_cars.getElementsByTagName("avg_lecturer_dexterity").item(0).getTextContent() );
-			AVG_LECTURER_STAY_TIME 	= timeToSimulationTime( lecturer_cars.getElementsByTagName("avg_lecturer_stay_time").item(0).getTextContent() );
+			AVG_LECTURER_CAR_WIDTH 		= parseIntegerAttribute(lecturer_cars, "avg_lecturer_car_width");
+			AVG_LECTURER_DEXTERITY 		= parseIntegerAttribute(lecturer_cars, "avg_lecturer_dexterity");
+			AVG_LECTURER_STAY_TIME 		= parseTimeAttribute(lecturer_cars, "avg_lecturer_stay_time");
 
 			// STUDENT CARS
-			AVG_STUDENT_CAR_WIDTH 	= Integer.parseInt( student_cars.getElementsByTagName("avg_student_car_width").item(0).getTextContent() );
-			AVG_STUDENT_DEXTERITY 	= Integer.parseInt( student_cars.getElementsByTagName("avg_student_dexterity").item(0).getTextContent() );
-			AVG_STUDENT_STAY_TIME 	= timeToSimulationTime( student_cars.getElementsByTagName("avg_student_stay_time").item(0).getTextContent() );
+			AVG_STUDENT_CAR_WIDTH 		= parseIntegerAttribute(student_cars, "avg_student_car_width");
+			AVG_STUDENT_DEXTERITY 		= parseIntegerAttribute(student_cars, "avg_student_dexterity");
+			AVG_STUDENT_STAY_TIME 		= parseTimeAttribute(student_cars, "avg_student_stay_time");
 
 		}
 		catch(ParserConfigurationException e) {}
 		catch(SAXException e) {}
 		catch(IOException e) {}
+	}
+
+	public static int parseTimeAttribute(Element node, String attrib_name) {
+
+		String value = node.getElementsByTagName(attrib_name).item(0).getTextContent();
+
+		return timeToSimulationTime(value);
+	}
+
+	public static int parseIntegerAttribute(Element node, String attrib_name) {
+
+		String value = node.getElementsByTagName(attrib_name).item(0).getTextContent();
+
+		return Integer.parseInt(value);
 	}
 }
