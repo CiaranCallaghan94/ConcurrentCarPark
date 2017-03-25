@@ -12,14 +12,14 @@ public class Exit implements Lane {
 
     ReentrantLock barrierArea = new ReentrantLock(true);
 
-    EntranceBarrierSection barrierSection;
+    ExitBarrierSection barrierSection;
 
     int amountInQueue = 0;
 
     Exit(Data data) {
 
         LOGGER.info("num cars Exit: " + data);
-        barrierSection = new EntranceBarrierSection(data);
+        barrierSection = new ExitBarrierSection(data);
     }
 
     public void moveToBarrier(Car car) throws InterruptedException {

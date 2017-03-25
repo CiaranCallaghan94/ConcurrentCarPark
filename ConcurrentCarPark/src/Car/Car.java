@@ -1,10 +1,9 @@
 package Car;
 
 import Carpark.Carpark;
-import Gateway.Gateway;
 import Gateway.Entrance;
-import Gateway.BarrierSection;
-
+import Gateway.Exit;
+import Gateway.Gateway;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,7 +20,7 @@ public abstract class Car implements Runnable {
     Gateway gateway;
     Carpark carpark;
     Entrance entrance;
-    BarrierSection barrierSection;
+    Exit exit;
 
     Car(Gateway gateway, Carpark carpark) {
 
@@ -61,8 +60,13 @@ public abstract class Car implements Runnable {
 
             // LEAVING
             LOGGER.info("Finished college. Going home..");
-            // TODO: Leave the carpark
 
+            // TODO: Leave the carpark
+            exit = gateway.addCarToExit(this);
+            LOGGER.info("Car is in the queue "+ (entrance.checkLenghtOfQueue()) +" cars back -" + Thread.currentThread().getId());
+            exit.moveToBarrier(this);
+            LOGGER.info("Car is leaving through the barrier -" + Thread.currentThread().getId());
+            LOGGER.info("IM GOING HOME");
 
         } catch(InterruptedException ex) {
             Thread.currentThread().interrupt();

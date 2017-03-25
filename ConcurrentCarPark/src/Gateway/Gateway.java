@@ -41,10 +41,10 @@ public class Gateway {
 		return (Entrance)placeInShortestLane(c, entrances);
 	}
 
-	public void addCarToExit(Car c) {
+	public Exit addCarToExit(Car c) {
 
         LOGGER.info("Managing car departure...  -" + Thread.currentThread().getId());
-		placeInShortestLane(c, exits);
+		return (Exit)placeInShortestLane(c, exits);
     }
 	
 	//Scans through all the entrances and adds the car to the shortest queue
