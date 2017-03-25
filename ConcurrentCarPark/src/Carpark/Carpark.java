@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Carpark {
 
@@ -14,6 +16,8 @@ public class Carpark {
 	private Gateway gateway;
 	List<Space> spaces;
 	List<Car> cars_searching_for_space;
+
+	ReentrantLock space_lock = new ReentrantLock(true);
 
 	public Carpark(int carpark_capacity) {
 
@@ -26,9 +30,92 @@ public class Carpark {
 		cars_searching_for_space = new ArrayList<>();
 	}
 
-	public synchronized void addCarToCarpark(Car c) {
+	public void findASpace(Car car) {
 
-		cars_searching_for_space.add(c);
+		space_lock.lock();
+
+		try {
+
+			Space space;
+			for(int i=0; i< spaces.size(); i++) {
+
+				space = spaces.get(i);
+				if(space.isFree()) {
+
+					// IF both spaces occupied, you're forced to not park over white line
+					if(previousSpaceOccupied(i) && nextSpaceOccupied(i)) {
+						LOGGER.info("Both neighbours full. Car parked normally -" + Thread.currentThread().getId());
+						space.addCar(car);
+					}
+
+					// Otherwise, car can POSSIBLY park over white line...
+					else {
+
+						Random rand = new Random();
+						int random_num = rand.nextInt(100) + 1;
+
+						// If true, park as normal. The lower the dexterity, the more likely this is false
+						if(random_num <= car.getDexterity()) {
+							LOGGER.info("Car parked normally -" + Thread.currentThread().getId());
+							space.addCar(car);
+						}
+
+						// Car will park over white line and occupy 2 spaces
+						else {
+							parkOverWhiteLine(i, car);
+						}
+					}
+
+					LOGGER.info("Car is now parked -" + Thread.currentThread().getId());
+					break;
+				}
+			}
+
+			// TODO: Manage case where car does not park here.
+		}
+		finally {
+			space_lock.unlock();
+		}
+	}
+
+	public boolean previousSpaceOccupied(int space_id) {
+
+		// EDGE CASE: First space has no previous space
+		if(space_id==0)
+			return true;
+		else
+			return spaces.get(space_id-1).isFree();
+
+	}
+
+	public boolean nextSpaceOccupied(int space_id) {
+
+		// EDGE CASE: Last space has no next space
+		if(space_id == spaces.size()) {
+			return true;
+		}
+		else {
+			return spaces.get(space_id+1).isFree();
+		}
+	}
+
+	public void parkOverWhiteLine(int space_id, Car car) {
+
+		// If previous space occupied, take up this space and next space
+		if(previousSpaceOccupied(space_id)) {
+
+			LOGGER.info("Parking over white line onto next space -" + Thread.currentThread().getId());
+			spaces.get(space_id).addCar(car);
+			spaces.get(space_id+1).addCar(car);
+		}
+
+		// Else, take up this space and previous space
+		else {
+
+			LOGGER.info("Parking over white line onto previous space -" + Thread.currentThread().getId());
+			spaces.get(space_id).addCar(car);
+			spaces.get(space_id-1).addCar(car);
+		}
 	}
 
 	/*

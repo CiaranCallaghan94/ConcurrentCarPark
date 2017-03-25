@@ -28,13 +28,13 @@
 
     <lecturer_cars>
         <avg_lecturer_car_width>200</avg_lecturer_car_width>
-        <avg_lecturer_dexterity>80</avg_lecturer_dexterity>
+        <avg_lecturer_dexterity>95</avg_lecturer_dexterity>
         <avg_lecturer_stay_time comment="hh:mm:ss">07:00:00</avg_lecturer_stay_time>
     </lecturer_cars>
 
     <student_cars>
         <avg_student_car_width>170</avg_student_car_width>
-        <avg_student_dexterity>50</avg_student_dexterity>
+        <avg_student_dexterity>85</avg_student_dexterity>
         <avg_student_stay_time comment="hh:mm:ss">03:00:00</avg_student_stay_time>
     </student_cars>
 
