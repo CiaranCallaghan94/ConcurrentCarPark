@@ -6,10 +6,12 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Exit implements Lane {
 
     private static final Logger LOGGER = LogManager.getLogger( "Exit" );
+    ReentrantLock barrierArea = new ReentrantLock(true);
 
     ExitBarrierSection barrierSection;
     Queue<Car> queue = new LinkedList<Car>();
@@ -19,20 +21,16 @@ public class Exit implements Lane {
         barrierSection = new ExitBarrierSection(data);
     }
 
-    public void addCar(Car c) {
+    public void addToQueue(Car c) {
 
         queue.add(c);
     }
 
     // If the queue is not empty remove the car at the front of the queue
     // else return null
-    public Car removerCar() {
+    public void removeFromQueue() {
 
-        if(!queue.isEmpty()){
-
-            return queue.remove();
-        } else
-            return null;
+        queue.remove();
     }
 
     public int numOfCarsInQueue() {
@@ -40,39 +38,25 @@ public class Exit implements Lane {
         return queue.size();
     }
 
-    public void advanceLane(Car car) throws InterruptedException {
 
-        while(!Thread.currentThread().isInterrupted()) {
 
-            if (car == queue.peek()) {
+    public void moveToBarrier(Car car) throws InterruptedException {
 
-                LOGGER.info("Car is at the top of the EXIT queue  -" + Thread.currentThread().getId());
-                moveCarToBarrier(car);
-                break;
+        barrierArea.lock();
 
-            } else {
-                LOGGER.info("Car is waiting its turn in the EXIT queue  -" + Thread.currentThread().getId());
-                wait();
-            }
+        try {
+
+            engageWithBarrier(car);
+        }
+        finally {
+
+            removeFromQueue();
+            barrierArea.unlock();
         }
     }
 
-    public void moveCarToBarrier(Car car) throws InterruptedException {
+    public void engageWithBarrier(Car car){
 
-        while(!Thread.currentThread().isInterrupted()) {
-
-            if (barrierSection.isFree()) {
-
-                LOGGER.info("Car is moving out of the queue and up to the barrier  -" + Thread.currentThread().getId());
-                removerCar();
-                barrierSection.addCar(car);
-                notifyAll();
-                break;
-            } else {
-
-                LOGGER.info("Car is waiting for the barrier section to become free  -" + Thread.currentThread().getId());
-                wait();
-            }
-        }
+        barrierSection.addCar(car);
     }
 }

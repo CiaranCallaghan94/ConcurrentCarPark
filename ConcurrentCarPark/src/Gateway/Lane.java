@@ -3,14 +3,12 @@ import Car.Car;
 
 public interface Lane {
 
-	void addCar(Car c);
+	void addToQueue(Car c);
 
-	Car removerCar();
+	void removeFromQueue();
 
 	int numOfCarsInQueue();
 
-	void advanceLane(Car car) throws InterruptedException;
-
-	void moveCarToBarrier(Car car) throws InterruptedException;
+	void moveToBarrier(Car car) throws InterruptedException;
 	
 }
