@@ -2,22 +2,22 @@ package config;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.io.File;
-import java.io.IOException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
+import java.io.File;
+import java.io.IOException;
 
 public class XMLParser {
 
     private static final Logger LOGGER = LogManager.getLogger( "XMLParser" );
 
     public static String input_path	 = "./ConcurrentCarPark/src/config/input.xml";
+	public static String input_path_2	 = "./src/config/input.xml";
 
     // TIMES
 	public static String OPEN_TIME              = "08:00";
@@ -51,7 +51,7 @@ public class XMLParser {
 
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document document = builder.parse(new File(input_path));
+			Document document = builder.parse(new File(input_path_2));
 
 			// normalize text representation
 			document.getDocumentElement().normalize ();

@@ -46,7 +46,7 @@ public abstract class Car implements Runnable {
             // ENTERING
             LOGGER.info("Car has now arrived, going to gateway -" + Thread.currentThread().getId());
             entrance = gateway.addCarToEntrance(this);
-            LOGGER.info("Car is in the queue "+ (entrance.checkLenghtOfQueue()-1) +" cars back -" + Thread.currentThread().getId());
+            LOGGER.info("Car is in the queue "+ (entrance.checkLenghtOfQueue()) +" cars back -" + Thread.currentThread().getId());
             entrance.moveToBarrier(this);
             LOGGER.info("Car has reached the barrier -" + Thread.currentThread().getId());
             LOGGER.info("Car is entering through the barrier -" + Thread.currentThread().getId());

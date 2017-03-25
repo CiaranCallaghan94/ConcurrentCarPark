@@ -36,7 +36,7 @@ public class Entrance implements Lane {
 
 	public int checkLenghtOfQueue(){
 
-		return barrierArea.getHoldCount();
+		return barrierArea.getQueueLength();
 	}
 
 	public void engageWithBarrier(Car car){
