@@ -7,13 +7,13 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Entrance implements Lane {
 
-    String name;
+    private final String name;
 
-    final Lock barrierArea = new ReentrantLock(true);
+    private final Lock barrierArea = new ReentrantLock(true);
 
-    EntranceBarrierSection barrierSection;
+    private final EntranceBarrierSection barrierSection;
 
-    int amountInQueue = 0;
+    private int amountInQueue = 0;
 
     Entrance(BarrierController barrier_controller, int id) {
 

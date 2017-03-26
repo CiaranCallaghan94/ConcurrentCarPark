@@ -7,12 +7,10 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Exit implements Lane {
 
-    String name;
-    final Lock barrierArea = new ReentrantLock(true);
-
-    ExitBarrierSection barrierSection;
-
-    int amountInQueue = 0;
+    private final String name;
+    private final Lock barrierArea = new ReentrantLock(true);
+    private final ExitBarrierSection barrierSection;
+    private int amountInQueue = 0;
 
     Exit(BarrierController barrier_controller, int id) {
 

@@ -22,7 +22,7 @@
     </arrival_rush_hour>
 
     <carpark>
-        <carpark_capacity>800</carpark_capacity>
+        <carpark_capacity>1000</carpark_capacity>
         <num_entrances>2</num_entrances>
         <num_exits>2</num_exits>
     </carpark>
@@ -34,7 +34,7 @@
     </barrier>
 
     <cars>
-        <num_cars>1000</num_cars>
+        <num_cars>2000</num_cars>
         <proportion_student comment="% from 1-100">90</proportion_student>
     </cars>
 

@@ -8,18 +8,19 @@ import java.util.List;
 
 public class Gateway {
 
-    private static List<Lane> entrances;
-    private static List<Lane> exits;
+    private final List<Lane> entrances;
+    private final List<Lane> exits;
 
-    public SimulationGUI gui;
+    public SimulationGUI GUI;
 
-    public Gateway(int num_entrances, int num_exits, SimulationGUI simGUI) {
+    public Gateway(int num_entrances, int num_exits, SimulationGUI GUI) {
 
-        this.gui = simGUI;
+        this.GUI = GUI;
+
         entrances = new ArrayList<>(num_entrances);
         exits = new ArrayList<>(num_exits);
 
-        BarrierController barrier_controller = new BarrierController(gui);
+        BarrierController barrier_controller = new BarrierController(GUI);
 
         for (int i = 0; i < num_entrances; i++) {
             Lane entrance = new Entrance(barrier_controller,i);

@@ -2,7 +2,7 @@ package Gateway;
 
 public class EntranceBarrierSection extends BarrierSection {
 
-    private BarrierController barrier_controller;
+    private final BarrierController barrier_controller;
 
     public EntranceBarrierSection(BarrierController barrier_controller) {
 
