@@ -86,6 +86,8 @@ public class Carpark {
         for (int space_id : occupied_spaces) {
             spaces.get(space_id).removeCar();
         }
+
+        space_lock.unlock();
     }
 
     public boolean previousSpaceOccupied(int space_id) {
