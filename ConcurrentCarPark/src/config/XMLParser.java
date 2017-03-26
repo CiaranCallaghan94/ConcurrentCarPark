@@ -1,7 +1,5 @@
 package config;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -23,8 +21,6 @@ import java.util.List;
  */
 
 public class XMLParser {
-
-    private static final Logger LOGGER = LogManager.getLogger("XMLParser");
 
     public static String input_path = "./ConcurrentCarPark/src/config/input.xml";
     public static String input_path_2 = "./src/config/input.xml";

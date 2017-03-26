@@ -1,31 +1,32 @@
 package Gateway;
 
 import Car.Car;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Exit implements Lane {
 
-    private static final Logger LOGGER = LogManager.getLogger("Exit");
-
+    String name;
     final Lock barrierArea = new ReentrantLock(true);
 
     ExitBarrierSection barrierSection;
 
     int amountInQueue = 0;
 
-    Exit(BarrierController barrier_controller) {
+    Exit(BarrierController barrier_controller, int id) {
+
+        name = "Exit " + id + ": ";
+
         barrierSection = new ExitBarrierSection(barrier_controller);
     }
 
     public void moveToBarrier(Car car) {
 
+        System.out.println(name + checkLenghtOfQueue());
+        addToQueue();
+        barrierArea.lock();
         try {
-
-            barrierArea.lock();
 
             engageWithBarrier(car);
         }

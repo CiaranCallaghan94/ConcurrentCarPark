@@ -4,15 +4,11 @@ import Carpark.Carpark;
 import Gateway.Entrance;
 import Gateway.Exit;
 import Gateway.Gateway;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Car implements Runnable {
-
-    private static final Logger LOGGER = LogManager.getLogger("Car");
 
     protected int arrive_time;
     protected int stay_time;
@@ -57,7 +53,6 @@ public abstract class Car implements Runnable {
 
     public void waitUntilArrivalTime() {
 
-        LOGGER.info("Car:" + Thread.currentThread().getId() + " is sleeping until arrive time (milliseconds): " + arrive_time);
         try {
             Thread.sleep(arrive_time);
         }
@@ -66,23 +61,17 @@ public abstract class Car implements Runnable {
 
     public void enterThroughGateway() {
 
-        LOGGER.info("Car:" + Thread.currentThread().getId() + " has now arrived, going to gateway");
         entrance = gateway.addCarToEntrance(this);
-        LOGGER.info("Car:" + Thread.currentThread().getId() + " is in the queue " + (entrance.checkLenghtOfQueue()) + " cars back");
         entrance.moveToBarrier(this);
-        LOGGER.info("Car:" + Thread.currentThread().getId() + " is entering through the barrier");
     }
 
     public void parkInCarpark() {
 
-        LOGGER.info("Car:" + Thread.currentThread().getId() + " is entering the carpark");
         carpark.findASpace(this);
-        LOGGER.info("Car:" + Thread.currentThread().getId() + " is now parked");
     }
 
     public void goToCollege() {
 
-        LOGGER.info("Car:" + Thread.currentThread().getId() + " is going into college...");
         try {
             Thread.sleep(stay_time);
         }
@@ -93,14 +82,10 @@ public abstract class Car implements Runnable {
 
     public void exitThroughGateway() {
 
-        LOGGER.info("Car:" + Thread.currentThread().getId() + " is finished college. Going home..");
         carpark.leaveTheCarpark(getSpaces());
 
         exit = gateway.addCarToExit(this);
-        LOGGER.info("Car:" + Thread.currentThread().getId() + " is in the queue " + (exit.checkLenghtOfQueue()) + " cars back");
         exit.moveToBarrier(this);
-        LOGGER.info("Car:" + Thread.currentThread().getId() + " is leaving through the barrier");
-        LOGGER.info("Car:" + Thread.currentThread().getId() + " is going home");
     }
 
     public abstract boolean isStudent();

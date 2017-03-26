@@ -1,9 +1,6 @@
 package Carpark;
 
 import Car.Car;
-import Gateway.Gateway;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +9,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Carpark {
 
-    private static final Logger LOGGER = LogManager.getLogger("Carpark");
-    private Gateway gateway;
     List<Space> spaces;
     List<Car> cars_searching_for_space;
 
@@ -44,7 +39,6 @@ public class Carpark {
 
                     // IF both spaces occupied, you're forced to not park over white line
                     if (previousSpaceOccupied(i) && nextSpaceOccupied(i)) {
-                        LOGGER.info("Both neighbours full. Car parked normally -" + Thread.currentThread().getId());
                         space.addCar(car);
                     }
 
@@ -56,7 +50,6 @@ public class Carpark {
 
                         // If true, park as normal. The lower the dexterity, the more likely this is false
                         if (random_num <= car.getDexterity()) {
-                            LOGGER.info("Car parked normally -" + Thread.currentThread().getId());
                             space.addCar(car);
                         }
 
@@ -66,7 +59,6 @@ public class Carpark {
                         }
                     }
 
-                    LOGGER.info("Car is now parked -" + Thread.currentThread().getId());
                     break;
                 }
             }
@@ -115,7 +107,6 @@ public class Carpark {
         // If previous space occupied, take up this space and next space
         if (previousSpaceOccupied(space_id)) {
 
-            LOGGER.info("Parking over white line onto next space -" + Thread.currentThread().getId());
             spaces.get(space_id).addCar(car);
             spaces.get(space_id + 1).addCar(car);
         }
@@ -123,7 +114,6 @@ public class Carpark {
         // Else, take up this space and previous space
         else {
 
-            LOGGER.info("Parking over white line onto previous space -" + Thread.currentThread().getId());
             spaces.get(space_id).addCar(car);
             spaces.get(space_id - 1).addCar(car);
         }

@@ -1,15 +1,13 @@
 package Gateway;
 
 import Car.Car;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Entrance implements Lane {
 
-    private static final Logger LOGGER = LogManager.getLogger("Entrance");
+    String name;
 
     final Lock barrierArea = new ReentrantLock(true);
 
@@ -17,13 +15,15 @@ public class Entrance implements Lane {
 
     int amountInQueue = 0;
 
-    Entrance(BarrierController barrier_controller) {
+    Entrance(BarrierController barrier_controller, int id) {
 
+        name = "Entrance " + id + ": ";
         barrierSection = new EntranceBarrierSection(barrier_controller);
     }
 
     public void moveToBarrier(Car car) {
 
+        System.out.println(name + checkLenghtOfQueue());
         addToQueue();
         barrierArea.lock();
 

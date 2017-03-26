@@ -2,14 +2,10 @@ package Gateway;
 
 import Car.Car;
 import config.XMLParser;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 
 public abstract class BarrierSection {
-
-    private static final Logger LOGGER = LogManager.getLogger("BarrierSection");
 
     private int std_barrier_time;
     private int std_problem_time;
@@ -43,8 +39,6 @@ public abstract class BarrierSection {
 
         service_time += emulateProblem();
 
-        LOGGER.info("Service time set as: " + service_time);
-
         return service_time;
     }
 
@@ -64,8 +58,6 @@ public abstract class BarrierSection {
             }
 
             additional_time = (int) Math.round(problem_time_dbl);
-
-            LOGGER.info("BarrierSection has problem. Additional time: " + additional_time + " -" + Thread.currentThread().getId());
         }
 
         return additional_time;
@@ -84,13 +76,11 @@ public abstract class BarrierSection {
         int service_time = setServiceTime();
 
         try {
-            LOGGER.info("Car at barrier, putting ticket in... -" + Thread.currentThread().getId());
             Thread.sleep(service_time);
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
 
-        LOGGER.info("Car has put ticket in. Barrier should now open.. -" + Thread.currentThread().getId());
         openBarrier();
         removeCar();
     }

@@ -1,11 +1,6 @@
 package Gateway;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 public class EntranceBarrierSection extends BarrierSection {
-
-    private static final Logger LOGGER = LogManager.getLogger("EntranceBarrierSection");
 
     private BarrierController barrier_controller;
 

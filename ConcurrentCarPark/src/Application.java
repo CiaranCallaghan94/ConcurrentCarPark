@@ -1,12 +1,10 @@
 import Car.Car;
 import Car.LecturerCar;
 import Car.StudentCar;
-import Gateway.Gateway;
 import Carpark.Carpark;
+import Gateway.Gateway;
 import config.ArrivalRushHour;
 import config.XMLParser;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +15,6 @@ import java.util.Random;
  */
 
 public class Application {
-
-    private static final Logger LOGGER = LogManager.getLogger("Simulation");
 
     private static List<Car> cars;
 
@@ -37,7 +33,6 @@ public class Application {
         // CREATE student cars
         while (num_cars_created < num_student_cars) {
 
-            LOGGER.info("num cars created: " + num_cars_created);
             car = new StudentCar(gateway, carpark);
             cars.add(car);
             num_cars_created++;
@@ -46,7 +41,6 @@ public class Application {
         // CREATE lecturer cars (the remaining proportion after creating students)
         while (num_cars_created < XMLParser.NUM_CARS) {
 
-            LOGGER.info("num cars created 2: " + num_cars_created);
             car = new LecturerCar(gateway, carpark);
             cars.add(car);
             num_cars_created++;
@@ -71,8 +65,6 @@ public class Application {
             percent_cars_this_rush_hour = rush_hour.PROPORTION / 100.0;
             num_cars_this_rush_hour = (int) Math.round(cars.size() * percent_cars_this_rush_hour);
             total_cars_after_this_rush_hour = cars_processed + num_cars_this_rush_hour;
-
-            LOGGER.info("Proportion cars this rush hour: " + num_cars_this_rush_hour);
 
             while (cars_processed < total_cars_after_this_rush_hour) {
                 setSingleCarVars(cars_processed, rush_hour.TIME, rush_hour.STD_DEVIATION);
