@@ -48,10 +48,12 @@ public class XMLParser {
     // LECTURER CARS
     public static int AVG_LECTURER_DEXTERITY;
     public static int AVG_LECTURER_STAY_TIME;
+    public static int LECTURER_STAY_TIME_DEVIATION;
 
     // STUDENT CARS
     public static int AVG_STUDENT_DEXTERITY;
     public static int AVG_STUDENT_STAY_TIME;
+    public static int STUDENT_STAY_TIME_DEVIATION;
 
     public static void readInput() {
 
@@ -100,10 +102,12 @@ public class XMLParser {
             // LECTURER CARS
             AVG_LECTURER_DEXTERITY = parseIntegerAttribute(lecturer_cars, "avg_lecturer_dexterity");
             AVG_LECTURER_STAY_TIME = parseTimeAttribute(lecturer_cars, "avg_lecturer_stay_time");
+            LECTURER_STAY_TIME_DEVIATION = parseTimeAttribute(lecturer_cars, "lecturer_stay_time_deviation");
 
             // STUDENT CARS
             AVG_STUDENT_DEXTERITY = parseIntegerAttribute(student_cars, "avg_student_dexterity");
             AVG_STUDENT_STAY_TIME = parseTimeAttribute(student_cars, "avg_student_stay_time");
+            STUDENT_STAY_TIME_DEVIATION = parseTimeAttribute(student_cars, "student_stay_time_deviation");
 
         } catch (ParserConfigurationException e) {
         } catch (SAXException e) {

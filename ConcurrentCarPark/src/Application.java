@@ -84,17 +84,20 @@ public class Application {
 
         Car car = cars.get(car_id);
 
-        Random rand = new Random();
-        arrive_time = (int) Math.round(rand.nextGaussian() * std_deviation + rush_hour);
+        arrive_time = getNormalDistValue(rush_hour, std_deviation);
 
         // Normally distribute time, depending on whether car is student or lecturer
         if (car.isStudent()) {
-            stay_time = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_STUDENT_STAY_TIME);
-            dexterity = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_STUDENT_DEXTERITY);
 
-        } else {
-            stay_time = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_LECTURER_STAY_TIME);
-            dexterity = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_LECTURER_DEXTERITY);
+            stay_time = getNormalDistValue(XMLParser.AVG_STUDENT_STAY_TIME, XMLParser.STUDENT_STAY_TIME_DEVIATION);
+            dexterity = getNormalDistValue(XMLParser.AVG_STUDENT_DEXTERITY, 1);
+        }
+
+        // isLecture
+        else {
+
+            stay_time = getNormalDistValue(XMLParser.AVG_LECTURER_STAY_TIME, XMLParser.LECTURER_STAY_TIME_DEVIATION);
+            dexterity = getNormalDistValue(XMLParser.AVG_LECTURER_DEXTERITY, 1);
         }
 
         car.setVariables(arrive_time, stay_time, dexterity);
@@ -121,6 +124,15 @@ public class Application {
         for(Car c: cars) {
             c.setArrivalTime(c.getArrivalTime() - earliest_arrival_time);
         }
+    }
+
+    public static int getNormalDistValue(int mean, int std_deviation) {
+
+        Random rand = new Random();
+        int sample = (int) Math.abs(Math.round(rand.nextGaussian() *
+                            std_deviation + mean));
+
+        return sample;
     }
 
     public static void main(String[] args) {

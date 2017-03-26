@@ -41,11 +41,13 @@
     <lecturer_cars>
         <avg_lecturer_dexterity comment="% from 1-100">95</avg_lecturer_dexterity>
         <avg_lecturer_stay_time comment="hh:mm:ss">07:00:00</avg_lecturer_stay_time>
+        <lecturer_stay_time_deviation comment="hh:mm:ss">03:00:00</lecturer_stay_time_deviation>
     </lecturer_cars>
 
     <student_cars>
         <avg_student_dexterity comment="% from 1-100">85</avg_student_dexterity>
         <avg_student_stay_time comment="hh:mm:ss">03:00:00</avg_student_stay_time>
+        <student_stay_time_deviation comment="hh:mm:ss">02:00:00</student_stay_time_deviation>
     </student_cars>
 
 </Input>
