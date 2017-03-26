@@ -17,7 +17,6 @@ import java.util.Random;
 
 public class Application {
 
-    private static SimulationGUI simGUI;
     private static List<Car> cars;
 
     // Create the student and lecturer cars based on the inputted 'proportion students'
@@ -139,8 +138,8 @@ public class Application {
 
         XMLParser.readInput();
 
-        simGUI = new SimulationGUI(XMLParser.NUM_ENTRANCES, XMLParser.NUM_EXITS);
-        Gateway gateway = new Gateway(XMLParser.NUM_ENTRANCES, XMLParser.NUM_EXITS, simGUI);
+        SimulationGUI GUI = new SimulationGUI(XMLParser.NUM_ENTRANCES, XMLParser.NUM_EXITS);
+        Gateway gateway = new Gateway(XMLParser.NUM_ENTRANCES, XMLParser.NUM_EXITS, GUI);
         Carpark carpark = new Carpark(XMLParser.CARPARK_CAPACITY);
 
         createCars(gateway, carpark);
