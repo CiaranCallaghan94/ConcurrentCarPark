@@ -18,7 +18,7 @@ public class SimulationGUI extends JFrame {
 
     public SimulationGUI(int num_entrances, int num_exits){
 
-        this.setSize(200,400);
+        this.setSize(400,400);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Carpark Simulation");
 

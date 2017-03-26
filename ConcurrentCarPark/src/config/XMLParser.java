@@ -46,12 +46,10 @@ public class XMLParser {
     public static float PROPORTION_STUDENTS;
 
     // LECTURER CARS
-    public static int AVG_LECTURER_CAR_WIDTH;
     public static int AVG_LECTURER_DEXTERITY;
     public static int AVG_LECTURER_STAY_TIME;
 
     // STUDENT CARS
-    public static int AVG_STUDENT_CAR_WIDTH;
     public static int AVG_STUDENT_DEXTERITY;
     public static int AVG_STUDENT_STAY_TIME;
 
@@ -61,7 +59,7 @@ public class XMLParser {
 
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(new File(input_path_2));
+            Document document = builder.parse(new File(input_path));
 
             // normalize text representation
             document.getDocumentElement().normalize();
@@ -100,12 +98,10 @@ public class XMLParser {
             PROPORTION_STUDENTS = parseIntegerAttribute(cars, "proportion_student");
 
             // LECTURER CARS
-            AVG_LECTURER_CAR_WIDTH = parseIntegerAttribute(lecturer_cars, "avg_lecturer_car_width");
             AVG_LECTURER_DEXTERITY = parseIntegerAttribute(lecturer_cars, "avg_lecturer_dexterity");
             AVG_LECTURER_STAY_TIME = parseTimeAttribute(lecturer_cars, "avg_lecturer_stay_time");
 
             // STUDENT CARS
-            AVG_STUDENT_CAR_WIDTH = parseIntegerAttribute(student_cars, "avg_student_car_width");
             AVG_STUDENT_DEXTERITY = parseIntegerAttribute(student_cars, "avg_student_dexterity");
             AVG_STUDENT_STAY_TIME = parseTimeAttribute(student_cars, "avg_student_stay_time");
 

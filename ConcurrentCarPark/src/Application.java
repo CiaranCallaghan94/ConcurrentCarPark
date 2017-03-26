@@ -81,7 +81,6 @@ public class Application {
         int arrive_time;
         int stay_time;
         int dexterity;
-        int car_width;
 
         Car car = cars.get(car_id);
 
@@ -90,17 +89,15 @@ public class Application {
 
         // Normally distribute time, depending on whether car is student or lecturer
         if (car.isStudent()) {
-            stay_time = arrive_time + (int) Math.round(rand.nextGaussian() + XMLParser.AVG_STUDENT_STAY_TIME);
+            stay_time = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_STUDENT_STAY_TIME);
             dexterity = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_STUDENT_DEXTERITY);
-            car_width = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_STUDENT_DEXTERITY);
 
         } else {
-            stay_time = arrive_time + (int) Math.round(rand.nextGaussian() + XMLParser.AVG_LECTURER_STAY_TIME);
+            stay_time = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_LECTURER_STAY_TIME);
             dexterity = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_LECTURER_DEXTERITY);
-            car_width = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_LECTURER_CAR_WIDTH);
         }
 
-        car.setVariables(arrive_time, stay_time, car_width, dexterity);
+        car.setVariables(arrive_time, stay_time, dexterity);
     }
 
     public static void main(String[] args) {
