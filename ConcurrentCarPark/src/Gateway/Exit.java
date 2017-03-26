@@ -20,14 +20,15 @@ public class Exit implements Lane {
         barrierSection = new ExitBarrierSection(data);
     }
 
-    public void moveToBarrier(Car car) throws InterruptedException {
-
-        barrierArea.lock();
+    public void moveToBarrier(Car car) {
 
         try {
 
+            barrierArea.lock();
+
             engageWithBarrier(car);
-        } finally {
+        }
+        finally {
 
             barrierArea.unlock();
             removeFromQueue();

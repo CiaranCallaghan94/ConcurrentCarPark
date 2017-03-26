@@ -44,40 +44,63 @@ public abstract class Car implements Runnable {
 
     public void run() {
 
+        waitUntilArrivalTime();
+
+        enterThroughGateway();
+
+        parkInCarpark();
+
+        goToCollege();
+
+        exitThroughGateway();
+    }
+
+    public void waitUntilArrivalTime() {
+
+        LOGGER.info("Sleeping until arrive time (milliseconds): " + arrive_time + " -" + Thread.currentThread().getId());
         try {
-
-            LOGGER.info("Sleeping until arrive time (milliseconds): " + arrive_time + " -" + Thread.currentThread().getId());
             Thread.sleep(arrive_time);
-
-            // ENTERING
-            LOGGER.info("Car has now arrived, going to gateway -" + Thread.currentThread().getId());
-            entrance = gateway.addCarToEntrance(this);
-            LOGGER.info("Car is in the queue " + (entrance.checkLenghtOfQueue()) + " cars back -" + Thread.currentThread().getId());
-            entrance.moveToBarrier(this);
-            LOGGER.info("Car is entering through the barrier -" + Thread.currentThread().getId());
-
-            // CARPARK
-            LOGGER.info("Car is entering the carpark -" + Thread.currentThread().getId());
-            carpark.findASpace(this);
-            LOGGER.info("Car is now parked -" + Thread.currentThread().getId());
-
-            // PARKED
-            LOGGER.info("Going to college...");
-            Thread.sleep(stay_time);
-
-            // LEAVING
-            LOGGER.info("Finished college. Going home..");
-            carpark.leaveTheCarpark(getSpaces());
-
-            exit = gateway.addCarToExit(this);
-            LOGGER.info("Car is in the queue " + (entrance.checkLenghtOfQueue()) + " cars back -" + Thread.currentThread().getId());
-            exit.moveToBarrier(this);
-            LOGGER.info("Car is leaving through the barrier -" + Thread.currentThread().getId());
-            LOGGER.info("IM GOING HOME");
-
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
         }
+        catch(InterruptedException e) {}
+    }
+
+    public void enterThroughGateway() {
+
+        LOGGER.info("Car has now arrived, going to gateway -" + Thread.currentThread().getId());
+        entrance = gateway.addCarToEntrance(this);
+        LOGGER.info("Car is in the queue " + (entrance.checkLenghtOfQueue()) + " cars back -" + Thread.currentThread().getId());
+        entrance.moveToBarrier(this);
+        LOGGER.info("Car is entering through the barrier -" + Thread.currentThread().getId());
+    }
+
+    public void parkInCarpark() {
+
+        LOGGER.info("Car is entering the carpark -" + Thread.currentThread().getId());
+        carpark.findASpace(this);
+        LOGGER.info("Car is now parked -" + Thread.currentThread().getId());
+    }
+
+    public void goToCollege() {
+
+        LOGGER.info("Going to college...");
+        try {
+            Thread.sleep(stay_time);
+        }
+        catch(InterruptedException e) {
+
+        }
+    }
+
+    public void exitThroughGateway() {
+
+        LOGGER.info("Finished college. Going home..");
+        carpark.leaveTheCarpark(getSpaces());
+
+        exit = gateway.addCarToExit(this);
+        LOGGER.info("Car is in the queue " + (entrance.checkLenghtOfQueue()) + " cars back -" + Thread.currentThread().getId());
+        exit.moveToBarrier(this);
+        LOGGER.info("Car is leaving through the barrier -" + Thread.currentThread().getId());
+        LOGGER.info("IM GOING HOME");
     }
 
     public abstract boolean isStudent();

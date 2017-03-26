@@ -21,15 +21,16 @@ public class Entrance implements Lane {
         barrierSection = new EntranceBarrierSection(data);
     }
 
-    public void moveToBarrier(Car car) throws InterruptedException {
+    public void moveToBarrier(Car car) {
 
-        addToQueue();
-        barrierArea.lock();
 
         try {
+            addToQueue();
+            barrierArea.lock();
 
             engageWithBarrier(car);
-        } finally {
+        }
+        finally {
 
             barrierArea.unlock();
             removeFromQueue();
