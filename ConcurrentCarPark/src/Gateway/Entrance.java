@@ -2,6 +2,7 @@ package Gateway;
 
 import Car.Car;
 
+import javax.swing.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -15,10 +16,13 @@ public class Entrance implements Lane {
 
     private int amountInQueue = 0;
 
-    Entrance(BarrierController barrier_controller, int id) {
+    private JLabel entrancePanel;
+
+    Entrance(BarrierController barrier_controller, int id, JLabel entrancePanel) {
 
         name = "Entrance " + id + ": ";
         barrierSection = new EntranceBarrierSection(barrier_controller);
+        this.entrancePanel = entrancePanel;
 
         System.out.println(name + checkLenghtOfQueue());
     }
@@ -26,11 +30,11 @@ public class Entrance implements Lane {
     public void moveToBarrier(Car car) {
 
 
-
-        barrierArea.lock();
-
         amountInQueue++;
         System.out.println(name + checkLenghtOfQueue());
+        entrancePanel.setText(name + amountInQueue);
+
+        barrierArea.lock();
 
         try {
 
@@ -40,6 +44,7 @@ public class Entrance implements Lane {
 
             amountInQueue--;
             System.out.println(name + checkLenghtOfQueue());
+            entrancePanel.setText(name + amountInQueue);
 
             barrierArea.unlock();
 
