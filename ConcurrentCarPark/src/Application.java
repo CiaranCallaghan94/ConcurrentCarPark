@@ -100,6 +100,28 @@ public class Application {
         car.setVariables(arrive_time, stay_time, dexterity);
     }
 
+    // Earliest arrival time might be at say, 8am. No need to have threads sleep that long.
+    // Subtract earliest arrival from every arrival time, so sleeps are shortened
+    public static void bringArrivalTimesForward() {
+
+        int earliest_arrival_time = cars.get(0).getArrivalTime();
+        int test_arrival_time;
+
+        // Get earliest arrival time
+        for(Car c: cars) {
+
+            test_arrival_time = c.getArrivalTime();
+
+            if(test_arrival_time < earliest_arrival_time)
+                earliest_arrival_time = test_arrival_time;
+        }
+
+        // Subtract earlier arrival time from all car arrival times.
+        for(Car c: cars) {
+            c.setArrivalTime(c.getArrivalTime() - earliest_arrival_time);
+        }
+    }
+
     public static void main(String[] args) {
 
         XMLParser.readInput();
@@ -110,6 +132,8 @@ public class Application {
 
         createCars(gateway, carpark);
         setAllCarVariables();
+
+        bringArrivalTimesForward();
 
         // Start the car threads
         for (Car c : cars) {

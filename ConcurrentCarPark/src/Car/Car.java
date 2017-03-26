@@ -97,4 +97,12 @@ public abstract class Car implements Runnable {
     public int getDexterity() {
         return dexterity;
     }
+
+    public void setArrivalTime(int arrive_time) {
+        this.arrive_time = arrive_time;
+    }
+
+    public int getArrivalTime() {
+        return arrive_time;
+    }
 }
