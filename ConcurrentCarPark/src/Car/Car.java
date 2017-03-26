@@ -12,7 +12,7 @@ import java.util.List;
 
 public abstract class Car implements Runnable {
 
-    private static final Logger LOGGER = LogManager.getLogger( "Car" );
+    private static final Logger LOGGER = LogManager.getLogger("Car");
 
     protected int arrive_time;
     protected int stay_time;
@@ -37,6 +37,9 @@ public abstract class Car implements Runnable {
 
         this.arrive_time = arrive_time;
         this.stay_time = stay_time;
+
+        this.width = width;
+        this.dexterity = dexterity;
     }
 
     public void run() {
@@ -49,7 +52,7 @@ public abstract class Car implements Runnable {
             // ENTERING
             LOGGER.info("Car has now arrived, going to gateway -" + Thread.currentThread().getId());
             entrance = gateway.addCarToEntrance(this);
-            LOGGER.info("Car is in the queue "+ (entrance.checkLenghtOfQueue()) +" cars back -" + Thread.currentThread().getId());
+            LOGGER.info("Car is in the queue " + (entrance.checkLenghtOfQueue()) + " cars back -" + Thread.currentThread().getId());
             entrance.moveToBarrier(this);
             LOGGER.info("Car is entering through the barrier -" + Thread.currentThread().getId());
 
@@ -67,12 +70,12 @@ public abstract class Car implements Runnable {
             carpark.leaveTheCarpark(getSpaces());
 
             exit = gateway.addCarToExit(this);
-            LOGGER.info("Car is in the queue "+ (entrance.checkLenghtOfQueue()) +" cars back -" + Thread.currentThread().getId());
+            LOGGER.info("Car is in the queue " + (entrance.checkLenghtOfQueue()) + " cars back -" + Thread.currentThread().getId());
             exit.moveToBarrier(this);
             LOGGER.info("Car is leaving through the barrier -" + Thread.currentThread().getId());
             LOGGER.info("IM GOING HOME");
 
-        } catch(InterruptedException ex) {
+        } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
     }

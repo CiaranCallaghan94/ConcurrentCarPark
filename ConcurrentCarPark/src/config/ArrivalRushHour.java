@@ -1,7 +1,7 @@
 package config;
 
 /**
- * ArrivalRushHour is simply responsible for holding
+ * ArrivalRushHour is responsible for simply holding
  * the information for a particular rush hour
  */
 

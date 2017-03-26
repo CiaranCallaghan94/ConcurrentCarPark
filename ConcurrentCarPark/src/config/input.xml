@@ -22,7 +22,7 @@
     </arrival_rush_hour>
 
     <carpark>
-        <carpark_capacity>10000</carpark_capacity>
+        <carpark_capacity>1000</carpark_capacity>
         <num_entrances>3</num_entrances>
         <num_exits>3</num_exits>
     </carpark>
