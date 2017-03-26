@@ -28,14 +28,14 @@ public class Application {
         cars = new ArrayList<>(XMLParser.NUM_CARS);
 
         // Calculate number of student cars
-        double percent_student_cars =  XMLParser.PROPORTION_STUDENTS / 100.0;
+        double percent_student_cars = XMLParser.PROPORTION_STUDENTS / 100.0;
         int num_student_cars = (int) Math.round(XMLParser.NUM_CARS * percent_student_cars);
 
         Car car;
         int num_cars_created = 0;
 
         // CREATE student cars
-        while(num_cars_created < num_student_cars) {
+        while (num_cars_created < num_student_cars) {
 
             car = new StudentCar(gateway, carpark);
             cars.add(car);
@@ -43,7 +43,7 @@ public class Application {
         }
 
         // CREATE lecturer cars (the remaining proportion after creating students)
-        while(num_cars_created < XMLParser.NUM_CARS) {
+        while (num_cars_created < XMLParser.NUM_CARS) {
 
             car = new LecturerCar(gateway, carpark);
             cars.add(car);
