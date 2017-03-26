@@ -23,10 +23,10 @@ public class Entrance implements Lane {
 
     public void moveToBarrier(Car car) {
 
+        addToQueue();
+        barrierArea.lock();
 
         try {
-            addToQueue();
-            barrierArea.lock();
 
             engageWithBarrier(car);
         }
