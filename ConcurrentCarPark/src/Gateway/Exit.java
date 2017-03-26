@@ -4,13 +4,14 @@ import Car.Car;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Exit implements Lane {
 
     private static final Logger LOGGER = LogManager.getLogger("Exit");
 
-    ReentrantLock barrierArea = new ReentrantLock(true);
+    final Lock barrierArea = new ReentrantLock(true);
 
     ExitBarrierSection barrierSection;
 
