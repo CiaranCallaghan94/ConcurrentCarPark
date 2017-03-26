@@ -101,7 +101,8 @@ public class Application {
     }
 
     // Earliest arrival time might be at say, 8am. No need to have threads sleep that long.
-    // Subtract earliest arrival from every arrival time, so sleeps are shortened
+    // Subtract earliest arrival from every arrival time, so sleeps are shortened.
+    // This gives the effect of the first car arriving once the simulation starts.
     public static void bringArrivalTimesForward() {
 
         int earliest_arrival_time = cars.get(0).getArrivalTime();
