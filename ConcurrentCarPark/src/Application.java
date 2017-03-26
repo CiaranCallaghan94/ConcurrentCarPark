@@ -27,21 +27,25 @@ public class Application {
 
         cars = new ArrayList<>(XMLParser.NUM_CARS);
 
-        float random_num;
-        Random rand = new Random();
+        // Calculate number of student cars
+        double percent_student_cars =  XMLParser.PROPORTION_STUDENTS / 100.0;
+        int num_student_cars = (int) Math.round(XMLParser.NUM_CARS * percent_student_cars);
 
         Car car;
-        for (int i = 0; i < XMLParser.NUM_CARS; i++) {
+        int num_cars_created = 0;
 
-            // Here, student or lecturer car is created depending on a "100-sided dice roll".
-            // If the dice lands within the inputted proportion of students,
-            // a student car is created, else a lecturer is created.
-            random_num = rand.nextFloat();
-            if (random_num <= XMLParser.PROPORTION_STUDENTS)
-                car = new StudentCar(gateway, carpark);
-            else
-                car = new LecturerCar(gateway, carpark);
+        // CREATE student cars
+        while(num_cars_created < num_student_cars) {
 
+            car = new StudentCar(gateway, carpark);
+            cars.add(car);
+            num_cars_created++;
+        }
+
+        // CREATE lecturer cars (the remaining proportion after creating students)
+        while(num_cars_created < XMLParser.NUM_CARS) {
+
+            car = new LecturerCar(gateway, carpark);
             cars.add(car);
         }
     }
