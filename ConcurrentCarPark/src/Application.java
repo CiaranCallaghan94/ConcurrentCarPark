@@ -94,7 +94,7 @@ public class Application {
         Random rand = new Random();
         arrive_time = (int) Math.round(rand.nextGaussian() * std_deviation + rush_hour);
 
-        // Normally distribute time, depening on whether car is student or lecturer
+        // Normally distribute time, depending on whether car is student or lecturer
         if (car.isStudent()) {
             stay_time = arrive_time + (int) Math.round(rand.nextGaussian() + XMLParser.AVG_STUDENT_STAY_TIME);
             dexterity = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_STUDENT_DEXTERITY);
@@ -112,7 +112,6 @@ public class Application {
     public static void main(String[] args) {
 
         XMLParser.readInput();
-
         Gateway gateway = new Gateway(XMLParser.NUM_ENTRANCES, XMLParser.NUM_EXITS);
         Carpark carpark = new Carpark(XMLParser.CARPARK_CAPACITY);
 

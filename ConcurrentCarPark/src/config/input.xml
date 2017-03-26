@@ -6,7 +6,7 @@
     <arrival_rush_hour id="1">
         <time comment="hh:mm:ss">08:00:00</time>
         <proportion comment="%">20</proportion>
-        <std_deviation comment="hh:mm:ss">00:30:00</std_deviation>
+        <std_deviation comment="hh:mm:ss">0:30:00</std_deviation>
     </arrival_rush_hour>
 
     <arrival_rush_hour id="2">
@@ -22,9 +22,9 @@
     </arrival_rush_hour>
 
     <carpark>
-        <carpark_capacity>1000</carpark_capacity>
-        <num_entrances>3</num_entrances>
-        <num_exits>3</num_exits>
+        <carpark_capacity>5</carpark_capacity>
+        <num_entrances>1</num_entrances>
+        <num_exits>1</num_exits>
     </carpark>
 
     <barrier>
@@ -34,7 +34,7 @@
     </barrier>
 
     <cars>
-        <num_cars>2500</num_cars>
+        <num_cars>10</num_cars>
         <proportion_student comment="% from 1-100">90</proportion_student>
     </cars>
 
