@@ -19,12 +19,15 @@ public class Entrance implements Lane {
 
         name = "Entrance " + id + ": ";
         barrierSection = new EntranceBarrierSection(barrier_controller);
+
+        System.out.println(name + checkLenghtOfQueue());
     }
 
     public void moveToBarrier(Car car) {
 
-        System.out.println(name + checkLenghtOfQueue());
         addToQueue();
+        System.out.println(name + checkLenghtOfQueue());
+
         barrierArea.lock();
 
         try {
@@ -34,7 +37,9 @@ public class Entrance implements Lane {
         finally {
 
             barrierArea.unlock();
+
             removeFromQueue();
+            System.out.println(name + checkLenghtOfQueue());
         }
     }
 

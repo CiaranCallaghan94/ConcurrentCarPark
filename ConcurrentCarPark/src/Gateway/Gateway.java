@@ -50,6 +50,15 @@ public class Gateway {
 
                 shortest_lane = test_shortest;
             }
+            // Adds a random chance of which lane the car enters if the queues are the same
+            else if(test_shortest.checkLenghtOfQueue() == shortest_lane.checkLenghtOfQueue()) {
+
+                int temp = (Math.random() < 0.5) ? 1 : 2;
+
+                if (temp == 2){
+                    shortest_lane = test_shortest;
+                }
+            }
         }
         return shortest_lane;
     }
