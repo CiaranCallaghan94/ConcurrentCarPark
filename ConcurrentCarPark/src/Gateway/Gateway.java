@@ -1,6 +1,7 @@
 package Gateway;
 
 import Car.Car;
+import GUI.SimulationGUI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +11,15 @@ public class Gateway {
     private static List<Lane> entrances;
     private static List<Lane> exits;
 
-    public Gateway(int num_entrances, int num_exits) {
+    public SimulationGUI gui;
 
+    public Gateway(int num_entrances, int num_exits, SimulationGUI simGUI) {
+
+        this.gui = simGUI;
         entrances = new ArrayList<>(num_entrances);
         exits = new ArrayList<>(num_exits);
 
-        BarrierController barrier_controller = new BarrierController();
+        BarrierController barrier_controller = new BarrierController(gui);
 
         for (int i = 0; i < num_entrances; i++) {
             Lane entrance = new Entrance(barrier_controller,i);

@@ -2,6 +2,7 @@ import Car.Car;
 import Car.LecturerCar;
 import Car.StudentCar;
 import Carpark.Carpark;
+import GUI.SimulationGUI;
 import Gateway.Gateway;
 import config.ArrivalRushHour;
 import config.XMLParser;
@@ -16,6 +17,7 @@ import java.util.Random;
 
 public class Application {
 
+    private static SimulationGUI simGUI;
     private static List<Car> cars;
 
     // Create the student and lecturer cars based on the inputted 'proportion students'
@@ -103,8 +105,10 @@ public class Application {
 
     public static void main(String[] args) {
 
+        simGUI = new SimulationGUI();
+
         XMLParser.readInput();
-        Gateway gateway = new Gateway(XMLParser.NUM_ENTRANCES, XMLParser.NUM_EXITS);
+        Gateway gateway = new Gateway(XMLParser.NUM_ENTRANCES, XMLParser.NUM_EXITS, simGUI);
         Carpark carpark = new Carpark(XMLParser.CARPARK_CAPACITY);
 
         createCars(gateway, carpark);
@@ -114,5 +118,6 @@ public class Application {
         for (Car c : cars) {
             new Thread(c).start();
         }
+
     }
 }

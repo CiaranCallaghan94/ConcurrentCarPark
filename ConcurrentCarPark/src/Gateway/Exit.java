@@ -25,20 +25,20 @@ public class Exit implements Lane {
 
     public void moveToBarrier(Car car) {
 
-        addToQueue();
+        amountInQueue++;
         System.out.println(name + checkLenghtOfQueue());
-
         barrierArea.lock();
+
         try {
 
             engageWithBarrier(car);
         }
         finally {
 
-            barrierArea.unlock();
-
-            removeFromQueue();
+            amountInQueue--;
             System.out.println(name + checkLenghtOfQueue());
+
+            barrierArea.unlock();
         }
     }
 
@@ -52,13 +52,4 @@ public class Exit implements Lane {
         barrierSection.addCar(car);
     }
 
-    public void addToQueue() {
-
-        amountInQueue++;
-    }
-
-    public void removeFromQueue() {
-
-        amountInQueue--;
-    }
 }

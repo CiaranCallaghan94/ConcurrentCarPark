@@ -25,10 +25,12 @@ public class Entrance implements Lane {
 
     public void moveToBarrier(Car car) {
 
-        addToQueue();
-        System.out.println(name + checkLenghtOfQueue());
+
 
         barrierArea.lock();
+
+        amountInQueue++;
+        System.out.println(name + checkLenghtOfQueue());
 
         try {
 
@@ -36,10 +38,11 @@ public class Entrance implements Lane {
         }
         finally {
 
+            amountInQueue--;
+            System.out.println(name + checkLenghtOfQueue());
+
             barrierArea.unlock();
 
-            removeFromQueue();
-            System.out.println(name + checkLenghtOfQueue());
         }
     }
 
@@ -53,13 +56,4 @@ public class Entrance implements Lane {
         barrierSection.addCar(car);
     }
 
-    public void addToQueue() {
-
-        amountInQueue++;
-    }
-
-    public void removeFromQueue() {
-
-        amountInQueue--;
-    }
 }
