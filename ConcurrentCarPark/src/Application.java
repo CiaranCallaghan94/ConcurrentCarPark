@@ -37,6 +37,7 @@ public class Application {
         // CREATE student cars
         while (num_cars_created < num_student_cars) {
 
+            LOGGER.info("num cars created: " + num_cars_created);
             car = new StudentCar(gateway, carpark);
             cars.add(car);
             num_cars_created++;
@@ -45,8 +46,10 @@ public class Application {
         // CREATE lecturer cars (the remaining proportion after creating students)
         while (num_cars_created < XMLParser.NUM_CARS) {
 
+            LOGGER.info("num cars created 2: " + num_cars_created);
             car = new LecturerCar(gateway, carpark);
             cars.add(car);
+            num_cars_created++;
         }
     }
 

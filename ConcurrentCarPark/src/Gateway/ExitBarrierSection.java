@@ -12,23 +12,15 @@ public class ExitBarrierSection extends BarrierSection {
 
     private static final Logger LOGGER = LogManager.getLogger("ExitBarrierSection");
 
-    ExitBarrier exit_barrier;
+    BarrierController barrier_controller;
 
-    public ExitBarrierSection(Data data) {
-        exit_barrier = new ExitBarrier(data);
+    public ExitBarrierSection(BarrierController barrier_controller) {
+
+        this.barrier_controller = barrier_controller;
     }
 
     public void openBarrier() {
 
-        ExecutorService executorService = Executors.newFixedThreadPool(1);
-        Future future = executorService.submit(exit_barrier);
-
-        try {
-            LOGGER.info("Calling EXIT future.get");
-            future.get();
-            LOGGER.info("Get EXIT complete");
-        } catch (InterruptedException e) {
-        } catch (ExecutionException e) {
-        }
+        barrier_controller.openExitBarrier();
     }
 }

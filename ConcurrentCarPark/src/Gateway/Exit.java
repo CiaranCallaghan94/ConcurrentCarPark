@@ -16,8 +16,8 @@ public class Exit implements Lane {
 
     int amountInQueue = 0;
 
-    Exit(Data data) {
-        barrierSection = new ExitBarrierSection(data);
+    Exit(BarrierController barrier_controller) {
+        barrierSection = new ExitBarrierSection(barrier_controller);
     }
 
     public void moveToBarrier(Car car) {

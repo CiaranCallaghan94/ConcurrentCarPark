@@ -19,15 +19,15 @@ public class Gateway {
         entrances = new ArrayList<>(num_entrances);
         exits = new ArrayList<>(num_exits);
 
-        Data data = new Data();
+        BarrierController barrier_controller = new BarrierController();
 
         for (int i = 0; i < num_entrances; i++) {
-            Lane entrance = new Entrance(data);
+            Lane entrance = new Entrance(barrier_controller);
             entrances.add(entrance);
         }
 
         for (int i = 0; i < num_exits; i++) {
-            Lane exit = new Exit(data);
+            Lane exit = new Exit(barrier_controller);
             exits.add(exit);
         }
     }

@@ -16,9 +16,9 @@ public class Entrance implements Lane {
 
     int amountInQueue = 0;
 
-    Entrance(Data data) {
+    Entrance(BarrierController barrier_controller) {
 
-        barrierSection = new EntranceBarrierSection(data);
+        barrierSection = new EntranceBarrierSection(barrier_controller);
     }
 
     public void moveToBarrier(Car car) {
