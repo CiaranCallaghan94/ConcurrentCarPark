@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Input>
 
-    <simulation_speed comment="1 for real-time. Recommended: 100000">1000</simulation_speed>
+    <simulation_speed comment="1 for real-time. Recommended: Over 1000">1000</simulation_speed>
 
     <arrival_rush_hour id="1">
         <time comment="hh:mm:ss">08:00:00</time>
