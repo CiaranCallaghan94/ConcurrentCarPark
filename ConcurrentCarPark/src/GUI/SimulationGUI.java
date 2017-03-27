@@ -13,7 +13,6 @@ public class SimulationGUI extends JFrame {
 
     Box mainBox;
 
-    private JLabel title;
     private List<JLabel> entrances_panels = new LinkedList<>();
     private List<JLabel> exits_panels = new LinkedList<>();
     private JLabel total_cars_in_scene_panel;
@@ -40,17 +39,11 @@ public class SimulationGUI extends JFrame {
         this.add(mainBox);
 
         // Title
-        JPanel center_panel = new JPanel(new GridLayout(0, 1));
+        createTitlePanel("Carpark Simulator");
 
-        title = new JLabel("Carpark Simulation", SwingConstants.CENTER);
-        title.setForeground(Color.BLUE);
-
-        center_panel.setLayout(new BorderLayout(5, 5));
-        center_panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
-        center_panel.add(title, SwingConstants.CENTER);
-        mainBox.add(center_panel);
-        mainBox.add(Box.createVerticalStrut(10));
+        // Max cars in simulation
+        this.max_cars_in_simulation = max_cars;
+        maxCarsInSimulation();
 
         // Cars in scene
         totalCarsInSceneLabel();
@@ -60,18 +53,15 @@ public class SimulationGUI extends JFrame {
         carparkOccupancyLabel();
 
         // Entrances
+        createTitlePanel("Entrances");
         totalCarsAtEntrancesLabel();
         individualEntranceLabels(num_entrances);
 
         // Exits
+        createTitlePanel("Exits");
         totalCarsAtExitsLabel();
         individualExitLabels(num_exits);
 
-        // Max cars in simulation
-        this.max_cars_in_simulation = max_cars;
-        maxCarsInSimulation();
-
-        this.setLocationRelativeTo(null);
         this.setSize(600,400);
 
         // Centers Frame
@@ -86,6 +76,18 @@ public class SimulationGUI extends JFrame {
                 entrances_panels, exits_panels, total_cars_in_scene_panel, cars_in_carpark_and_capacity,
                 total_cars_at_entrances_panel, total_cars_at_exits_panel, max_cars_in_simulation_panel,
                 entrances_nums, exits_nums, num_entrances, num_exits, max_cars_in_simulation, carpark_capacity, max_cars);
+    }
+
+    private void createTitlePanel(String title) {
+
+        JPanel title_panel = new JPanel(new GridLayout(0, 1));
+
+        JLabel title_label = new JLabel(title, SwingConstants.CENTER);
+        title_label.setForeground(Color.BLUE);
+
+        title_panel.add(title_label, SwingConstants.CENTER);
+        mainBox.add(title_panel);
+        mainBox.add(Box.createVerticalStrut(10));
     }
 
     private void totalCarsInSceneLabel() {
@@ -148,5 +150,3 @@ public class SimulationGUI extends JFrame {
         mainBox.add(Box.createVerticalStrut(10));
     }
 }
-
-
