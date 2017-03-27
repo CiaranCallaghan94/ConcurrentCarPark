@@ -9,9 +9,6 @@ import java.util.List;
  */
 public class GUIupdater {
 
-    private SimulationGUI GUI;
-
-    public JLabel title;
     public List<JLabel> entrances_panels = new LinkedList<>();
     public List<JLabel> exits_panels = new LinkedList<>();
     public JLabel total_cars_in_scene_panel;
