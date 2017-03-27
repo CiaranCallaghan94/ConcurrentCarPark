@@ -6,12 +6,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by ciarancallaghan on 26/03/2017.
+ * The SimulationGUI class is the projects GUI class.
+ * When the application is run this class is created which generates the GUI.
+ * All the work is done in the constructor.
  */
 public class SimulationGUI extends JFrame {
 
-    Box mainBox;
-
+    private Box mainBox;
     private List<JLabel> entrances_panels = new LinkedList<>();
     private List<JLabel> exits_panels = new LinkedList<>();
     private JLabel total_cars_in_scene_panel;
@@ -19,50 +20,50 @@ public class SimulationGUI extends JFrame {
     private JLabel total_cars_at_entrances_panel;
     private JLabel total_cars_at_exits_panel;
     private JLabel max_cars_in_simulation_panel;
-
     private int max_cars_in_simulation = 0;
     private int carpark_capacity = 0;
-
     private List<Integer> entrances_nums = new LinkedList<>();
     private List<Integer> exits_nums = new LinkedList<>();
-
     public GUIupdater updater;
 
-    public SimulationGUI(int num_entrances, int num_exits, int carpark_capacity, int max_cars) {
+    public SimulationGUI(int num_entrances, int num_exits, int carpark_capacity, int max_cars){
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Title of the frame
         this.setTitle("Carpark Simulation");
 
 
-        // Panel
+        // Creates a box layout for the components
         mainBox = Box.createVerticalBox();
         this.add(mainBox);
 
-        // Title
+        // Title Label
         createMainTitlePanel("Carpark Simulator");
 
-        // Max cars in simulation
+        // Max cars in simulation Label
         this.max_cars_in_simulation = max_cars;
         maxCarsInSimulation();
 
-        // Cars in scene
+        // Cars in scene Label
         totalCarsInSceneLabel();
 
-        // Carpark Occupancy Capacity
+        // Carpark Occupancy/Capacity Label
         this.carpark_capacity = carpark_capacity;
         carparkOccupancyLabel();
 
-        // Entrances
+        // Entrances Labels
         createTitlePanel("Entrances");
         totalCarsAtEntrancesLabel();
         individualEntranceLabels(num_entrances);
 
-        // Exits
+        // Exits Labels
         createTitlePanel("Exits");
         totalCarsAtExitsLabel();
         individualExitLabels(num_exits);
 
-        this.setSize(400, 400);
+        //Set Frame size
+        this.setSize(400,400);
         // Centers Frame
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
@@ -77,32 +78,29 @@ public class SimulationGUI extends JFrame {
                 entrances_nums, exits_nums, num_entrances, num_exits, max_cars_in_simulation, carpark_capacity, max_cars);
     }
 
-    private void createTitlePanel(String title) {
 
-        JPanel title_panel = new JPanel(new GridLayout(0, 1));
 
-        JLabel title_label = new JLabel(title, SwingConstants.CENTER);
-        title_label.setForeground(Color.BLUE);
-
-        Font boldFont = new Font(title_label.getText(), Font.BOLD, 14);
-        title_label.setFont(boldFont);
-
-        title_panel.add(title_label);
-        mainBox.add(title_panel);
-        mainBox.add(Box.createVerticalStrut(10));
-    }
 
     private void createMainTitlePanel(String title) {
 
         JPanel title_panel = new JPanel(new GridLayout(0, 1));
-
         JLabel title_label = new JLabel(title, SwingConstants.CENTER);
         title_label.setForeground(Color.BLUE);
-
         Font boldFont = new Font(title_label.getText(), Font.BOLD, 17);
         title_label.setFont(boldFont);
-
         title_panel.add(title_label, SwingConstants.CENTER);
+        mainBox.add(title_panel);
+        mainBox.add(Box.createVerticalStrut(10));
+    }
+
+    private void createTitlePanel(String title) {
+
+        JPanel title_panel = new JPanel(new GridLayout(0, 1));
+        JLabel title_label = new JLabel(title, SwingConstants.CENTER);
+        title_label.setForeground(Color.BLUE);
+        Font boldFont = new Font(title_label.getText(), Font.BOLD, 14);
+        title_label.setFont(boldFont);
+        title_panel.add(title_label);
         mainBox.add(title_panel);
         mainBox.add(Box.createVerticalStrut(10));
     }
@@ -124,7 +122,8 @@ public class SimulationGUI extends JFrame {
     }
 
     private void totalCarsAtEntrancesLabel() {
-        total_cars_at_entrances_panel = new JLabel("Total: " + 0);
+
+        total_cars_at_entrances_panel =  new JLabel("Total: "+ 0);
         Font boldFont = new Font(total_cars_at_entrances_panel.getText(), Font.BOLD, 13);
         total_cars_at_entrances_panel.setFont(boldFont);
         addToMainbox(total_cars_at_entrances_panel);
@@ -132,9 +131,9 @@ public class SimulationGUI extends JFrame {
 
     private void individualEntranceLabels(int num_entrances) {
 
-        for (int i = 0; i < num_entrances; i++) {
+        for (int i = 0; i < num_entrances; i++){
 
-            int num = i + 1;
+            int num = i+1;
             entrances_nums.add(0);
             JLabel cars_at_entrance = new JLabel("Entrance " + num + ": 0");
             entrances_panels.add(cars_at_entrance);
@@ -144,7 +143,7 @@ public class SimulationGUI extends JFrame {
 
     private void totalCarsAtExitsLabel() {
 
-        total_cars_at_exits_panel = new JLabel("Total: " + 0);
+        total_cars_at_exits_panel =  new JLabel("Total: "+ 0);
         Font boldFont = new Font(total_cars_at_exits_panel.getText(), Font.BOLD, 13);
         total_cars_at_exits_panel.setFont(boldFont);
         addToMainbox(total_cars_at_exits_panel);
@@ -152,9 +151,9 @@ public class SimulationGUI extends JFrame {
 
     private void individualExitLabels(int num_exits) {
 
-        for (int i = 0; i < num_exits; i++) {
+        for (int i = 0; i < num_exits; i++){
 
-            int num = i + 1;
+            int num = i+1;
             exits_nums.add(0);
             JLabel cars_at_exit = new JLabel("Exit " + num + ": 0");
             exits_panels.add(cars_at_exit);
@@ -165,7 +164,7 @@ public class SimulationGUI extends JFrame {
     private void maxCarsInSimulation() {
 
         max_cars_in_simulation_panel = new JLabel("Total cars in simulation: " +
-                0 + "/" + max_cars_in_simulation);
+                                                    0 + "/" + max_cars_in_simulation);
         Font boldFont = new Font(max_cars_in_simulation_panel.getText(), Font.BOLD, 13);
         max_cars_in_simulation_panel.setFont(boldFont);
         addToMainbox(max_cars_in_simulation_panel);
