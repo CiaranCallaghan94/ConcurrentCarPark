@@ -1,7 +1,6 @@
 package GUI;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -62,14 +61,15 @@ public class SimulationGUI extends JFrame {
         totalCarsAtExitsLabel();
         individualExitLabels(num_exits);
 
-        this.setSize(600,400);
-
+        //this.setSize(300,400);
+        this.pack();
         // Centers Frame
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
         int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
         this.setLocation(x, y);
 
+        setResizable(false);
         this.setVisible(true);
 
         this.updater = new GUIupdater(
@@ -103,7 +103,7 @@ public class SimulationGUI extends JFrame {
     }
 
     private void totalCarsAtEntrancesLabel() {
-        total_cars_at_entrances_panel =  new JLabel("Amount of cars at all entrances: "+ 0);
+        total_cars_at_entrances_panel =  new JLabel("Combined total of cars at all entrances: "+ 0);
         addToMainbox(total_cars_at_entrances_panel);
     }
 
@@ -121,7 +121,7 @@ public class SimulationGUI extends JFrame {
 
     private void totalCarsAtExitsLabel() {
 
-        total_cars_at_exits_panel =  new JLabel("Amount of cars at all entrances: "+ 0);
+        total_cars_at_exits_panel =  new JLabel("Combined total of cars at all entrances: "+ 0);
         addToMainbox(total_cars_at_exits_panel);
     }
 
