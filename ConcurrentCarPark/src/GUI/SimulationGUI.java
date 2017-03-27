@@ -68,8 +68,7 @@ public class SimulationGUI extends JFrame {
         int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
         int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
         this.setLocation(x, y);
-
-        setResizable(false);
+        
         this.setVisible(true);
 
         this.updater = new GUIupdater(
