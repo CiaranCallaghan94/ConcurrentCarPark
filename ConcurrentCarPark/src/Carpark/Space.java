@@ -2,6 +2,11 @@ package Carpark;
 
 import Car.Car;
 
+/**
+ * This class contains a single Space. A space may contain or
+ * may not contain a car.
+ */
+
 public class Space {
 
     private Car car = null;
@@ -16,17 +21,19 @@ public class Space {
 
     }
 
-    public void addCar(Car c) {
+    /** Package-private methods **/
+
+    void addCar(Car c) {
         is_free = false;
         car = c;
     }
 
-    public Car removeCar() {
+    Car removeCar() {
         is_free = true;
         return car;
     }
 
-    public boolean isFree() {
+    boolean isFree() {
         return is_free;
     }
 
