@@ -69,7 +69,7 @@ public class GUIupdater {
         updateStats();
     }
 
-    public void updateStats() {
+    private void updateStats() {
 
         total_cars_in_scene = 0;
         total_cars_at_entrances = 0;
