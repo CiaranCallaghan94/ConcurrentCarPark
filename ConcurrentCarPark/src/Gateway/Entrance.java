@@ -7,7 +7,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * The Entrance maintains fairness with its ReentrantLock
+ * The Entrance maintains a queue of cars waiting to access an entrance barrier.
  * The lock is used to ensure only one car approaches the barrier at a time.
  * The fairness parameter in the Reentrant lock enables us to make a queue like
  * feature, The longest waiting car moves to the barrier next.
@@ -16,13 +16,9 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Entrance {
 
     private final String name;
-
     private final Lock barrierArea = new ReentrantLock(true);
-
     private final EntranceBarrierSection barrierSection;
-
     private int amountInQueue = 0;
-
     private int id = 0;
 
     private SimulationGUI GUI;
@@ -38,30 +34,27 @@ public class Entrance {
     }
 
     // The car will request to move up to the barrier.
-    // If it is succesful the car will engage with the barrier.
+    // If it is successful the car will engage with the barrier.
     // If it is not it will wait its turn.
     // This will also update the GUI when a car enters or leaves the queue.
     public void moveToBarrier(Car car) {
 
         amountInQueue++;
         System.out.println(name + checkLengthOfQueue());
-        GUI.updater.setEntranceNum(id,checkLengthOfQueue());
+        GUI.updater.setEntranceNum(id, checkLengthOfQueue());
 
         barrierArea.lock();
 
         try {
 
             engageWithBarrier(car);
-        }
-        finally {
+        } finally {
 
             barrierArea.unlock();
 
             amountInQueue--;
             System.out.println(name + checkLengthOfQueue());
-            GUI.updater.setEntranceNum(id,checkLengthOfQueue());
-
-
+            GUI.updater.setEntranceNum(id, checkLengthOfQueue());
         }
     }
 

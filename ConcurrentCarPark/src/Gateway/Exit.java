@@ -7,12 +7,11 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * The Exit maintains fairness with its ReentrantLock
+ * The Entrance maintains a queue of cars waiting to access an exit barrier.
  * The lock is used to ensure only one car approaches the barrier at a time.
  * The fairness parameter in the Reentrant lock enables us to make a queue like
  * feature, The longest waiting car moves to the barrier next.
  */
-
 
 public class Exit {
 
@@ -48,8 +47,7 @@ public class Exit {
         try {
 
             engageWithBarrier(car);
-        }
-        finally {
+        } finally {
 
             barrierArea.unlock();
 

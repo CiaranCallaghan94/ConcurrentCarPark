@@ -48,10 +48,14 @@ public class Gateway {
         }
     }
 
-    //Scans through all the entrances and adds the car to the shortest queue.
+    // Scans through all the entrances to find the shortest queue.
+    // Adds the car to that queue.
     private Entrance placeInShortestEntrance(Car c, List<Entrance> lanes) {
 
+        // Try acquire lock, if not go into waiting queue
         gatewayInLock.lock();
+
+        // Acquired lock, in critical section
 
         GUI.updater.increaseTotalCarsInSimulation();
 
@@ -79,6 +83,7 @@ public class Gateway {
             return shortest_lane;
         }
         finally {
+            // Release lock
             gatewayInLock.unlock();
         }
     }
@@ -86,7 +91,10 @@ public class Gateway {
     //Scans through all the entrances and adds the car to the shortest queue
     private Exit placeInShortestExit(Car c, List<Exit> lanes) {
 
+        // Try acquire lock, if not go into waiting queue
         gatewayOutLock.lock();
+
+        // Acquired lock, in critical section
 
         try {
 
@@ -112,6 +120,7 @@ public class Gateway {
             return shortest_lane;
         }
         finally {
+            // Release lock
             gatewayOutLock.unlock();
         }
     }
