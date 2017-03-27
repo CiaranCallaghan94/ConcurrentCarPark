@@ -23,17 +23,20 @@ public class Gateway {
         BarrierController barrier_controller = new BarrierController(GUI);
 
         for (int i = 0; i < num_entrances; i++) {
-            Lane entrance = new Entrance(barrier_controller,i,GUI.entrances.get(i));
+            Lane entrance = new Entrance(barrier_controller,i,GUI);
             entrances.add(entrance);
         }
 
         for (int i = 0; i < num_exits; i++) {
-            Lane exit = new Exit(barrier_controller,i,GUI.exits.get(i));
+            Lane exit = new Exit(barrier_controller,i,GUI);
             exits.add(exit);
         }
     }
 
     public Entrance addCarToEntrance(Car c) {
+
+        GUI.increaseTotalCarsInSimulation();
+        GUI.updateStats();
 
         return (Entrance) placeInShortestLane(c, entrances);
     }

@@ -23,7 +23,7 @@
 
     <carpark>
         <carpark_capacity>1000</carpark_capacity>
-        <num_entrances>2</num_entrances>
+        <num_entrances>4</num_entrances>
         <num_exits>2</num_exits>
     </carpark>
 

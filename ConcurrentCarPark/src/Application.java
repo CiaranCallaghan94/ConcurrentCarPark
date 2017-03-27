@@ -107,7 +107,7 @@ public class Application {
 
         XMLParser.readInput();
 
-        simGUI = new SimulationGUI(XMLParser.NUM_ENTRANCES, XMLParser.NUM_EXITS);
+        simGUI = new SimulationGUI(XMLParser.NUM_ENTRANCES, XMLParser.NUM_EXITS, XMLParser.CARPARK_CAPACITY, XMLParser.NUM_CARS);
         Gateway gateway = new Gateway(XMLParser.NUM_ENTRANCES, XMLParser.NUM_EXITS, simGUI);
         Carpark carpark = new Carpark(XMLParser.CARPARK_CAPACITY);
 

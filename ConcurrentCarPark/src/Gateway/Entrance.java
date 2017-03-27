@@ -1,8 +1,8 @@
 package Gateway;
 
 import Car.Car;
+import GUI.SimulationGUI;
 
-import javax.swing.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -16,13 +16,16 @@ public class Entrance implements Lane {
 
     private int amountInQueue = 0;
 
-    private JLabel entrancePanel;
+    private int id = 0;
 
-    Entrance(BarrierController barrier_controller, int id, JLabel entrancePanel) {
+    private SimulationGUI GUI;
+
+    Entrance(BarrierController barrier_controller, int id, SimulationGUI GUI) {
 
         name = "Entrance " + id + ": ";
         barrierSection = new EntranceBarrierSection(barrier_controller);
-        this.entrancePanel = entrancePanel;
+        this.id = id;
+        this.GUI = GUI;
 
         System.out.println(name + checkLenghtOfQueue());
     }
@@ -32,7 +35,7 @@ public class Entrance implements Lane {
 
         amountInQueue++;
         System.out.println(name + checkLenghtOfQueue());
-        entrancePanel.setText(name + amountInQueue);
+        GUI.setEntranceNum(id,checkLenghtOfQueue());
 
         barrierArea.lock();
 
@@ -42,11 +45,12 @@ public class Entrance implements Lane {
         }
         finally {
 
+            barrierArea.unlock();
+
             amountInQueue--;
             System.out.println(name + checkLenghtOfQueue());
-            entrancePanel.setText(name + amountInQueue);
+            GUI.setEntranceNum(id,checkLenghtOfQueue());
 
-            barrierArea.unlock();
 
         }
     }

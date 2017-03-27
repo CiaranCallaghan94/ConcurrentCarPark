@@ -31,7 +31,8 @@ public class BarrierController {
             }
 
             num_cars_in_carpark++;
-            updateGUI(num_cars_in_carpark);
+            GUI.setTotalCarsInCarpark(num_cars_in_carpark);
+            GUI.updateStats();
         }
         catch(InterruptedException e) {}
         finally {
@@ -44,13 +45,10 @@ public class BarrierController {
         barrier_lock.lock();
 
         num_cars_in_carpark--;
-        updateGUI(num_cars_in_carpark);
+        GUI.setTotalCarsInCarpark(num_cars_in_carpark);
+        GUI.updateStats();
 
         has_spaces.signal();
         barrier_lock.unlock();
-    }
-
-    public void updateGUI(int num_cars) {
-        GUI.carParkCapacity.setText("CarPark: " + num_cars_in_carpark + "/" + carpark_capacity);
     }
 }

@@ -92,8 +92,4 @@ public abstract class BarrierSection {
         clearTheBarrier();
         return car;
     }
-
-    public boolean isFree() {
-        return is_free;
-    }
 }

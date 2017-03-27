@@ -1,8 +1,8 @@
 package Gateway;
 
 import Car.Car;
+import GUI.SimulationGUI;
 
-import javax.swing.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -12,13 +12,15 @@ public class Exit implements Lane {
     private final Lock barrierArea = new ReentrantLock(true);
     private final ExitBarrierSection barrierSection;
     private int amountInQueue = 0;
-    private JLabel exitPanel;
+    private int id;
+    private SimulationGUI GUI;
 
-    Exit(BarrierController barrier_controller, int id, JLabel exitPanel) {
+    Exit(BarrierController barrier_controller, int id, SimulationGUI GUI) {
 
         name = "Exit " + id + ": ";
         barrierSection = new ExitBarrierSection(barrier_controller);
-        this.exitPanel = exitPanel;
+        this.id = id;
+        this.GUI = GUI;
 
         System.out.println(name + checkLenghtOfQueue());
     }
@@ -27,7 +29,8 @@ public class Exit implements Lane {
 
         amountInQueue++;
         System.out.println(name + checkLenghtOfQueue());
-        exitPanel.setText(name + amountInQueue);
+        GUI.setExitNum(id, checkLenghtOfQueue());
+        GUI.updateStats();
 
         barrierArea.lock();
 
@@ -37,11 +40,13 @@ public class Exit implements Lane {
         }
         finally {
 
+            barrierArea.unlock();
+
             amountInQueue--;
             System.out.println(name + checkLenghtOfQueue());
-            exitPanel.setText(name + amountInQueue);
+            GUI.setExitNum(id, checkLenghtOfQueue());
+            GUI.updateStats();
 
-            barrierArea.unlock();
 
         }
     }
