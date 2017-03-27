@@ -32,7 +32,6 @@ public class BarrierController {
 
             num_cars_in_carpark++;
             GUI.updater.setTotalCarsInCarpark(num_cars_in_carpark);
-            GUI.updater.updateStats();
         }
         catch(InterruptedException e) {}
         finally {
@@ -46,7 +45,6 @@ public class BarrierController {
 
         num_cars_in_carpark--;
         GUI.updater.setTotalCarsInCarpark(num_cars_in_carpark);
-        GUI.updater.updateStats();
 
         has_spaces.signal();
         barrier_lock.unlock();

@@ -61,10 +61,12 @@ public class GUIupdater {
     public void setEntranceNum(int id, int i) {
 
         entrances_nums.set(id, i);
+        updateStats();
     }
 
     public void setExitNum(int id, int i) {
         exits_nums.set(id, i);
+        updateStats();
     }
 
     public void updateStats() {
@@ -103,11 +105,12 @@ public class GUIupdater {
     public void setTotalCarsInCarpark(int i) {
 
         total_cars_in_carpark = i;
+        updateStats();
     }
 
     public void increaseTotalCarsInSimulation(){
 
         total_cars_in_simulation++;
-        System.out.println("Increasing total cars in simulation: " + total_cars_in_simulation);
+        updateStats();
     }
 }

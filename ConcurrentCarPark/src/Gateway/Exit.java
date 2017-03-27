@@ -30,7 +30,6 @@ public class Exit implements Lane {
         amountInQueue++;
         System.out.println(name + checkLengthOfQueue());
         GUI.updater.setExitNum(id, checkLengthOfQueue());
-        GUI.updater.updateStats();
 
         barrierArea.lock();
 
@@ -45,9 +44,6 @@ public class Exit implements Lane {
             amountInQueue--;
             System.out.println(name + checkLengthOfQueue());
             GUI.updater.setExitNum(id, checkLengthOfQueue());
-            GUI.updater.updateStats();
-
-
         }
     }
 
