@@ -71,9 +71,15 @@ public class SimulationGUI extends JFrame {
         this.max_cars_in_simulation = max_cars;
         maxCarsInSimulation();
 
-        // Centers Frame
         this.setLocationRelativeTo(null);
         this.setSize(600,400);
+
+        // Centers Frame
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+        this.setLocation(x, y);
+
         this.setVisible(true);
 
         this.updater = new GUIupdater(
