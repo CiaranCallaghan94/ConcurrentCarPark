@@ -5,11 +5,16 @@ import GUI.SimulationGUI;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Gateway {
 
     private final List<Lane> entrances;
     private final List<Lane> exits;
+
+    private final Lock gatewayInLock = new ReentrantLock(true);
+    private final Lock gatewayOutLock = new ReentrantLock(true);
 
     public SimulationGUI GUI;
 
@@ -35,40 +40,79 @@ public class Gateway {
 
     public Entrance addCarToEntrance(Car c) {
 
-        GUI.increaseTotalCarsInSimulation();
-        GUI.updateStats();
-
-        return (Entrance) placeInShortestLane(c, entrances);
+        return (Entrance) placeInShortestEntrance(c, entrances);
     }
 
     public Exit addCarToExit(Car c) {
 
-        return (Exit) placeInShortestLane(c, exits);
+        return (Exit) placeInShortestExit(c, exits);
     }
 
     //Scans through all the entrances and adds the car to the shortest queue
-    private synchronized Lane placeInShortestLane(Car c, List<Lane> lanes) {
+    private Lane placeInShortestEntrance(Car c, List<Lane> lanes) {
 
-        Lane shortest_lane = lanes.get(0);
+        gatewayInLock.lock();
 
-        for (int i = 1; i < lanes.size(); i++) {
+        GUI.increaseTotalCarsInSimulation();
 
-            Lane test_shortest = lanes.get(i);
-            if (test_shortest.checkLenghtOfQueue() < shortest_lane.checkLenghtOfQueue()) {
+        try {
 
-                shortest_lane = test_shortest;
-            }
-            // Adds a random chance of which lane the car enters if the queues are the same
-            else if(test_shortest.checkLenghtOfQueue() == shortest_lane.checkLenghtOfQueue()) {
+            Lane shortest_lane = lanes.get(0);
 
-                int temp = (Math.random() < 0.5) ? 1 : 2;
+            for (int i = 1; i < lanes.size(); i++) {
 
-                if (temp == 2){
+                Lane test_shortest = lanes.get(i);
+                if (test_shortest.checkLenghtOfQueue() < shortest_lane.checkLenghtOfQueue()) {
+
                     shortest_lane = test_shortest;
                 }
+                // Adds a random chance of which lane the car enters if the queues are the same
+                else if (test_shortest.checkLenghtOfQueue() == shortest_lane.checkLenghtOfQueue()) {
+
+                    int temp = (Math.random() < 0.5) ? 1 : 2;
+
+                    if (temp == 2) {
+                        shortest_lane = test_shortest;
+                    }
+                }
             }
+            return shortest_lane;
         }
-        return shortest_lane;
+        finally {
+            gatewayInLock.unlock();
+        }
     }
 
+    //Scans through all the entrances and adds the car to the shortest queue
+    private Lane placeInShortestExit(Car c, List<Lane> lanes) {
+
+        gatewayOutLock.lock();
+
+        try {
+
+            Lane shortest_lane = lanes.get(0);
+
+            for (int i = 1; i < lanes.size(); i++) {
+
+                Lane test_shortest = lanes.get(i);
+                if (test_shortest.checkLenghtOfQueue() < shortest_lane.checkLenghtOfQueue()) {
+
+                    shortest_lane = test_shortest;
+                }
+                // Adds a random chance of which lane the car enters if the queues are the same
+                else if (test_shortest.checkLenghtOfQueue() == shortest_lane.checkLenghtOfQueue()) {
+
+                    int temp = (Math.random() < 0.5) ? 1 : 2;
+
+                    if (temp == 2) {
+                        shortest_lane = test_shortest;
+                    }
+                }
+            }
+            return shortest_lane;
+        }
+        finally {
+            gatewayOutLock.unlock();
+        }
+    }
 }
