@@ -81,16 +81,18 @@ public class GUIupdater {
         //entrances
         for(int i = 0 ; i < entrances_nums.size(); i++){
 
+            int num = i+1;
             total_cars_at_entrances += entrances_nums.get(i);
-            entrances_panels.get(i).setText("entrance: "+ entrances_nums.get(i));
+            entrances_panels.get(i).setText("Entrance " + num + ": " + entrances_nums.get(i));
         }
         total_cars_at_entrances_panel.setText("Amount of cars at all entrances: " + total_cars_at_entrances);
 
         //exits
         for(int i = 0 ; i < exits_nums.size(); i++){
 
+            int num = i+1;
             total_cars_at_exits += exits_nums.get(i);
-            exits_panels.get(i).setText("exit: "+ exits_nums.get(i));
+            exits_panels.get(i).setText("Exit " + num + ": " + exits_nums.get(i));
         }
         total_cars_at_exits_panel.setText("Amount of cars at all exits: "+ total_cars_at_exits);
 
