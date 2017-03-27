@@ -33,12 +33,13 @@ public class SimulationGUI extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Carpark Simulation");
 
+
         // Panel
         mainBox = Box.createVerticalBox();
         this.add(mainBox);
 
         // Title
-        createTitlePanel("Carpark Simulator");
+        createMainTitlePanel("Carpark Simulator");
 
         // Max cars in simulation
         this.max_cars_in_simulation = max_cars;
@@ -61,8 +62,7 @@ public class SimulationGUI extends JFrame {
         totalCarsAtExitsLabel();
         individualExitLabels(num_exits);
 
-        //this.setSize(300,400);
-        this.pack();
+        this.setSize(400,400);
         // Centers Frame
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
@@ -85,6 +85,24 @@ public class SimulationGUI extends JFrame {
         JLabel title_label = new JLabel(title, SwingConstants.CENTER);
         title_label.setForeground(Color.BLUE);
 
+        Font boldFont = new Font(title_label.getText(), Font.BOLD, 14);
+        title_label.setFont(boldFont);
+
+        title_panel.add(title_label);
+        mainBox.add(title_panel);
+        mainBox.add(Box.createVerticalStrut(10));
+    }
+
+    private void createMainTitlePanel(String title) {
+
+        JPanel title_panel = new JPanel(new GridLayout(0, 1));
+
+        JLabel title_label = new JLabel(title, SwingConstants.CENTER);
+        title_label.setForeground(Color.BLUE);
+
+        Font boldFont = new Font(title_label.getText(), Font.BOLD, 17);
+        title_label.setFont(boldFont);
+
         title_panel.add(title_label, SwingConstants.CENTER);
         mainBox.add(title_panel);
         mainBox.add(Box.createVerticalStrut(10));
@@ -93,17 +111,23 @@ public class SimulationGUI extends JFrame {
     private void totalCarsInSceneLabel() {
 
         total_cars_in_scene_panel = new JLabel("Cars in scene: " + 0);
+        Font boldFont = new Font(total_cars_in_scene_panel.getText(), Font.BOLD, 13);
+        total_cars_in_scene_panel.setFont(boldFont);
         addToMainbox(total_cars_in_scene_panel);
     }
 
     private void carparkOccupancyLabel() {
 
         cars_in_carpark_and_capacity = new JLabel("Carpark Occupancy: " + 0 + "/" + carpark_capacity);
+        Font boldFont = new Font(cars_in_carpark_and_capacity.getText(), Font.BOLD, 13);
+        cars_in_carpark_and_capacity.setFont(boldFont);
         addToMainbox(cars_in_carpark_and_capacity);
     }
 
     private void totalCarsAtEntrancesLabel() {
-        total_cars_at_entrances_panel =  new JLabel("Combined total of cars at all entrances: "+ 0);
+        total_cars_at_entrances_panel =  new JLabel("Total: "+ 0);
+        Font boldFont = new Font(total_cars_at_entrances_panel.getText(), Font.BOLD, 13);
+        total_cars_at_entrances_panel.setFont(boldFont);
         addToMainbox(total_cars_at_entrances_panel);
     }
 
@@ -121,7 +145,9 @@ public class SimulationGUI extends JFrame {
 
     private void totalCarsAtExitsLabel() {
 
-        total_cars_at_exits_panel =  new JLabel("Combined total of cars at all entrances: "+ 0);
+        total_cars_at_exits_panel =  new JLabel("Total: "+ 0);
+        Font boldFont = new Font(total_cars_at_exits_panel.getText(), Font.BOLD, 13);
+        total_cars_at_exits_panel.setFont(boldFont);
         addToMainbox(total_cars_at_exits_panel);
     }
 
@@ -141,6 +167,8 @@ public class SimulationGUI extends JFrame {
 
         max_cars_in_simulation_panel = new JLabel("Total cars in simulation: " +
                                                     0 + "/" + max_cars_in_simulation);
+        Font boldFont = new Font(max_cars_in_simulation_panel.getText(), Font.BOLD, 13);
+        max_cars_in_simulation_panel.setFont(boldFont);
         addToMainbox(max_cars_in_simulation_panel);
     }
 
