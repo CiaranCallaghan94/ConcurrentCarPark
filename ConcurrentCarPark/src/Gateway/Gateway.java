@@ -8,10 +8,18 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * The Gateway maintains fairness with its ReentrantLock.
+ * The lock is used to ensure that the car can choose accurately which lane it should enter
+ * The fairness parameter in the Reentrant lock enables us to make a queue like
+ * feature, The longest waiting car can then look for the shortest queue.
+ * A lock is used here to enforce mutual exclusion choosing the shortest lane.
+ */
+
 public class Gateway {
 
-    private final List<Lane> entrances;
-    private final List<Lane> exits;
+    private final List<Entrance> entrances;
+    private final List<Exit> exits;
 
     private final Lock gatewayInLock = new ReentrantLock(true);
     private final Lock gatewayOutLock = new ReentrantLock(true);
@@ -27,29 +35,21 @@ public class Gateway {
 
         BarrierController barrier_controller = new BarrierController(GUI);
 
+        // Creates the amount of entrances specified in the input.
         for (int i = 0; i < num_entrances; i++) {
-            Lane entrance = new Entrance(barrier_controller,i,GUI);
+            Entrance entrance = new Entrance(barrier_controller,i,GUI);
             entrances.add(entrance);
         }
 
+        // Creates the amount of exits specified in the input.
         for (int i = 0; i < num_exits; i++) {
-            Lane exit = new Exit(barrier_controller,i,GUI);
+            Exit exit = new Exit(barrier_controller,i,GUI);
             exits.add(exit);
         }
     }
 
-    public Entrance addCarToEntrance(Car c) {
-
-        return (Entrance) placeInShortestEntrance(c, entrances);
-    }
-
-    public Exit addCarToExit(Car c) {
-
-        return (Exit) placeInShortestExit(c, exits);
-    }
-
-    //Scans through all the entrances and adds the car to the shortest queue
-    private Lane placeInShortestEntrance(Car c, List<Lane> lanes) {
+    //Scans through all the entrances and adds the car to the shortest queue.
+    private Entrance placeInShortestEntrance(Car c, List<Entrance> lanes) {
 
         gatewayInLock.lock();
 
@@ -57,16 +57,16 @@ public class Gateway {
 
         try {
 
-            Lane shortest_lane = lanes.get(0);
+            Entrance shortest_lane = lanes.get(0);
 
             for (int i = 1; i < lanes.size(); i++) {
 
-                Lane test_shortest = lanes.get(i);
+                Entrance test_shortest = lanes.get(i);
                 if (test_shortest.checkLengthOfQueue() < shortest_lane.checkLengthOfQueue()) {
 
                     shortest_lane = test_shortest;
                 }
-                // Adds a random chance of which lane the car enters if the queues are the same
+                // // Adds a random decision which lane the car enters if the queues are the same
                 else if (test_shortest.checkLengthOfQueue() == shortest_lane.checkLengthOfQueue()) {
 
                     int temp = (Math.random() < 0.5) ? 1 : 2;
@@ -84,22 +84,22 @@ public class Gateway {
     }
 
     //Scans through all the entrances and adds the car to the shortest queue
-    private Lane placeInShortestExit(Car c, List<Lane> lanes) {
+    private Exit placeInShortestExit(Car c, List<Exit> lanes) {
 
         gatewayOutLock.lock();
 
         try {
 
-            Lane shortest_lane = lanes.get(0);
+            Exit shortest_lane = lanes.get(0);
 
             for (int i = 1; i < lanes.size(); i++) {
 
-                Lane test_shortest = lanes.get(i);
+                Exit test_shortest = lanes.get(i);
                 if (test_shortest.checkLengthOfQueue() < shortest_lane.checkLengthOfQueue()) {
 
                     shortest_lane = test_shortest;
                 }
-                // Adds a random chance of which lane the car enters if the queues are the same
+                // Adds a random decision which lane the car enters if the queues are the same.
                 else if (test_shortest.checkLengthOfQueue() == shortest_lane.checkLengthOfQueue()) {
 
                     int temp = (Math.random() < 0.5) ? 1 : 2;
@@ -115,4 +115,16 @@ public class Gateway {
             gatewayOutLock.unlock();
         }
     }
+
+    public Entrance addCarToEntrance(Car c) {
+
+        return placeInShortestEntrance(c, entrances);
+    }
+
+    public Exit addCarToExit(Car c) {
+
+        return  placeInShortestExit(c, exits);
+    }
+
+
 }
