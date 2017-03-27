@@ -13,20 +13,20 @@ public class SimulationGUI extends JFrame {
 
     Box mainBox;
 
-    public JLabel title;
-    public List<JLabel> entrances_panels = new LinkedList<>();
-    public List<JLabel> exits_panels = new LinkedList<>();
-    public JLabel total_cars_in_scene_panel;
-    public JLabel cars_in_carpark_and_capacity;
-    public JLabel total_cars_at_entrances_panel;
-    public JLabel total_cars_at_exits_panel;
-    public JLabel max_cars_in_simulation_panel;
+    private JLabel title;
+    private List<JLabel> entrances_panels = new LinkedList<>();
+    private List<JLabel> exits_panels = new LinkedList<>();
+    private JLabel total_cars_in_scene_panel;
+    private JLabel cars_in_carpark_and_capacity;
+    private JLabel total_cars_at_entrances_panel;
+    private JLabel total_cars_at_exits_panel;
+    private JLabel max_cars_in_simulation_panel;
 
-    public int max_cars_in_simulation = 0;
-    public int carpark_capacity = 0;
+    private int max_cars_in_simulation = 0;
+    private int carpark_capacity = 0;
 
-    public List<Integer> entrances_nums = new LinkedList<>();
-    public List<Integer> exits_nums = new LinkedList<>();
+    private List<Integer> entrances_nums = new LinkedList<>();
+    private List<Integer> exits_nums = new LinkedList<>();
 
     public GUIupdater updater;
 
@@ -82,24 +82,24 @@ public class SimulationGUI extends JFrame {
                 entrances_nums, exits_nums, num_entrances, num_exits, max_cars_in_simulation, carpark_capacity, max_cars);
     }
 
-    public void totalCarsInSceneLabel() {
+    private void totalCarsInSceneLabel() {
 
         total_cars_in_scene_panel = new JLabel("Cars in scene: " + 0);
         addToMainbox(total_cars_in_scene_panel);
     }
 
-    public void carparkOccupancyLabel() {
+    private void carparkOccupancyLabel() {
 
         cars_in_carpark_and_capacity = new JLabel("Carpark Occupancy: " + 0 + "/" + carpark_capacity);
         addToMainbox(cars_in_carpark_and_capacity);
     }
 
-    public void totalCarsAtEntrancesLabel() {
+    private void totalCarsAtEntrancesLabel() {
         total_cars_at_entrances_panel =  new JLabel("Amount of cars at all entrances: "+ 0);
         addToMainbox(total_cars_at_entrances_panel);
     }
 
-    public void individualEntranceLabels(int num_entrances) {
+    private void individualEntranceLabels(int num_entrances) {
 
         for (int i = 0; i < num_entrances; i++){
 
@@ -111,13 +111,13 @@ public class SimulationGUI extends JFrame {
         }
     }
 
-    public void totalCarsAtExitsLabel() {
+    private void totalCarsAtExitsLabel() {
 
         total_cars_at_exits_panel =  new JLabel("Amount of cars at all entrances: "+ 0);
         addToMainbox(total_cars_at_exits_panel);
     }
 
-    public void individualExitLabels(int num_exits) {
+    private void individualExitLabels(int num_exits) {
 
         for (int i = 0; i < num_exits; i++){
 
@@ -129,14 +129,14 @@ public class SimulationGUI extends JFrame {
         }
     }
 
-    public void maxCarsInSimulation() {
+    private void maxCarsInSimulation() {
 
         max_cars_in_simulation_panel = new JLabel("Total cars in simulation: " +
                                                     0 + "/" + max_cars_in_simulation);
         addToMainbox(max_cars_in_simulation_panel);
     }
 
-    public void addToMainbox(JLabel label) {
+    private void addToMainbox(JLabel label) {
 
         mainBox.add(label);
         mainBox.add(Box.createVerticalStrut(10));
