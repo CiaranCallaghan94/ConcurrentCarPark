@@ -111,16 +111,16 @@ public class Application {
         int test_arrival_time;
 
         // Get earliest arrival time
-        for(Car c: cars) {
+        for (Car c : cars) {
 
             test_arrival_time = c.getArrivalTime();
 
-            if(test_arrival_time < earliest_arrival_time)
+            if (test_arrival_time < earliest_arrival_time)
                 earliest_arrival_time = test_arrival_time;
         }
 
         // Subtract earlier arrival time from all car arrival times.
-        for(Car c: cars) {
+        for (Car c : cars) {
             c.setArrivalTime(c.getArrivalTime() - earliest_arrival_time);
         }
     }
@@ -129,7 +129,7 @@ public class Application {
 
         Random rand = new Random();
         int sample = (int) Math.abs(Math.round(rand.nextGaussian() *
-                            std_deviation + mean));
+                std_deviation + mean));
 
         return sample;
     }

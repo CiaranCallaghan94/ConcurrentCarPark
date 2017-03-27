@@ -76,32 +76,32 @@ public class GUIupdater {
         total_cars_at_exits = 0;
 
         //total
-        cars_in_carpark_and_capacity.setText("Carpark Occupancy: " + total_cars_in_carpark + "/" +carpark_capacity);
+        cars_in_carpark_and_capacity.setText("Carpark Occupancy: " + total_cars_in_carpark + "/" + carpark_capacity);
 
         //entrances
-        for(int i = 0 ; i < entrances_nums.size(); i++){
+        for (int i = 0; i < entrances_nums.size(); i++) {
 
-            int num = i+1;
+            int num = i + 1;
             total_cars_at_entrances += entrances_nums.get(i);
             entrances_panels.get(i).setText("Entrance " + num + ": " + entrances_nums.get(i));
         }
         total_cars_at_entrances_panel.setText("Total: " + total_cars_at_entrances);
 
         //exits
-        for(int i = 0 ; i < exits_nums.size(); i++){
+        for (int i = 0; i < exits_nums.size(); i++) {
 
-            int num = i+1;
+            int num = i + 1;
             total_cars_at_exits += exits_nums.get(i);
             exits_panels.get(i).setText("Exit " + num + ": " + exits_nums.get(i));
         }
-        total_cars_at_exits_panel.setText("Total: "+ total_cars_at_exits);
+        total_cars_at_exits_panel.setText("Total: " + total_cars_at_exits);
 
         // cars in scene
         total_cars_in_scene = total_cars_in_carpark + total_cars_at_exits + total_cars_at_entrances;
         total_cars_in_scene_panel.setText("Cars in scene: " + total_cars_in_scene);
 
         // total
-        max_cars_in_simulation_panel.setText("Total cars in simulation: "+ total_cars_in_simulation +"/"+ max_cars_in_simulation);
+        max_cars_in_simulation_panel.setText("Total cars in simulation: " + total_cars_in_simulation + "/" + max_cars_in_simulation);
 
     }
 
@@ -111,7 +111,7 @@ public class GUIupdater {
         updateStats();
     }
 
-    public void increaseTotalCarsInSimulation(){
+    public void increaseTotalCarsInSimulation() {
 
         total_cars_in_simulation++;
         updateStats();

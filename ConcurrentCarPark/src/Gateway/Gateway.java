@@ -37,13 +37,13 @@ public class Gateway {
 
         // Creates the amount of entrances specified in the input.
         for (int i = 0; i < num_entrances; i++) {
-            Entrance entrance = new Entrance(barrier_controller,i,GUI);
+            Entrance entrance = new Entrance(barrier_controller, i, GUI);
             entrances.add(entrance);
         }
 
         // Creates the amount of exits specified in the input.
         for (int i = 0; i < num_exits; i++) {
-            Exit exit = new Exit(barrier_controller,i,GUI);
+            Exit exit = new Exit(barrier_controller, i, GUI);
             exits.add(exit);
         }
     }
@@ -81,8 +81,7 @@ public class Gateway {
                 }
             }
             return shortest_lane;
-        }
-        finally {
+        } finally {
             // Release lock
             gatewayInLock.unlock();
         }
@@ -118,8 +117,7 @@ public class Gateway {
                 }
             }
             return shortest_lane;
-        }
-        finally {
+        } finally {
             // Release lock
             gatewayOutLock.unlock();
         }
@@ -132,7 +130,7 @@ public class Gateway {
 
     public Exit addCarToExit(Car c) {
 
-        return  placeInShortestExit(c, exits);
+        return placeInShortestExit(c, exits);
     }
 
 

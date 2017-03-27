@@ -62,8 +62,8 @@ public abstract class Car implements Runnable {
 
         try {
             Thread.sleep(arrive_time);
+        } catch (InterruptedException e) {
         }
-        catch(InterruptedException e) {}
     }
 
     // The car will enter in through the carparks gateway.
@@ -88,8 +88,7 @@ public abstract class Car implements Runnable {
 
         try {
             Thread.sleep(stay_time);
-        }
-        catch(InterruptedException e) {
+        } catch (InterruptedException e) {
 
         }
     }

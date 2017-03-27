@@ -41,12 +41,12 @@ public class Carpark {
         // Lock acquired, in critical section
 
         // Wait for a space to come available if none available
-        if(!spacesAvailable()) {
+        if (!spacesAvailable()) {
             try {
                 System.out.println("Car park full, waiting around...");
                 has_spaces.await();
+            } catch (InterruptedException e) {
             }
-            catch(InterruptedException e) {}
         }
 
         // Space available so find a space!
@@ -92,8 +92,8 @@ public class Carpark {
 
     public boolean spacesAvailable() {
 
-        for(Space space: spaces) {
-            if(space.isFree())
+        for (Space space : spaces) {
+            if (space.isFree())
                 return true;
         }
 

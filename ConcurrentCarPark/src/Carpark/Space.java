@@ -21,7 +21,9 @@ public class Space {
 
     }
 
-    /** Package-private methods **/
+    /**
+     * Package-private methods
+     **/
 
     void addCar(Car c) {
         is_free = false;
