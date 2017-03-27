@@ -1,6 +1,7 @@
 package GUI;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.List;
  * Created by ciarancallaghan on 26/03/2017.
  */
 public class SimulationGUI extends JFrame {
+
+    Box mainBox;
 
     public JLabel title;
     public List<JLabel> entrances_panels = new LinkedList<>();
@@ -19,16 +22,13 @@ public class SimulationGUI extends JFrame {
     public JLabel total_cars_at_exits_panel;
     public JLabel max_cars_in_simulation_panel;
 
-    public int total_cars_in_simulation = 0;
     public int max_cars_in_simulation = 0;
-    public int total_cars_in_scene = 0;
-    public int total_cars_in_carpark = 0;
     public int carpark_capacity = 0;
-    public int total_cars_at_entrances = 0;
-    public int total_cars_at_exits = 0;
+
     public List<Integer> entrances_nums = new LinkedList<>();
     public List<Integer> exits_nums = new LinkedList<>();
 
+    public GUIupdater updater;
 
     public SimulationGUI(int num_entrances, int num_exits, int carpark_capacity, int max_cars){
 
@@ -36,109 +36,110 @@ public class SimulationGUI extends JFrame {
         this.setTitle("Carpark Simulation");
 
         // Panel
-        Box mainBox = Box.createVerticalBox();
+        mainBox = Box.createVerticalBox();
         this.add(mainBox);
 
         // Title
-        title = new JLabel("Carpark Simulation");
+        JPanel center_panel = new JPanel(new GridLayout(0, 1));
+
+        title = new JLabel("Carpark Simulation", SwingConstants.CENTER);
         title.setForeground(Color.BLUE);
-        mainBox.add(title);
+
+        center_panel.setLayout(new BorderLayout(5, 5));
+        center_panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        center_panel.add(title, SwingConstants.CENTER);
+        mainBox.add(center_panel);
         mainBox.add(Box.createVerticalStrut(10));
 
         // Cars in scene
-        total_cars_in_scene_panel = new JLabel("Cars in scene: " + total_cars_in_scene);
-        mainBox.add(total_cars_in_scene_panel);
-        mainBox.add(Box.createVerticalStrut(10));
+        totalCarsInSceneLabel();
+
         // Carpark Occupancy Capacity
         this.carpark_capacity = carpark_capacity;
-        cars_in_carpark_and_capacity = new JLabel("Carpark Occupancy: " + total_cars_in_carpark + "/" +carpark_capacity);
-        mainBox.add(cars_in_carpark_and_capacity);
-        mainBox.add(Box.createVerticalStrut(10));
+        carparkOccupancyLabel();
 
         // Entrances
-        total_cars_at_entrances_panel =  new JLabel("Amount of cars at all entrances: "+ total_cars_at_entrances);
-        mainBox.add(total_cars_at_entrances_panel);
-        mainBox.add(Box.createVerticalStrut(10));
-        for (int i = 0; i < num_entrances; i++){
-            entrances_nums.add(0);
-            entrances_panels.add( new JLabel("Cars at Entrance: 0"));
-            mainBox.add(entrances_panels.get(i));
-            mainBox.add(Box.createVerticalStrut(2));
-        }
-        mainBox.add(Box.createVerticalStrut(10));
-        // Exits
-        total_cars_at_exits_panel =  new JLabel("Amount of cars at all entrances: "+ total_cars_at_exits);
-        mainBox.add(total_cars_at_exits_panel);
-        mainBox.add(Box.createVerticalStrut(10));
-        for (int i = 0; i < num_exits; i++){
-            exits_nums.add(0);
-            exits_panels.add( new JLabel("Cars at Exit: 0"));
-            mainBox.add(exits_panels.get(i));
-            mainBox.add(Box.createVerticalStrut(2));
-        }
+        totalCarsAtEntrancesLabel();
+        individualEntranceLabels(num_entrances);
 
-        mainBox.add(Box.createVerticalStrut(10));
+        // Exits
+        totalCarsAtExitsLabel();
+        individualExitLabels(num_exits);
+
         // Max cars in simulation
-        max_cars_in_simulation = max_cars;
-        max_cars_in_simulation_panel = new JLabel("Total cars in simulation: "+ total_cars_in_simulation +"/"+ max_cars_in_simulation);
-        mainBox.add(max_cars_in_simulation_panel);
+        this.max_cars_in_simulation = max_cars;
+        maxCarsInSimulation();
+
         // Centers Frame
         this.setLocationRelativeTo(null);
-        this.setSize(300,300);
+        this.setSize(600,400);
         this.setVisible(true);
+
+        this.updater = new GUIupdater(
+                entrances_panels, exits_panels, total_cars_in_scene_panel, cars_in_carpark_and_capacity,
+                total_cars_at_entrances_panel, total_cars_at_exits_panel, max_cars_in_simulation_panel,
+                entrances_nums, exits_nums, num_entrances, num_exits, max_cars_in_simulation, carpark_capacity, max_cars);
     }
 
+    public void totalCarsInSceneLabel() {
 
-    public void setEntranceNum(int id, int i) {
-
-        entrances_nums.set(id, i);
+        total_cars_in_scene_panel = new JLabel("Cars in scene: " + 0);
+        addToMainbox(total_cars_in_scene_panel);
     }
 
-    public void setExitNum(int id, int i) {
-        exits_nums.set(id, i);
+    public void carparkOccupancyLabel() {
+
+        cars_in_carpark_and_capacity = new JLabel("Carpark Occupancy: " + 0 + "/" + carpark_capacity);
+        addToMainbox(cars_in_carpark_and_capacity);
     }
 
-    public void updateStats() {
+    public void totalCarsAtEntrancesLabel() {
+        total_cars_at_entrances_panel =  new JLabel("Amount of cars at all entrances: "+ 0);
+        addToMainbox(total_cars_at_entrances_panel);
+    }
 
-        total_cars_in_scene = 0;
-        total_cars_at_entrances = 0;
-        total_cars_at_exits = 0;
+    public void individualEntranceLabels(int num_entrances) {
 
-        //total
-        cars_in_carpark_and_capacity.setText("Carpark Occupancy: " + total_cars_in_carpark + "/" +carpark_capacity);
+        for (int i = 0; i < num_entrances; i++){
 
-        //entrances
-        for(int i = 0 ; i < entrances_nums.size(); i++){
-
-            total_cars_at_entrances += entrances_nums.get(i);
-            entrances_panels.get(i).setText("entrance: "+ entrances_nums.get(i));
+            int num = i+1;
+            entrances_nums.add(0);
+            JLabel cars_at_entrance = new JLabel("Cars at Entrance " + num + ": 0");
+            entrances_panels.add(cars_at_entrance);
+            addToMainbox(cars_at_entrance);
         }
-        total_cars_at_entrances_panel.setText("Amount of cars at all entrances: " + total_cars_at_entrances);
+    }
 
-        //exits
-        for(int i = 0 ; i < exits_nums.size(); i++){
+    public void totalCarsAtExitsLabel() {
 
-            total_cars_at_exits += exits_nums.get(i);
-            exits_panels.get(i).setText("exit: "+ exits_nums.get(i));
+        total_cars_at_exits_panel =  new JLabel("Amount of cars at all entrances: "+ 0);
+        addToMainbox(total_cars_at_exits_panel);
+    }
+
+    public void individualExitLabels(int num_exits) {
+
+        for (int i = 0; i < num_exits; i++){
+
+            int num = i+1;
+            exits_nums.add(0);
+            JLabel cars_at_exit = new JLabel("Cars at Exit " + num + ": 0");
+            exits_panels.add(cars_at_exit);
+            addToMainbox(cars_at_exit);
         }
-        total_cars_at_exits_panel.setText("Amount of cars at all exits: "+ total_cars_at_exits);
-
-        // cars in scene
-        total_cars_in_scene = total_cars_in_carpark + total_cars_at_exits + total_cars_at_entrances;
-        total_cars_in_scene_panel.setText("Cars in scene: " + total_cars_in_scene);
-
-        // total
-        max_cars_in_simulation_panel.setText("Total cars in simulation: "+ total_cars_in_simulation +"/"+ max_cars_in_simulation);
     }
 
-    public void setTotalCarsInCarpark(int i) {
+    public void maxCarsInSimulation() {
 
-        total_cars_in_carpark = i;
+        max_cars_in_simulation_panel = new JLabel("Total cars in simulation: " +
+                                                    0 + "/" + max_cars_in_simulation);
+        addToMainbox(max_cars_in_simulation_panel);
     }
 
-    public void increaseTotalCarsInSimulation(){
+    public void addToMainbox(JLabel label) {
 
-        total_cars_in_simulation++;
+        mainBox.add(label);
+        mainBox.add(Box.createVerticalStrut(10));
     }
 }
 

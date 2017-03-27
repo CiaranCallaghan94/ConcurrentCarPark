@@ -53,7 +53,7 @@ public class Gateway {
 
         gatewayInLock.lock();
 
-        GUI.increaseTotalCarsInSimulation();
+        GUI.updater.increaseTotalCarsInSimulation();
 
         try {
 
@@ -62,12 +62,12 @@ public class Gateway {
             for (int i = 1; i < lanes.size(); i++) {
 
                 Lane test_shortest = lanes.get(i);
-                if (test_shortest.checkLenghtOfQueue() < shortest_lane.checkLenghtOfQueue()) {
+                if (test_shortest.checkLengthOfQueue() < shortest_lane.checkLengthOfQueue()) {
 
                     shortest_lane = test_shortest;
                 }
                 // Adds a random chance of which lane the car enters if the queues are the same
-                else if (test_shortest.checkLenghtOfQueue() == shortest_lane.checkLenghtOfQueue()) {
+                else if (test_shortest.checkLengthOfQueue() == shortest_lane.checkLengthOfQueue()) {
 
                     int temp = (Math.random() < 0.5) ? 1 : 2;
 
@@ -95,12 +95,12 @@ public class Gateway {
             for (int i = 1; i < lanes.size(); i++) {
 
                 Lane test_shortest = lanes.get(i);
-                if (test_shortest.checkLenghtOfQueue() < shortest_lane.checkLenghtOfQueue()) {
+                if (test_shortest.checkLengthOfQueue() < shortest_lane.checkLengthOfQueue()) {
 
                     shortest_lane = test_shortest;
                 }
                 // Adds a random chance of which lane the car enters if the queues are the same
-                else if (test_shortest.checkLenghtOfQueue() == shortest_lane.checkLenghtOfQueue()) {
+                else if (test_shortest.checkLengthOfQueue() == shortest_lane.checkLengthOfQueue()) {
 
                     int temp = (Math.random() < 0.5) ? 1 : 2;
 

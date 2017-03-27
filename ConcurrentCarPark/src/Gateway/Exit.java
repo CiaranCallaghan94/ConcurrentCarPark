@@ -22,15 +22,15 @@ public class Exit implements Lane {
         this.id = id;
         this.GUI = GUI;
 
-        System.out.println(name + checkLenghtOfQueue());
+        System.out.println(name + checkLengthOfQueue());
     }
 
     public void moveToBarrier(Car car) {
 
         amountInQueue++;
-        System.out.println(name + checkLenghtOfQueue());
-        GUI.setExitNum(id, checkLenghtOfQueue());
-        GUI.updateStats();
+        System.out.println(name + checkLengthOfQueue());
+        GUI.updater.setExitNum(id, checkLengthOfQueue());
+        GUI.updater.updateStats();
 
         barrierArea.lock();
 
@@ -43,15 +43,15 @@ public class Exit implements Lane {
             barrierArea.unlock();
 
             amountInQueue--;
-            System.out.println(name + checkLenghtOfQueue());
-            GUI.setExitNum(id, checkLenghtOfQueue());
-            GUI.updateStats();
+            System.out.println(name + checkLengthOfQueue());
+            GUI.updater.setExitNum(id, checkLengthOfQueue());
+            GUI.updater.updateStats();
 
 
         }
     }
 
-    public int checkLenghtOfQueue() {
+    public int checkLengthOfQueue() {
 
         return amountInQueue;
     }
