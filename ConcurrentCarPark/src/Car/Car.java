@@ -12,16 +12,14 @@ public abstract class Car implements Runnable {
 
     protected int arrive_time;
     protected int stay_time;
-
-    protected int width;
     protected int dexterity;
 
-    Gateway gateway;
-    Carpark carpark;
-    Entrance entrance;
-    Exit exit;
+    private Gateway gateway;
+    private Carpark carpark;
+    private Entrance entrance;
+    private Exit exit;
 
-    List<Integer> occupied_spaces = new ArrayList<>(2);
+    private List<Integer> occupied_spaces = new ArrayList<>(2);
 
     Car(Gateway gateway, Carpark carpark) {
 
@@ -29,12 +27,10 @@ public abstract class Car implements Runnable {
         this.carpark = carpark;
     }
 
-    public void setVariables(int arrive_time, int stay_time, int width, int dexterity) {
+    public void setVariables(int arrive_time, int stay_time, int dexterity) {
 
         this.arrive_time = arrive_time;
         this.stay_time = stay_time;
-
-        this.width = width;
         this.dexterity = dexterity;
     }
 
@@ -98,11 +94,15 @@ public abstract class Car implements Runnable {
         return this.occupied_spaces;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
     public int getDexterity() {
         return dexterity;
+    }
+
+    public void setArrivalTime(int arrive_time) {
+        this.arrive_time = arrive_time;
+    }
+
+    public int getArrivalTime() {
+        return arrive_time;
     }
 }

@@ -17,7 +17,6 @@ import java.util.Random;
 
 public class Application {
 
-    private static SimulationGUI simGUI;
     private static List<Car> cars;
 
     // Create the student and lecturer cars based on the inputted 'proportion students'
@@ -81,38 +80,72 @@ public class Application {
         int arrive_time;
         int stay_time;
         int dexterity;
-        int car_width;
 
         Car car = cars.get(car_id);
 
-        Random rand = new Random();
-        arrive_time = (int) Math.round(rand.nextGaussian() * std_deviation + rush_hour);
+        arrive_time = getNormalDistValue(rush_hour, std_deviation);
 
         // Normally distribute time, depending on whether car is student or lecturer
         if (car.isStudent()) {
-            stay_time = arrive_time + (int) Math.round(rand.nextGaussian() + XMLParser.AVG_STUDENT_STAY_TIME);
-            dexterity = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_STUDENT_DEXTERITY);
-            car_width = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_STUDENT_DEXTERITY);
 
-        } else {
-            stay_time = arrive_time + (int) Math.round(rand.nextGaussian() + XMLParser.AVG_LECTURER_STAY_TIME);
-            dexterity = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_LECTURER_DEXTERITY);
-            car_width = (int) Math.round(rand.nextGaussian() + XMLParser.AVG_LECTURER_CAR_WIDTH);
+            stay_time = getNormalDistValue(XMLParser.AVG_STUDENT_STAY_TIME, XMLParser.STUDENT_STAY_TIME_DEVIATION);
+            dexterity = getNormalDistValue(XMLParser.AVG_STUDENT_DEXTERITY, 1);
         }
 
-        car.setVariables(arrive_time, stay_time, car_width, dexterity);
+        // isLecture
+        else {
+
+            stay_time = getNormalDistValue(XMLParser.AVG_LECTURER_STAY_TIME, XMLParser.LECTURER_STAY_TIME_DEVIATION);
+            dexterity = getNormalDistValue(XMLParser.AVG_LECTURER_DEXTERITY, 1);
+        }
+
+        car.setVariables(arrive_time, stay_time, dexterity);
+    }
+
+    // Earliest arrival time might be at say, 8am. No need to have threads sleep that long.
+    // Subtract earliest arrival from every arrival time, so sleeps are shortened.
+    // This gives the effect of the first car arriving once the simulation starts.
+    public static void bringArrivalTimesForward() {
+
+        int earliest_arrival_time = cars.get(0).getArrivalTime();
+        int test_arrival_time;
+
+        // Get earliest arrival time
+        for(Car c: cars) {
+
+            test_arrival_time = c.getArrivalTime();
+
+            if(test_arrival_time < earliest_arrival_time)
+                earliest_arrival_time = test_arrival_time;
+        }
+
+        // Subtract earlier arrival time from all car arrival times.
+        for(Car c: cars) {
+            c.setArrivalTime(c.getArrivalTime() - earliest_arrival_time);
+        }
+    }
+
+    public static int getNormalDistValue(int mean, int std_deviation) {
+
+        Random rand = new Random();
+        int sample = (int) Math.abs(Math.round(rand.nextGaussian() *
+                            std_deviation + mean));
+
+        return sample;
     }
 
     public static void main(String[] args) {
 
         XMLParser.readInput();
 
-        simGUI = new SimulationGUI(XMLParser.NUM_ENTRANCES, XMLParser.NUM_EXITS, XMLParser.CARPARK_CAPACITY, XMLParser.NUM_CARS);
-        Gateway gateway = new Gateway(XMLParser.NUM_ENTRANCES, XMLParser.NUM_EXITS, simGUI);
+        SimulationGUI GUI = new SimulationGUI(XMLParser.NUM_ENTRANCES, XMLParser.NUM_EXITS);
+        Gateway gateway = new Gateway(XMLParser.NUM_ENTRANCES, XMLParser.NUM_EXITS, GUI);
         Carpark carpark = new Carpark(XMLParser.CARPARK_CAPACITY);
 
         createCars(gateway, carpark);
         setAllCarVariables();
+
+        bringArrivalTimesForward();
 
         // Start the car threads
         for (Car c : cars) {
