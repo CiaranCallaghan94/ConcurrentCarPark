@@ -111,7 +111,7 @@ public class SimulationGUI extends JFrame {
 
             int num = i+1;
             entrances_nums.add(0);
-            JLabel cars_at_entrance = new JLabel("Cars at Entrance " + num + ": 0");
+            JLabel cars_at_entrance = new JLabel("Entrance " + num + ": 0");
             entrances_panels.add(cars_at_entrance);
             addToMainbox(cars_at_entrance);
         }
@@ -129,7 +129,7 @@ public class SimulationGUI extends JFrame {
 
             int num = i+1;
             exits_nums.add(0);
-            JLabel cars_at_exit = new JLabel("Cars at Exit " + num + ": 0");
+            JLabel cars_at_exit = new JLabel("Exit " + num + ": 0");
             exits_panels.add(cars_at_exit);
             addToMainbox(cars_at_exit);
         }
